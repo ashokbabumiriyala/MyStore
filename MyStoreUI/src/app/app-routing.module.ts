@@ -4,13 +4,14 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'folder/Inbox',
+    redirectTo: 'mystore-slides',
     pathMatch: 'full'
   },
   {
     path: 'folder/:id',
     loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
-  },  {
+  },
+  {
     path: 'login',
     loadChildren: () => import('./Shared/login/login.module').then( m => m.LoginPageModule)
   },
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'signup',
     loadChildren: () => import('./Shared/signup/signup.module').then( m => m.SignupPageModule)
+  },
+  {
+    path: 'mystore-slides',
+    loadChildren: () => import('./Shared/mystore-slides/mystore-slides.module').then( m => m.MystoreSlidesPageModule)
   }
 
 ];
