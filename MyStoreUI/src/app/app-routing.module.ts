@@ -17,6 +17,10 @@ const routes: Routes = [
   {
     path: 'forgot-password',
     loadChildren: () => import('./Shared/forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
+  },
+  {
+    path: 'signup',
+    loadChildren: () => import('./Shared/signup/signup.module').then( m => m.SignupPageModule)
   }
 
 ];
