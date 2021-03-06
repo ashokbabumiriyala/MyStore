@@ -1,9 +1,33 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="mystore-slides"></ion-back-button>
+        </ion-buttons>
+        <ion-title class="ion-text-center">Log In</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
+    <ion-card class="login-form">
+        <form>
+            <ion-item lines="full">
+                <ion-label position="floating">User Name</ion-label>
+                <ion-input type="text" required></ion-input>
+                <ion-icon name="person-outline" color="primary" slot="start"></ion-icon>
+            </ion-item>
 
+            <ion-item lines="full">
+                <ion-label position="floating">Password</ion-label>
+                <ion-input type="password" required></ion-input>
+                <ion-icon name="lock-closed-outline" color="primary" slot="start"></ion-icon>
+            </ion-item>
+
+            <ion-row>
+                <ion-col class="ion-text-center ion-margin-top">
+                    <ion-button type="submit" expand="block" class="ion-margin-bottom">Sign In</ion-button>
+                    <a [routerLink]="['/forgot-password']" class="small-text">Forgot Password?</a>
+                </ion-col>
+            </ion-row>
+        </form>
+    </ion-card>
 </ion-content>
