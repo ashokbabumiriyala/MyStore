@@ -26,7 +26,19 @@ const routes: Routes = [
   {
     path: 'mystore-slides',
     loadChildren: () => import('./Shared/mystore-slides/mystore-slides.module').then( m => m.MystoreSlidesPageModule)
+  },  {
+    path: 'welcome-slides',
+    loadChildren: () => import('./welcome-slides/welcome-slides.module').then( m => m.WelcomeSlidesPageModule)
+  },
+  {
+    path: 'service-provider',
+    loadChildren: () => import('./service-provider/service-provider.module').then( m => m.ServiceProviderPageModule)
+  },
+  {
+    path: 'product-provider',
+    loadChildren: () => import('./product-provider/product-provider.module').then( m => m.ProductProviderPageModule)
   }
+
 
 ];
 
