@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';  
 
 @Component({
   selector: 'app-welcome-slides',
@@ -6,10 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./welcome-slides.page.scss'],
 })
 export class WelcomeSlidesPage implements OnInit {
-
-  constructor() { }
-
+  addStoreInformation:boolean = false;
+  constructor(private router: Router) { }
+  
   ngOnInit() {
+    
   }
-
+  nextToSteps() {
+    this.addStoreInformation = true;
+  }
+  nextToAdd() {
+      this.router.navigate(['mystore-slides']);  
+  }
+ 
 }

@@ -1,0 +1,39 @@
+.card-background-page {
+    background-image: url(../../assets/images/bg.jpeg);
+}
+
+.welcome {
+    height: 87vh;
+    .title {
+        text-align: center;
+        font-weight: bold;
+        font-size: 36px;
+        color: black;
+        margin-top: 60px;
+    }
+    .forward {
+        width: 95%;
+        margin: 0 auto;
+        margin-top: 60%;
+        font-size: 18px;
+    }
+}
+
+.steps {
+    height: 87vh;
+    h1 {
+        color: black;
+        padding-left: 15px;
+    }
+    p {
+        color: #000;
+        padding-left: 15px;
+        font-size: 24px;
+        font-family: lato sans-serif;
+    }
+    .next {
+        width: 95%;
+        margin: 0 auto;
+        margin-top: 39%;
+    }
+}

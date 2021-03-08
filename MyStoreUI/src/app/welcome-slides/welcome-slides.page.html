@@ -1,9 +1,38 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>welcome-slides</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="mystore-slides"></ion-back-button>
+        </ion-buttons>
+        <ion-title class="ion-text-center">Welcome</ion-title>
+    </ion-toolbar>
 </ion-header>
-
-<ion-content>
-
+<ion-content class="card-background-page">
+    <ion-card class="welcome" *ngIf="!addStoreInformation">
+        <ion-img src="./assets/images/welcome.png"></ion-img>
+        <h1 class="title">My 3 KaRRt</h1>
+        <ion-button class="forward" size="large" expand="block" (click)="nextToSteps()" shape="round">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+            Add Store Information
+        </ion-button>
+    </ion-card>
+    <ion-card class="steps" *ngIf="addStoreInformation">
+        <ion-text>
+            <h1>Step-1</h1>
+            <p>Add store's Master Information</p>
+        </ion-text>
+        <ion-text color="secondary">
+            <h1>Step-2</h1>
+            <p>Add specific store's Information</p>
+        </ion-text>
+        <ion-text color="secondary">
+            <h1>Step-3</h1>
+            <p>Add products and submit for approval</p>
+        </ion-text>
+        <ion-button class="next" size="large" expand="block" shape="round" (click)="nextToAdd()">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+            Next
+        </ion-button>
+    </ion-card>
 </ion-content>
