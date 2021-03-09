@@ -1,46 +1,41 @@
-<ion-header>
-    <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-back-button defaultHref="login"></ion-back-button>
-        </ion-buttons>
-        <ion-title class="ion-text-center">Sign Up</ion-title>
-    </ion-toolbar>
-</ion-header>
-
-<ion-content class="ion-padding">
+<ion-content class="ion-padding after-login-bg">
     <form>
         <ion-item>
-            <ion-label position="stacked">Select Servie Provider</ion-label>
-            <ion-select placeholder="select servie provider">
-                <ion-select-option value="bird">Product</ion-select-option>
-                <ion-select-option value="cat">Service</ion-select-option>
-                <ion-select-option value="dog">Store Manager</ion-select-option>
-                <ion-select-option value="honeybadger">Store Owner</ion-select-option>
+            <ion-label position="floating">Select Provider Type</ion-label>
+            <ion-select>
+                <ion-select-option value="productprovider">Product Provider</ion-select-option>
+                <ion-select-option value="serviceprovider">Service Provider</ion-select-option>
             </ion-select>
             <ion-icon name="cog-outline" color="primary" slot="start"></ion-icon>
         </ion-item>
         <ion-item>
-            <ion-label position="stacked">User Name</ion-label>
+            <ion-label position="floating">Category</ion-label>
+            <ion-input type="text" required></ion-input>
+            <ion-icon name="logo-whatsapp" color="primary" slot="start"></ion-icon>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="floating">User Name</ion-label>
             <ion-input type="text" required></ion-input>
             <ion-icon name="person-outline" color="primary" slot="start"></ion-icon>
         </ion-item>
         <ion-item>
-            <ion-label position="stacked">Mobile Number</ion-label>
+            <ion-label position="floating">Mobile Number</ion-label>
             <ion-input type="text" required></ion-input>
             <ion-icon name="logo-whatsapp" color="primary" slot="start"></ion-icon>
         </ion-item>
         <ion-item>
-            <ion-label position="stacked">E-mail Id</ion-label>
+            <ion-label position="floating">E-mail Id</ion-label>
             <ion-input type="text" required></ion-input>
             <ion-icon name="mail-outline" color="primary" slot="start"></ion-icon>
         </ion-item>
         <ion-item>
-            <ion-label position="stacked">Password</ion-label>
+            <ion-label position="floating">Password</ion-label>
             <ion-input type="text" required></ion-input>
             <ion-icon name="lock-closed-outline" color="primary" slot="start"></ion-icon>
         </ion-item>
         <ion-item>
-            <ion-label position="stacked">Confirm Password</ion-label>
+            <ion-label position="floating">Confirm Password</ion-label>
             <ion-input type="text" required></ion-input>
             <ion-icon name="lock-closed-outline" color="primary" slot="start"></ion-icon>
         </ion-item>

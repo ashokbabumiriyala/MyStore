@@ -112,3 +112,11 @@ ion-note {
 ion-item.selected {
     --color: var(--ion-color-primary);
 }
+
+#main-content {
+    transform: translate(0px, 77px);
+}
+
+.header {
+    height: 77px;
+}
