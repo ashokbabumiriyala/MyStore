@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'mystore-slides',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -22,11 +22,8 @@ const routes: Routes = [
   {
     path: 'signup',
     loadChildren: () => import('./Shared/signup/signup.module').then( m => m.SignupPageModule)
-  },
+  }, 
   {
-    path: 'mystore-slides',
-    loadChildren: () => import('./Shared/mystore-slides/mystore-slides.module').then( m => m.MystoreSlidesPageModule)
-  },  {
     path: 'welcome-slides',
     loadChildren: () => import('./welcome-slides/welcome-slides.module').then( m => m.WelcomeSlidesPageModule)
   },
@@ -37,7 +34,11 @@ const routes: Routes = [
   {
     path: 'product-provider',
     loadChildren: () => import('./product-provider/product-provider.module').then( m => m.ProductProviderPageModule)
+  },  {
+    path: 'introduction',
+    loadChildren: () => import('./Shared/introduction/introduction.module').then( m => m.IntroductionPageModule)
   }
+
 
 
 ];
