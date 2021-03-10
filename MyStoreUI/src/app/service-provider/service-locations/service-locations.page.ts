@@ -7,8 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ServiceLocationsPage implements OnInit {
 
-  constructor() { }
+  constructor() { 
 
+    
+  }
+  fromDate = "2021-03-10T09:30";
+  toDate = "2021-03-10T21:30";
   ngOnInit() {
   }
 

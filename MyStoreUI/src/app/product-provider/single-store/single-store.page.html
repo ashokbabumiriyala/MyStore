@@ -1,9 +1,76 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>single-store</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="ion-padding after-login-bg">
 
-<ion-content>
+    <form>
+        <ion-item>
+            <ion-label position="floating">Store Name</ion-label>
+            <ion-input type="text" required></ion-input>
+            <ion-icon name="" color="primary" slot="start"></ion-icon>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Store Manager Name</ion-label>
+            <ion-input type="text" required></ion-input>
+            <ion-icon name="person-outline" color="primary" slot="start"></ion-icon>
+        </ion-item>
 
+
+        <ion-item>
+            <ion-label position="floating">Manager Id Number</ion-label>
+            <ion-input type="text" required></ion-input>
+            <ion-icon name="" color="primary" slot="start"></ion-icon>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="floating">Mobile Number</ion-label>
+            <ion-input type="text" required></ion-input>
+            <ion-icon name="phone-portrait-outline" color="primary" slot="start"></ion-icon>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="floating">Address</ion-label>
+            <ion-textarea></ion-textarea>
+            <ion-icon name="" color="primary" slot="start"></ion-icon>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="floating">City</ion-label>
+            <ion-input type="text" required></ion-input>
+            <ion-icon name="" color="primary" slot="start"></ion-icon>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="floating">State</ion-label>
+            <ion-input type="text" required></ion-input>
+            <ion-icon name="" color="primary" slot="start"></ion-icon>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Pin Code</ion-label>
+            <ion-input type="text" required></ion-input>
+            <ion-icon name="" color="primary" slot="start"></ion-icon>
+        </ion-item>
+
+
+        <ion-item>
+            <ion-label position="floating">Land Mark</ion-label>
+            <ion-textarea></ion-textarea>
+            <ion-icon name="" color="primary" slot="start"></ion-icon>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>Timings </ion-label>
+            <ion-icon name="time-outline" color="primary" slot="start"></ion-icon>
+        </ion-item>
+        <ion-item>
+            <ion-label>From:</ion-label>
+            <ion-datetime displayFormat="h:mm a" [(ngModel)]="fromDate" name="fromDate"></ion-datetime>
+            <ion-label>&nbsp;To:</ion-label>
+            <ion-datetime displayFormat="h:mm a" [(ngModel)]="toDate" name="toDate"></ion-datetime>
+
+        </ion-item>
+
+        <ion-row>
+            <ion-col class="ion-text-center ion-margin-top">
+                <ion-button type="submit" expand="block" class="ion-margin-bottom">Add Store</ion-button>
+            </ion-col>
+        </ion-row>
+    </form>
 </ion-content>
