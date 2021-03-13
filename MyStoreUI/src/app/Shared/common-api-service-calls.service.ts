@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { throwError, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
+import { ToastController } from '@ionic/angular';
 class ID {
   Id: number;
 }
@@ -10,14 +11,11 @@ class ID {
 })
 export class CommonApiServiceCallsService {
   private httpHeaders: HttpHeaders;
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient,private toastController:ToastController) { }
   createHttpHeader() {
     this.httpHeaders = new HttpHeaders();
     let authToken: any;
-    authToken = JSON.parse(localStorage.getItem('AuthToken'));
-    if (authToken === null || authToken === undefined) {
-       authToken = JSON.parse(sessionStorage.getItem('AuthToken'));
-    }
+    authToken = JSON.parse(sessionStorage.getItem('AuthToken'));   
     if (authToken != null && authToken !== undefined) {
       this.httpHeaders = this.httpHeaders.set('Content-Type', 'application/json');
       this.httpHeaders = this.httpHeaders.set('Authorization', 'Bearer ' + authToken);
@@ -93,6 +91,16 @@ export class CommonApiServiceCallsService {
       return throwError(console.log(error));
     }
     return throwError(console.log(error));
+  }
+
+   async presentToast(data: string,tostarColor:string) {
+    const toast = await this.toastController.create({
+      message: data,
+      duration: 2000,
+      position: 'top',      
+      color: tostarColor
+    });
+    toast.present();
   }
  
 }

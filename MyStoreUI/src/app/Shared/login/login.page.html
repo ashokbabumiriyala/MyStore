@@ -1,19 +1,23 @@
 <ion-content class="login-form ion-padding after-login-bg">
     <h2 class="page-title">Login</h2>
-    <form>
+    <form [formGroup]="loginFormGroup">
         <ion-item class="ion-ele" lines="full">
             <ion-label position="floating">User Name</ion-label>
-            <ion-input type="text" required></ion-input>
+            <ion-input type="text"  formControlName="providerName" required></ion-input>
             <ion-icon name="person-outline" slot="start"></ion-icon>
         </ion-item>
+        <small  *ngIf="isFormSubmitted &&  providerName.errors"><span style="color: red;" >*User Name Required </span>                 
+        </small>
         <ion-item class="ion-ele" lines="full">
             <ion-label position="floating">Password</ion-label>
-            <ion-input type="password" required></ion-input>
+            <ion-input type="password"  formControlName="password" required></ion-input>
             <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
         </ion-item>
+        <small *ngIf="isFormSubmitted &&  password.errors">  <span style="color: red;" >*Password Required </span>                 
+        </small>
         <ion-row>
             <ion-col class="ion-text-center ion-margin-top">
-                <ion-button type="submit" shape="round" expand="block" (click)="validateUser();" class="ion-margin-bottom">Sign In</ion-button>
+                <ion-button type="submit" shape="round" expand="block" (click)="validateUser()" class="ion-margin-bottom">Sign In</ion-button>
                 <a [routerLink]="['/forgot-password']" class="small-text" [queryParams]="{ userName: false}">Forgot Password?</a>&nbsp;&nbsp;
                 <a [routerLink]="['/forgot-password']" class="small-text" [queryParams]="{ userName: true}">Forgot UserName?</a>
             </ion-col>
