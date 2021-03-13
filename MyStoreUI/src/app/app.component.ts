@@ -41,9 +41,11 @@ export class AppComponent implements OnInit {
       return;
     }
     menus.forEach(menu => {
-      const menuObject = { title: menu.displayName, id: menu.menuID };
+      const menuObject = { title: menu.displayName, id: menu.menuID,icon:menu.icon };
       this.menuItems.push(menuObject);
     });
+
+    console.log(this.menuItems)
   }
   public navigatePage(menuId: number): void {  
     if (menuId === 0 || menuId == null || menuId === undefined) {

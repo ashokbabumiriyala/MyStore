@@ -11,6 +11,7 @@ ion-menu.md ion-content {
 
 ion-menu.md ion-list {
     padding: 20px 0;
+    padding-top: 0px;
 }
 
 ion-menu.md ion-note {
@@ -49,13 +50,13 @@ ion-menu.md ion-item.selected {
     --background: rgba(var(--ion-color-primary-rgb), 0.14);
 }
 
-ion-menu.md ion-item.selected ion-icon {
-    color: var(--ion-color-primary);
-}
+// ion-menu.md ion-item.selected ion-icon {
+//     // color: var(--ion-color-primary);
+// }
 
-ion-menu.md ion-item ion-icon {
-    color: #616e7e;
-}
+// ion-menu.md ion-item ion-icon {
+//     color: #616e7e;
+// }
 
 ion-menu.md ion-item ion-label {
     font-weight: 500;

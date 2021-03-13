@@ -3,10 +3,15 @@
         <ion-menu contentId="main-content" type="overlay" *ngIf="menuItems.length>0">
             <ion-content>
                 <ion-list id="inbox-list">
+
+                    <ion-title class="ion-text-center" style="border-bottom:1px solid" >
+                        <ion-img class="app-img" src="../assets/images/logo.jpeg"></ion-img>
+                    </ion-title>
+
                     <ion-menu-toggle auto-hide="false" *ngFor="let p of menuItems;">
                         <ion-item routerDirection="root" (click)="navigatePage(p.id);" lines="none" detail="false"
                             routerLinkActive="selected">
-                            <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+                            <ion-icon slot="start" [name]="p.icon"></ion-icon>
                             <ion-label>{{ p.title }}</ion-label>
                         </ion-item>
                     </ion-menu-toggle>
