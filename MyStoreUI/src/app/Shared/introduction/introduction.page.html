@@ -1,9 +1,50 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>introduction</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="before-login-bg">
+  <div *ngIf="imgSlide">
+    <ion-img class="welcome-bg" src="../assets/images/welcome.jpeg"></ion-img>
+    <ion-img class="welcome-logo" src="../assets/images/logo.jpeg"></ion-img>
+    <!-- <ion-button color="primary" shape="round" size="medium" class="ion-margin-bottom next" (click)="nextSlide()">
+      <ion-icon name="chevron-forward-outline" style="color:#FFF"></ion-icon>
+    </ion-button> -->
+    <ion-button type="submit" shape="round" expand="block" (click)="nextSlide()" class="ion-margin-bottom next">
+     Next</ion-button>
 
-<ion-content>
-
+  </div>
+  <div *ngIf="introduction">
+    <div class="intro-text">
+      <ion-text>
+        <h1>Birth of Product or Service</h1>
+      </ion-text>
+      <ion-text color="secondary">
+        <p>A simple timeline on how
+          your product or service came
+          to be is a helpful way of
+          visualizing your company's
+          origin story.</p>
+      </ion-text>
+    </div>
+    <div class="intro-4">
+      <ion-text>Intro-4</ion-text>
+      <span class="roundedbtn"></span>
+    </div>
+    <div class="intro-5">
+      <ion-text>Intro-5</ion-text>
+      <span class="roundedbtn"></span>
+    </div>
+    <div class="intro-6">
+      <ion-text>Intro-6</ion-text>
+      <span class="roundedbtn"></span>
+    </div>
+    <!-- <ion-button color="primary" shape="round" size="medium" class="ion-margin-bottom next" (click)="endSlide()">
+      <ion-icon name="chevron-forward-outline" style="color:#FFF"></ion-icon>
+    </ion-button> -->
+    <ion-button type="submit" shape="round" expand="block" (click)="endSlide()" class="ion-margin-bottom next">
+      Get Started</ion-button>
+  </div>
+  <div *ngIf="videoSlide">
+    <ion-img class="welcome-bg" src="../assets/images/welcome.jpeg"></ion-img>
+    <ion-img class="welcome-logo" src="../assets/images/logo.jpeg"></ion-img>
+    <ion-button color="primary" shape="round" size="medium" class="ion-margin-bottom next" (click)="navigateToLogin()">
+      <ion-icon name="chevron-forward-outline" style="color:#FFF"></ion-icon>
+    </ion-button>
+  </div>
 </ion-content>

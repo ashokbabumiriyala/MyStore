@@ -13,7 +13,7 @@
                 </ion-list>             
             </ion-content>
         </ion-menu>
-        <ion-header class="header">
+        <ion-header class="header" *ngIf="showHead">
             <ion-toolbar>
                 <!-- <ion-buttons slot="start">
                     <ion-back-button defaultHref="login"></ion-back-button>
@@ -21,14 +21,13 @@
                 <ion-buttons slot="start">
                     <ion-menu-button></ion-menu-button>
                   </ion-buttons>
-
                 <ion-title class="ion-text-center">
                     <ion-img class="app-img" src="../assets/images/logo.jpeg"></ion-img>
                 </ion-title>
             </ion-toolbar>
         </ion-header>
-        <ion-router-outlet id="main-content"></ion-router-outlet>
-        <ion-footer class="footer">
+        <ion-router-outlet id="main-content" [ngClass]="showHead ? 'main-content' : ''"></ion-router-outlet>
+        <ion-footer class="footer" *ngIf="showHead">
             <ion-img class="menuIcon" src="../assets/images/footer-icon.png"></ion-img>
             <ion-toolbar class="ion-padding-horizontal">
                 <ion-icon slot="start" name="return-up-back-outline"></ion-icon>

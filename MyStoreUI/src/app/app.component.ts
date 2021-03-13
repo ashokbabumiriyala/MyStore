@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HelperService} from 'src/app/common/helper.service'
 import {AppConstants} from 'src/app/common/AppConstants';
-import { Router } from '@angular/router';  
+import { Router, NavigationStart } from '@angular/router';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -12,6 +13,7 @@ export class AppComponent implements OnInit {
   roleId: number;
   providerId: number;
   menuItems = [];
+  showHead:boolean = false;
   // public appPages = [
   //   { title: 'Inbox', url: '/folder/Inbox', icon: 'mail' },
   //   { title: 'Outbox', url: '/folder/Outbox', icon: 'paper-plane' },
@@ -23,6 +25,15 @@ export class AppComponent implements OnInit {
   // public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
   constructor(private helperService:HelperService,private router: Router) {}
   ngOnInit() {
+    this.router.events.forEach((event) => {
+      if (event instanceof NavigationStart) {
+        if (event['url'] == '/introduction') {
+          this.showHead = false;
+        } else {
+          this.showHead = true;
+        }
+      }
+    });
     this.helperService.getProfileObs().subscribe(profile => {     
       if(profile!=null){     
         console.log(profile);
