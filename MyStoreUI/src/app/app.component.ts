@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
       this.menuItems.push(menuObject);
     });
   }
-  public navigatePage(menuId: number): void {
+  public navigatePage(menuId: number): void {  
     if (menuId === 0 || menuId == null || menuId === undefined) {
       menuId = (this.menuItems.length > 0) ? this.menuItems[0].id : menuId;
     }
@@ -72,10 +72,10 @@ export class AppComponent implements OnInit {
         this.router.navigate(['animals']);  
         break;
       case AppConstants.menuNavigation.ServiceDashboard:
-        this.router.navigate(['animals']);  
+        this.router.navigate(['service-provider']);  
         break;
       case AppConstants.menuNavigation.BusinessMaster:
-        this.router.navigate(['service-provider']);  
+        this.router.navigate(['service-provider/service-master']);  
         break;
       case AppConstants.menuNavigation.LocationsSubunits:
         this.router.navigate(['service-provider/service-locations']); 
