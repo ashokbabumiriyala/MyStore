@@ -12,17 +12,8 @@ export class AppComponent implements OnInit {
   providerName: string;
   roleId: number;
   providerId: number;
-  menuItems = [];
-  showHead:boolean = false;
-  // public appPages = [
-  //   { title: 'Inbox', url: '/folder/Inbox', icon: 'mail' },
-  //   { title: 'Outbox', url: '/folder/Outbox', icon: 'paper-plane' },
-  //   { title: 'Favorites', url: '/folder/Favorites', icon: 'heart' },
-  //   { title: 'Archived', url: '/folder/Archived', icon: 'archive' },
-  //   { title: 'Trash', url: '/folder/Trash', icon: 'trash' },
-  //   { title: 'Spam', url: '/folder/Spam', icon: 'warning' },
-  // ];
-  // public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+  menuItems = [];  
+  showHead:boolean;
   constructor(private helperService:HelperService,private router: Router) {}
   ngOnInit() {
     this.router.events.forEach((event) => {
@@ -35,8 +26,7 @@ export class AppComponent implements OnInit {
       }
     });
     this.helperService.getProfileObs().subscribe(profile => {     
-      if(profile!=null){     
-        console.log(profile);
+      if(profile!=null){
       this.menuItems = [];      
       this.providerName = profile.name;
       this.roleId = profile.roleId;
@@ -44,8 +34,7 @@ export class AppComponent implements OnInit {
       this.loadMenu(profile.menus);
       this.navigatePage(profile.defaultMenuId);
       }
-    });
-  
+    });  
   }
   private loadMenu(menus: any[]): void {
     if (!menus || menus === undefined) {
