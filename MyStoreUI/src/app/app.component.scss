@@ -114,9 +114,37 @@ ion-item.selected {
 }
 
 #main-content {
-    margin-top: 77px;
+    margin-top: 50px;
+    margin-bottom: 38px;
 }
 
 .header {
-    height: 77px;
+    height: 50px;
+}
+
+.app-img {
+    height: 50px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0px;
+    height: 35px;
+    ion-icon {
+        font-size: 32px;
+        --ionicon-stroke-width: 50px;
+        padding-bottom: 15px;
+    }
+    .menuIcon {
+        z-index: 9999;
+        height: 50px;
+        width: 50px;
+        position: fixed;
+        left: 43%;
+        bottom: 3px;
+        border-radius: 100%;
+        background: white;
+        padding: 5px;
+        box-shadow: 0 0 10px #eb445a;
+    }
 }

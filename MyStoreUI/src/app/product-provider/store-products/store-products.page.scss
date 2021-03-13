@@ -2,7 +2,7 @@
      --ion-grid-column-padding: 10px;
      border-collapse: collapse;
      border-style: hidden;
-     background-color: #FFFFFF;
+     background-color: transparent;
      ion-row:first-child {
          font-weight: bold;
      }
@@ -21,4 +21,13 @@
  
  .table-icons {
      font-size: 24px;
+ }
+ 
+ .ion-ele {
+     border-radius: 15px;
+     border: 1px solid;
+     border-width: thick;
+     --background: transparent;
+     border: 1px solid;
+     margin-bottom: 5px;
  }

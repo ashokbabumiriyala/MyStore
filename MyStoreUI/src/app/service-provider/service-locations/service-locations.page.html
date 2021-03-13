@@ -1,84 +1,72 @@
 <ion-content class="ion-padding after-login-bg">
-
+    <h2 class="page-title">Service Information</h2>
     <form>
-        <ion-item>
+        <ion-item class="ion-ele">
             <ion-label position="floating">Business Name</ion-label>
             <ion-input type="text" required></ion-input>
-            <ion-icon name="" color="primary" slot="start"></ion-icon>
+            <ion-icon name="" slot="start"></ion-icon>
         </ion-item>
-        <ion-item>
+        <ion-item class="ion-ele">
             <ion-label position="floating">Business Manager Name</ion-label>
             <ion-input type="text" required></ion-input>
-            <ion-icon name="person-outline" color="primary" slot="start"></ion-icon>
+            <ion-icon name="person-outline" slot="start"></ion-icon>
         </ion-item>
-
-
-        <ion-item>
+        <ion-item class="ion-ele">
             <ion-label position="floating">Manager Id Number</ion-label>
             <ion-input type="text" required></ion-input>
-            <ion-icon name="" color="primary" slot="start"></ion-icon>
+            <ion-icon name="" slot="start"></ion-icon>
         </ion-item>
-
-        <ion-item>
+        <ion-item class="ion-ele">
             <ion-label position="floating">Mobile Number</ion-label>
             <ion-input type="text" required></ion-input>
-            <ion-icon name="phone-portrait-outline" color="primary" slot="start"></ion-icon>
+            <ion-icon name="phone-portrait-outline" slot="start"></ion-icon>
         </ion-item>
-
-        <ion-item>
+        <ion-item class="ion-ele">
             <ion-label position="floating">Address</ion-label>
             <ion-textarea></ion-textarea>
-            <ion-icon name="" color="primary" slot="start"></ion-icon>
+            <ion-icon name="" slot="start"></ion-icon>
         </ion-item>
-
-        <ion-item>
+        <ion-item class="ion-ele">
             <ion-label position="floating">City</ion-label>
             <ion-input type="text" required></ion-input>
-            <ion-icon name="" color="primary" slot="start"></ion-icon>
+            <ion-icon name="" slot="start"></ion-icon>
         </ion-item>
-
-        <ion-item>
+        <ion-item class="ion-ele">
             <ion-label position="floating">State</ion-label>
             <ion-input type="text" required></ion-input>
-            <ion-icon name="" color="primary" slot="start"></ion-icon>
+            <ion-icon name="" slot="start"></ion-icon>
         </ion-item>
-        <ion-item>
+        <ion-item class="ion-ele">
             <ion-label position="floating">Pin Code</ion-label>
             <ion-input type="text" required></ion-input>
-            <ion-icon name="" color="primary" slot="start"></ion-icon>
+            <ion-icon name="" slot="start"></ion-icon>
         </ion-item>
-
-
-        <ion-item>
+        <ion-item class="ion-ele">
             <ion-label position="floating">Land Mark</ion-label>
             <ion-textarea></ion-textarea>
-            <ion-icon name="" color="primary" slot="start"></ion-icon>
+            <ion-icon name="" slot="start"></ion-icon>
         </ion-item>
-
-        <ion-item>
+        <ion-item class="ion-ele">
             <ion-label>Timings </ion-label>
-            <ion-icon name="time-outline" color="primary" slot="start"></ion-icon>
+            <ion-icon name="time-outline" slot="start"></ion-icon>
         </ion-item>
-        <ion-item>
+        <ion-item class="ion-ele">
             <ion-label>From:</ion-label>
             <ion-datetime displayFormat="h:mm a" [(ngModel)]="fromDate" name="fromDate"></ion-datetime>
             <ion-label>&nbsp;To:</ion-label>
             <ion-datetime displayFormat="h:mm a" [(ngModel)]="toDate" name="toDate"></ion-datetime>
-
         </ion-item>
-        <ion-item>
+        <ion-item class="ion-ele">
             <ion-label position="floating">Service Delivery Type</ion-label>
             <ion-select>
                 <ion-select-option value="visitcenter">Visit Center</ion-select-option>
                 <ion-select-option value="homeserviceitems">Home Service Items</ion-select-option>
             </ion-select>
-            <ion-icon name="cog-outline" color="primary" slot="start"></ion-icon>
+            <ion-icon name="cog-outline" slot="start"></ion-icon>
         </ion-item>
-
-
         <ion-row>
             <ion-col class="ion-text-center ion-margin-top">
-                <ion-button type="submit" expand="block" class="ion-margin-bottom">Add Business</ion-button>
+                <ion-button type="submit" shape="round" expand="block" class="ion-button ion-margin-bottom">Add Business</ion-button>
             </ion-col>
         </ion-row>
     </form>

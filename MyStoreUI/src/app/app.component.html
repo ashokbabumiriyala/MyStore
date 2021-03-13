@@ -7,16 +7,15 @@
                     <ion-note>hi@ionicframework.com</ion-note>
 
                     <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-                        <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
+                        <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false"
+                            routerLinkActive="selected">
                             <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
                             <ion-label>{{ p.title }}</ion-label>
                         </ion-item>
                     </ion-menu-toggle>
                 </ion-list>
-
                 <ion-list id="labels-list">
                     <ion-list-header>Labels</ion-list-header>
-
                     <ion-item *ngFor="let label of labels" lines="none">
                         <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
                         <ion-label>{{ label }}</ion-label>
@@ -26,14 +25,24 @@
         </ion-menu>
         <ion-header class="header">
             <ion-toolbar>
-                <ion-buttons slot="start">
+                <!-- <ion-buttons slot="start">
                     <ion-back-button defaultHref="login"></ion-back-button>
-                </ion-buttons>
+                </ion-buttons> -->
                 <ion-title class="ion-text-center">
-                    <ion-img src="../assets/images/logo.jpeg"></ion-img>
+                    <ion-img class="app-img" src="../assets/images/logo.jpeg"></ion-img>
                 </ion-title>
             </ion-toolbar>
         </ion-header>
         <ion-router-outlet id="main-content"></ion-router-outlet>
+        <ion-footer class="footer">
+            <ion-img class="menuIcon" src="../assets/images/footer-icon.png"></ion-img>
+            <ion-toolbar class="ion-padding-horizontal">
+                <ion-icon slot="start" name="return-up-back-outline"></ion-icon>
+                <!-- <ion-title class="ion-text-center">
+                    <ion-img class="menuIcon" src="../assets/images/footer-icon.png"></ion-img>
+                </ion-title> -->
+                <ion-icon slot="end" name="return-up-forward-outline"></ion-icon>
+            </ion-toolbar>
+        </ion-footer>
     </ion-split-pane>
 </ion-app>
