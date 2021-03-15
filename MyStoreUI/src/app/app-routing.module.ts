@@ -34,7 +34,8 @@ const routes: Routes = [
   {
     path: 'product-provider',
     loadChildren: () => import('./product-provider/product-provider.module').then( m => m.ProductProviderPageModule)
-  },  {
+  },
+  {
     path: 'introduction',
     loadChildren: () => import('./Shared/introduction/introduction.module').then( m => m.IntroductionPageModule)
   }

@@ -19,6 +19,7 @@ export class ProductProviderPage implements OnInit {
   public yourCustomFunctionName() {
     this.lineChart = new Chart(this.lineCanvas.nativeElement, {
 
+
         type: 'line',
         data: {
             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
