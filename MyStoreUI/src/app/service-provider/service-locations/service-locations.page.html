@@ -1,6 +1,37 @@
 <ion-content class="ion-padding after-login-bg">
     <h2 class="page-title">Service Location</h2>
-    <form>
+    <ion-row *ngIf="!editService">
+		 <ion-col size="8"></ion-col>
+		 <ion-col size="4">
+		<ion-button *ngIf="!editMaster" type="button" shape="round" class="ion-button" (click)="editServiceInfo()">Add</ion-button>
+		</ion-col>
+	</ion-row>
+	<ion-row *ngIf="!editService">
+	 <ion-item class="ion-ele sub-store">
+		<ion-label position="floating">Select Service</ion-label>
+		<ion-select>
+			<ion-select-option value="1">Service-1</ion-select-option>
+			<ion-select-option value="2">Service-2</ion-select-option>
+		</ion-select>
+		<ion-icon name="cog-outline" slot="start"></ion-icon>
+     </ion-item>
+	</ion-row>
+	<ion-grid *ngIf="!editService">
+            <ion-row>
+                <ion-col size="3">Action</ion-col>
+                <ion-col size="4">Service Name</ion-col>
+                <ion-col size="5">Manager Name</ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="3">
+                    <ion-icon name="trash" class="table-icons" color="danger"></ion-icon>
+                    <ion-icon name="create" class="table-icons" (click)="editServiceInfo()"></ion-icon>
+                </ion-col>
+                <ion-col size="4">Service-1</ion-col>
+                <ion-col size="5">Manger-1</ion-col>
+            </ion-row>
+			</ion-grid>
+    <form *ngIf="editService">
         <ion-item class="ion-ele">
             <ion-label position="floating">Business Name</ion-label>
             <ion-input type="text" required></ion-input>

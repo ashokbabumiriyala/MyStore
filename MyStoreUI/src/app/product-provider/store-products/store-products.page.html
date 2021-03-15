@@ -1,6 +1,37 @@
 <ion-content class="ion-padding after-login-bg">
     <h2 class="page-title">Upload Products</h2>
-    <form>
+	<ion-row *ngIf="!editProduct">
+		 <ion-col size="8"></ion-col>
+		 <ion-col size="4">
+		<ion-button *ngIf="!editMaster" type="button" shape="round" class="ion-button" (click)="editProductInfo()">Add</ion-button>
+		</ion-col>
+	</ion-row>
+	<ion-row *ngIf="!editProduct">
+	 <ion-item class="ion-ele sub-store">
+		<ion-label position="floating">Select Store</ion-label>
+		<ion-select>
+			<ion-select-option value="1">Store-1</ion-select-option>
+			<ion-select-option value="2">Store-2</ion-select-option>
+		</ion-select>
+		<ion-icon name="cog-outline" slot="start"></ion-icon>
+     </ion-item>
+	</ion-row>
+	<ion-grid *ngIf="!editProduct">
+            <ion-row>
+                <ion-col size="3">Action</ion-col>
+                <ion-col size="4">Store Name</ion-col>
+                <ion-col size="5">Manager Name</ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="3">
+                    <ion-icon name="trash" class="table-icons" color="danger"></ion-icon>
+                    <ion-icon name="create" class="table-icons" (click)="editProductInfo()"></ion-icon>
+                </ion-col>
+                <ion-col size="4">Store-1</ion-col>
+                <ion-col size="5">Manger-1</ion-col>
+            </ion-row>
+			</ion-grid>
+    <form *ngIf="editProduct">
         <ion-item class="ion-ele">
             <ion-label position="floating">Select Store</ion-label>
             <ion-select>

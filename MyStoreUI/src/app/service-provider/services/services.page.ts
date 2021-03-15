@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./services.page.scss'],
 })
 export class ServicesPage implements OnInit {
-
+editService:boolean = false;
   constructor() { }
 
   ngOnInit() {
   }
-
+editServiceInfo(){
+	  this.editService = true;
+  }
 }

@@ -120,7 +120,9 @@ ion-item.selected {
 }
 
 .header {
-    height: 50px;
+    height: fit-content;
+	border-bottom: 1px solid var(--iconcolor);
+	box-shadow: 5px 5px 5px #bbb;
 }
 
 .app-img {
@@ -131,6 +133,7 @@ ion-item.selected {
     position: fixed;
     bottom: 0px;
     height: 35px;
+	box-shadow:5px 5px 5px 8px #bbb;
     ion-icon {
         font-size: 32px;
         --ionicon-stroke-width: 50px;

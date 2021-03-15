@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./service-master.page.scss'],
 })
 export class ServiceMasterPage implements OnInit {
+editMaster:boolean = false;
 
   constructor() { }
 
   ngOnInit() {
   }
-
+editMasterInfo() {
+	this.editMaster = true;
+}
 }
