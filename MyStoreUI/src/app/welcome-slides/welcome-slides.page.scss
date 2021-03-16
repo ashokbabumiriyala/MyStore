@@ -6,8 +6,13 @@
     border: 1px solid;
     margin-bottom: 5px;
 }
-
+.to {
+	font-size:34px;
+	color: var(--btnbg);
+}
 .welcome {
+	position:relative;
+	top:30px;
     .title {
         text-align: center;
         font-weight: bold;
@@ -18,7 +23,7 @@
     .forward {
         width: 95%;
         margin: 0 auto;
-        margin-top: 47%;
+        margin-top: 26%;
         font-size: 18px;
     }
 }
