@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./store-products.page.scss'],
 })
 export class StoreProductsPage implements OnInit {
-editProduct:boolean = false;
+editProduct:boolean;
+editMaster:boolean;
   constructor() { }
 
   ngOnInit() {

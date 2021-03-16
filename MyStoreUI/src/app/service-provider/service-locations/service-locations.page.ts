@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ServiceLocationsPage implements OnInit {
 editService:boolean = false;
+editMaster:boolean;
   constructor() {}
   fromDate = "2021-03-10T09:30";
   toDate = "2021-03-10T21:30";

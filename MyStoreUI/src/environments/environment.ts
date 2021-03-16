@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  authenticationServiceUrl: 'https://localhost:44337/api/Authentication/',
+   authenticationServiceUrl: 'https://localhost:44337/api/Authentication/',
+  //authenticationServiceUrl: 'http://itprototypes.com/api/Authentication/',
 };
 
 /*
