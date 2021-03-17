@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+
 
 import { IonicModule } from '@ionic/angular';
 
 import { StoreMasterPageRoutingModule } from './store-master-routing.module';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreMasterPage } from './store-master.page';
 
 @NgModule({
@@ -13,6 +13,7 @@ import { StoreMasterPage } from './store-master.page';
     CommonModule,
     FormsModule,
     IonicModule,
+    ReactiveFormsModule,
     StoreMasterPageRoutingModule
   ],
   declarations: [StoreMasterPage]
