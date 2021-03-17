@@ -1,12 +1,12 @@
 <ion-content class="ion-padding after-login-bg">
     <h2 class="page-title">Store Master</h2>
-		<ion-row *ngIf="!editMaster">
+		<ion-row *ngIf="!storeMasterList">
 		 <ion-col size="8"></ion-col>
 		 <ion-col size="4">
 		<ion-button type="button" shape="round" class="ion-button" (click)="editMasterInfo()">Add</ion-button>
 		</ion-col>
 	</ion-row>
-	<ion-grid *ngIf="!editMaster">
+	<ion-grid *ngIf="!storeMasterList">
             <ion-row>
                 <ion-col size="3">Action</ion-col>
                 <ion-col size="4">Store Type</ion-col>
@@ -21,7 +21,7 @@
                 <ion-col size="5">Master-1</ion-col>
             </ion-row>
         </ion-grid>
-    <form [formGroup]="storeMasterFormGroup" *ngIf="editMaster">
+    <form [formGroup]="storeMasterFormGroup" *ngIf="storeMasterList">
         <ion-item class="ion-ele">
             <ion-label position="floating">Store Type</ion-label>
             <ion-select formControlName="StoreType">
@@ -48,7 +48,7 @@
         </ion-item>
         <ion-item class="ion-ele">
             <ion-label position="floating">Mobile Number</ion-label>
-            <ion-input type="text" formControlName="MobileNumber" required></ion-input>
+            <ion-input type="number" formControlName="MobileNumber" required></ion-input>
             <ion-icon name="phone-portrait-outline" slot="start"></ion-icon>
         </ion-item>
 
@@ -73,7 +73,7 @@
 
         <ion-item class="ion-ele">
             <ion-label position="floating">Owner Id Number</ion-label>
-            <ion-input type="text" formControlName="OwnerID" required></ion-input>
+            <ion-input type="number" formControlName="OwnerID" required></ion-input>
             <ion-icon name="checkmark-done-outline" slot="start"></ion-icon>
         </ion-item>
 

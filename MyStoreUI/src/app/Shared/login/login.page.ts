@@ -4,7 +4,7 @@ import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
 import { IProviderDetails } from 'src/app/common/provider-details';
 import { HelperService } from 'src/app/common/helper.service';
-
+import { LoadingController } from '@ionic/angular';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -14,6 +14,7 @@ export class LoginPage implements OnInit {
   constructor(private registrationServiceService:RegistrationServiceService,
     private toastController:ToastController,
     private helperService:HelperService,
+    private loadingController: LoadingController
    ) { }
   loginFormGroup: FormGroup;
   isFormSubmitted:boolean;
@@ -46,7 +47,9 @@ export class LoginPage implements OnInit {
     this.isFormSubmitted = true;
     if (this.loginFormGroup.invalid) {
       return;
-    }    
+    }   
+    const loadingController = await this.helperService.createLoadingController("loading");
+    await loadingController.present(); 
     const dataObject = { ProviderUserName:this.providerName.value,Password:this.password.value };
     this.registrationServiceService.validateUser('ProviderLogin', dataObject)
       .subscribe((data: any) => {       
@@ -56,13 +59,14 @@ export class LoginPage implements OnInit {
         name: data.providerName, roleId: data.providerRoleId, 
         providerId: data.providerId,
         menus: data.menuItems, defaultMenuId: data.defaultMenuId       
-      };  
+      };    
        this.helperService.setProfileObs(providerDetails);
        this.presentToast("login success.","success");
       },
         (error: any) => {         
-            this.presentToast("Invalid User Name or Password.","danger");             
+            this.presentToast("Invalid User Name or Password.","danger");
         });
+        await loadingController.dismiss();
   }
 
 }

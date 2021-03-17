@@ -1,20 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import{ FormControl, FormGroup, Validators}from '@angular/forms'
-import { LoadingController } from '@ionic/angular';
-
-import { ToastController } from '@ionic/angular';
+import {HelperService} from '../../common/helper.service';
+import {StoreMasterService} from '../store-master/store-master.service';
+import { NavController, ToastController } from '@ionic/angular';
+import { Router, NavigationStart } from '@angular/router';
 @Component({
   selector: 'app-store-master',
   templateUrl: './store-master.page.html',
   styleUrls: ['./store-master.page.scss'],
 })
 export class StoreMasterPage implements OnInit {
-editMaster:boolean = false;
+storeMasterList:boolean = false;
 istoreMaster:IStoreMaster;
 storeMasterFormGroup:FormGroup;
 isFormSubmitted:boolean;
-  constructor(private loadingController: LoadingController,
-    // private StoreMasterService:StoreMasterService,
+  constructor(
+    private StoreMasterService:StoreMasterService,
+    private navCtrl: NavController,
+    private router: Router,
+    private helperService:HelperService,
     private toastController:ToastController) { }
 
   ngOnInit() {   
@@ -84,7 +88,9 @@ isFormSubmitted:boolean;
     this.isFormSubmitted = true;
     if (this.storeMasterFormGroup.invalid) {
       return;
-    }    
+    }   
+    const loadingController = await this.helperService.createLoadingController("loading");
+    await loadingController.present();  
     this.istoreMaster = {
       StoreType: this.StoreType.value, ProviderID: 1, NumberOfStores:Number(this.NumberOfStores.value),
       Name: this.Name.value, MobileNumber: this.MobileNumber.value, Email: this.Email.value,
@@ -92,18 +98,19 @@ isFormSubmitted:boolean;
       AccountHolderName: this.AccountHolderName.value, AccountNumber: this.AccountHolderName.value, IFSCCode: this.IFSCCode.value,
       BranchName: this.BranchName.value
     };
-    // this.StoreMasterService.storeMasterSave('StoreMasterSave', this.istoreMaster)
-    // .subscribe((data: any) => {
-    //   this.storeMasterFormGroup.reset();
-    //   this.presentToast("Store master added successfully.","success")
-    // },
-    //   (error: any) => {         
+    this.StoreMasterService.storeMasterSave('StoreMasterSave', this.istoreMaster)
+    .subscribe((data: any) => {      
+      this.presentToast("Store master added successfully.","success");
+      this.storeMasterList=false;    
+    },
+      (error: any) => {         
                    
-    //   });
+      });
+      await loadingController.dismiss();
   }
 
 editMasterInfo() {
-	this.editMaster = true;
+	this.storeMasterList = true;
  }
  async presentToast(data: string,tostarColor:string) {
   const toast = await this.toastController.create({
