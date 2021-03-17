@@ -46,7 +46,7 @@ export class LoginPage implements OnInit {
     this.isFormSubmitted = true;
     if (this.loginFormGroup.invalid) {
       return;
-    }
+    }    
     const dataObject = { ProviderUserName:this.providerName.value,Password:this.password.value };
     this.registrationServiceService.validateUser('ProviderLogin', dataObject)
       .subscribe((data: any) => {       

@@ -31,52 +31,82 @@
                 <ion-col size="5">Manger-1</ion-col>
             </ion-row>
 			</ion-grid>
-    <form *ngIf="editStore">
+    <form [formGroup]="singleStoreFormGroup" *ngIf="editStore">
         <ion-item class="ion-ele">
             <ion-label position="floating">Store Name</ion-label>
-            <ion-input type="text" required></ion-input>
+            <ion-input type="text" formControlName="StoreName" required></ion-input>
             <ion-icon name="bag-remove-outline" slot="start"></ion-icon>
         </ion-item>
+        <small  *ngIf="isFormSubmitted &&  StoreName.errors"><span style="color: red;" >*Store Name Required </span>                 
+        </small>
+
         <ion-item class="ion-ele">
             <ion-label position="floating">Store Manager Name</ion-label>
-            <ion-input type="text" required></ion-input>
+            <ion-input type="text"  formControlName="ManagerName" required></ion-input>
             <ion-icon name="person-outline" slot="start"></ion-icon>
         </ion-item>
+        <small  *ngIf="isFormSubmitted &&  ManagerName.errors"><span style="color: red;" >*Manager Name  Required </span>                 
+        </small>
         <ion-item class="ion-ele">
             <ion-label position="floating">Manager Id Number</ion-label>
-            <ion-input type="text" required></ion-input>
+            <ion-input type="text" formControlName="ManagerID" required></ion-input>
             <ion-icon name="bookmark-outline" slot="start"></ion-icon>
         </ion-item>
+
+        <small  *ngIf="isFormSubmitted &&  ManagerID.errors"><span style="color: red;" >*Manager ID Required </span>                 
+        </small>
+
         <ion-item class="ion-ele">
             <ion-label position="floating">Mobile Number</ion-label>
-            <ion-input type="text" required></ion-input>
+            <ion-input type="text" formControlName="ManagerName" required></ion-input>
             <ion-icon name="phone-portrait-outline" slot="start"></ion-icon>
         </ion-item>
+
+        <small  *ngIf="isFormSubmitted &&  ManagerName.errors"><span style="color: red;" >*Manager Name Required </span>                 
+        </small>
+
         <ion-item class="ion-ele">
             <ion-label position="floating">Address</ion-label>
-            <ion-textarea></ion-textarea>
+            <ion-textarea formControlName="Address" ></ion-textarea>
             <ion-icon name="chatbox-outline" slot="start"></ion-icon>
         </ion-item>
+        <small  *ngIf="isFormSubmitted &&  Address.errors"><span style="color: red;" >*Address Required </span>                 
+        </small>
+
         <ion-item class="ion-ele">
             <ion-label position="floating">City</ion-label>
-            <ion-input type="text" required></ion-input>
+            <ion-input type="text" formControlName="City" required></ion-input>
             <ion-icon name="diamond-outline" slot="start"></ion-icon>
         </ion-item>
+
+        <small  *ngIf="isFormSubmitted &&  City.errors"><span style="color: red;" >*City Required </span>                 
+        </small>
+
         <ion-item class="ion-ele">
             <ion-label position="floating">State</ion-label>
-            <ion-input type="text" required></ion-input>
+            <ion-input type="text"  formControlName="State" required></ion-input>
             <ion-icon name="file-tray-outline" slot="start"></ion-icon>
         </ion-item>
+        <small  *ngIf="isFormSubmitted &&  State.errors"><span style="color: red;" >*State Required </span>                 
+        </small>
         <ion-item class="ion-ele">
             <ion-label position="floating">Pin Code</ion-label>
-            <ion-input type="text" required></ion-input>
+            <ion-input type="text" formControlName="PinCode" required></ion-input>
             <ion-icon name="diamond-outline" slot="start"></ion-icon>
         </ion-item>
+
+        <small  *ngIf="isFormSubmitted &&  PinCode.errors"><span style="color: red;" >*PinCode Required </span>                 
+        </small>
+
         <ion-item class="ion-ele">
             <ion-label position="floating">Land Mark</ion-label>
-            <ion-textarea></ion-textarea>
+            <ion-textarea formControlName="LandMark" ></ion-textarea>
             <ion-icon name="location-outline" slot="start"></ion-icon>
         </ion-item>
+
+        <small  *ngIf="isFormSubmitted &&  LandMark.errors"><span style="color: red;" >*Land Mark Required </span>                 
+        </small>
+
         <ion-item class="ion-ele">
             <ion-label>Timings </ion-label>
             <ion-icon name="time-outline" slot="start"></ion-icon>

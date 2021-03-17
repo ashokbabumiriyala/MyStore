@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import{FormControl, FormGroup, Validators}from '@angular/forms'
+import{ FormControl, FormGroup, Validators}from '@angular/forms'
+import { LoadingController } from '@ionic/angular';
 
+import { ToastController } from '@ionic/angular';
 @Component({
   selector: 'app-store-master',
   templateUrl: './store-master.page.html',
@@ -11,9 +13,11 @@ editMaster:boolean = false;
 istoreMaster:IStoreMaster;
 storeMasterFormGroup:FormGroup;
 isFormSubmitted:boolean;
-  constructor() { }
+  constructor(private loadingController: LoadingController,
+    // private StoreMasterService:StoreMasterService,
+    private toastController:ToastController) { }
 
-  ngOnInit() {
+  ngOnInit() {   
     this.createstoreMasterForm();
   }
 
@@ -57,13 +61,12 @@ isFormSubmitted:boolean;
 
   get OwnerID() {
     return this.storeMasterFormGroup.get('OwnerID');
-  }
-  
+  } 
 
   private createstoreMasterForm() { 
     this.storeMasterFormGroup = new FormGroup({
       StoreType: new FormControl('', Validators.required),
-      NumberOfStores: new FormControl('', Validators.required)  ,   
+      NumberOfStores: new FormControl('', [Validators.required,Validators.maxLength(4)])  ,   
       Name: new FormControl('', Validators.required),
       MobileNumber: new FormControl('', Validators.required)  ,  
       Email: new FormControl('', Validators.required),
@@ -81,12 +84,36 @@ isFormSubmitted:boolean;
     this.isFormSubmitted = true;
     if (this.storeMasterFormGroup.invalid) {
       return;
-    }
+    }    
+    this.istoreMaster = {
+      StoreType: this.StoreType.value, ProviderID: 1, NumberOfStores:Number(this.NumberOfStores.value),
+      Name: this.Name.value, MobileNumber: this.MobileNumber.value, Email: this.Email.value,
+      TinorGstNumber: this.TinorGstNumber.value, OwnerID:Number(this.OwnerID.value), BankName: this.BankName.value,
+      AccountHolderName: this.AccountHolderName.value, AccountNumber: this.AccountHolderName.value, IFSCCode: this.IFSCCode.value,
+      BranchName: this.BranchName.value
+    };
+    // this.StoreMasterService.storeMasterSave('StoreMasterSave', this.istoreMaster)
+    // .subscribe((data: any) => {
+    //   this.storeMasterFormGroup.reset();
+    //   this.presentToast("Store master added successfully.","success")
+    // },
+    //   (error: any) => {         
+                   
+    //   });
   }
 
 editMasterInfo() {
 	this.editMaster = true;
  }
+ async presentToast(data: string,tostarColor:string) {
+  const toast = await this.toastController.create({
+    message: data,
+    duration: 2000,
+    position: 'bottom',      
+    color: tostarColor
+  });
+  toast.present();
+}
 }
 interface IStoreMaster{
   StoreType :string;
