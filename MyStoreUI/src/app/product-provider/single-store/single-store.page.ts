@@ -22,53 +22,50 @@ editStoreInfo(){
 	this.editStore = true;
 }
 
+get ToTime() {
+  return this.singleStoreFormGroup.get('ToTime');
+}
+get FromTime() {
+  return this.singleStoreFormGroup.get('FromTime');
+}
 get LandMark() {
   return this.singleStoreFormGroup.get('LandMark');
 }
 get PinCode() {
   return this.singleStoreFormGroup.get('PinCode');
 }
-get MobileNmuber() {
-  return this.singleStoreFormGroup.get('MobileNmuber');
+get State() {
+  return this.singleStoreFormGroup.get('State');
+}
+get City() {
+  return this.singleStoreFormGroup.get('City');
 }
 get Address() {
   return this.singleStoreFormGroup.get('Address');
 }
+get MobileNmuber() {
+  return this.singleStoreFormGroup.get('MobileNmuber');
+}
 get ManagerID() {
   return this.singleStoreFormGroup.get('ManagerID');
-}
-get StoreType() {
-  return this.singleStoreFormGroup.get('StoreType');
 }
 get ManagerName() {
   return this.singleStoreFormGroup.get('ManagerName');
 }
-get StoreMasterID() {
+get Name() {
+  return this.singleStoreFormGroup.get('Name');
+}
+get StoreType(){
+  return this.singleStoreFormGroup.get('StoreType');
+}
+get StoreMasterID(){
   return this.singleStoreFormGroup.get('StoreMasterID');
 }
-get FromTime() {
-  return this.singleStoreFormGroup.get('FromTime');
-}
-get ToTime() {
-  return this.singleStoreFormGroup.get('ToTime');
-}
-
-get StoreName() {
-  return this.singleStoreFormGroup.get('StoreName');
-}
-
-get City(){
-  return this.singleStoreFormGroup.get('City');
-}
-get State(){
-  return this.singleStoreFormGroup.get('State');
-}
-
 private createSingleStoreForm() { 
   this.singleStoreFormGroup = new FormGroup({
     StoreMasterID: new FormControl('', Validators.required),
     StoreType: new FormControl('', Validators.required)  ,   
-    StoreName: new FormControl('', Validators.required)  ,   
+    Name: new FormControl('', Validators.required)  ,   
     ManagerName: new FormControl('', Validators.required),
     ManagerID: new FormControl('', Validators.required)  ,  
     MobileNmuber: new FormControl('', Validators.required),
@@ -78,18 +75,15 @@ private createSingleStoreForm() {
     PinCode: new FormControl('', Validators.required),
     LandMark: new FormControl('', Validators.required)  ,  
     FromTime: new FormControl('', Validators.required),
-    ToTime: new FormControl('', Validators.required)  
-   
+    ToTime: new FormControl('', Validators.required)     
   });
 }
 }
-
 interface ISingleStore{
  StoreMasterID :number;
  StoreType :string;
- StoreName:string;
- Name :string;
- ManagerName :string;
+ Name:string; 
+ ManagerName :string; 
  ManagerID :number;
  MobileNmuber :string;
  Address :string;

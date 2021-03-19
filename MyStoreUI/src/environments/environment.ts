@@ -8,9 +8,6 @@ export const environment = {
   storeMasterServiceUrl: 'https://localhost:44337/api/Store/',
   //authenticationServiceUrl: 'http://itprototypes.com:5000/api/Authentication/',
 };
-
-
-
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

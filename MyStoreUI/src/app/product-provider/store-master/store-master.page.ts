@@ -14,6 +14,11 @@ storeMasterList:boolean = false;
 istoreMaster:IStoreMaster;
 storeMasterFormGroup:FormGroup;
 isFormSubmitted:boolean;
+showAddButton:boolean;
+provideStoreList= [];
+storeType=[];
+storeId:number;
+title:string;
   constructor(
     private StoreMasterService:StoreMasterService,
     private navCtrl: NavController,
@@ -23,8 +28,37 @@ isFormSubmitted:boolean;
 
   ngOnInit() {   
     this.createstoreMasterForm();
+    this.storeMasterListSelect();
+    this.title="Register";
   }
 
+
+  //#region list
+async storeMasterListSelect(){  
+  const loadingController = await this.helperService.createLoadingController("loading");
+  await loadingController.present();  
+  const dataObject={Id: Number(sessionStorage.getItem("providerId")),Mode:'Select'};
+  this.StoreMasterService.storeMasterSelect('ProviderStoreSelect', dataObject)
+  .subscribe((data: any) => {
+   this.storeType= data.provideStoreType;  
+    if(data.provideStoreList.length>0){   
+      this.provideStoreList=data.provideStoreList;   
+      this.showAddButton=false;
+    }else{
+      this.showAddButton=true;
+      this.provideStoreList=[];   
+    }
+  
+  },
+    (error: any) => {         
+                 
+    });
+    await loadingController.dismiss();
+}
+
+  //#endregion
+
+//#region store master save  [raba(0,205,30,0.1)] 
   get StoreType() {
     return this.storeMasterFormGroup.get('StoreType');
   }
@@ -83,7 +117,6 @@ isFormSubmitted:boolean;
       BranchName: new FormControl('', Validators.required)    
     });
   }
-
   async saveStoreMaster(): Promise<void>{
     this.isFormSubmitted = true;
     if (this.storeMasterFormGroup.invalid) {
@@ -92,26 +125,68 @@ isFormSubmitted:boolean;
     const loadingController = await this.helperService.createLoadingController("loading");
     await loadingController.present();  
     this.istoreMaster = {
-      StoreType: this.StoreType.value, ProviderID: 1, NumberOfStores:Number(this.NumberOfStores.value),
-      Name: this.Name.value, MobileNumber: this.MobileNumber.value, Email: this.Email.value,
-      TinorGstNumber: this.TinorGstNumber.value, OwnerID:Number(this.OwnerID.value), BankName: this.BankName.value,
-      AccountHolderName: this.AccountHolderName.value, AccountNumber: this.AccountHolderName.value, IFSCCode: this.IFSCCode.value,
-      BranchName: this.BranchName.value
+      StoreType:Number(this.StoreType.value), ProviderID:  Number(sessionStorage.getItem("providerId")), NumberOfStores:Number(this.NumberOfStores.value),
+      Name: this.Name.value, MobileNumber: this.MobileNumber.value.toString(), Email: this.Email.value,
+      TinorGstNumber: this.TinorGstNumber.value.toString(), OwnerID:Number(this.OwnerID.value), BankName: this.BankName.value,
+      AccountHolderName: this.AccountHolderName.value, AccountNumber: this.AccountNumber.value.toString(), IFSCCode: this.IFSCCode.value,
+      BranchName: this.BranchName.value,Id:this.storeId,Mode:this.title
     };
+debugger;
+    console.log(this.istoreMaster);
     this.StoreMasterService.storeMasterSave('StoreMasterSave', this.istoreMaster)
     .subscribe((data: any) => {      
-      this.presentToast("Store master added successfully.","success");
-      this.storeMasterList=false;    
+      this.presentToast("Store master " + this.title+ "  successfully.","success");
+      this.storeMasterList=false;
+      this.storeMasterListSelect();    
     },
       (error: any) => {         
                    
       });
       await loadingController.dismiss();
-  }
+  } 
+//#endregion
 
-editMasterInfo() {
+// this.caseCategoryData = this.helperService.prepareDropDownData(dropdownData.caseCategoryDetails);
+//#region edit store master
+editMasterInfo(rowdata:any) {  
+  if(rowdata==null){
+    this.storeId=0;
+    this.title="Register";
+  }else{
+    const dataObject={Id: Number(rowdata.id),Mode:'Edit'};
+    this.storeId=Number(rowdata.id);
+    this.StoreMasterService.storeMasterSelect('ProviderStoreSelect', dataObject)
+    .subscribe((data: any) => { 
+      this.storeType=[];
+      this.storeType= data.provideStoreType;
+      debugger;
+      console.log(this.storeType);  
+      this.setForamADetailsToPage(data.provideStoreList[0]);
+    },
+      (error: any) => {  
+      });
+    this.title="Update";    
+  }
 	this.storeMasterList = true;
  }
+ private setForamADetailsToPage(data: any): void {
+    this.storeMasterFormGroup.patchValue({
+    StoreType:String(data.storeTypeId),
+    NumberOfStores:Number(data.numberOfStores),
+    Name: data.name,
+    MobileNumber: data.mobileNumber,
+    Email: data.email,
+    TinorGstNumber: data.tinorGstNumber,
+    OwnerID: data.ownerID,
+    BankName: data.bankName,
+    AccountHolderName:data.accountHolderName,
+    AccountNumber: data.accountNumber,
+    IFSCCode: data.ifscCode,
+    BranchName: data.branchName    
+  });
+}
+//#endregion
+
  async presentToast(data: string,tostarColor:string) {
   const toast = await this.toastController.create({
     message: data,
@@ -123,7 +198,7 @@ editMasterInfo() {
 }
 }
 interface IStoreMaster{
-  StoreType :string;
+  StoreType :number;
   ProviderID :number;
   NumberOfStores:number;
   Name :string;
@@ -136,6 +211,8 @@ interface IStoreMaster{
   AccountNumber :string;
   IFSCCode :string;
   BranchName :string;
+  Id:number;
+  Mode:string;
 }
 
 

@@ -11,4 +11,8 @@ constructor(private commonApiServiceCallsService:CommonApiServiceCallsService) {
   storeMasterSave(methodName: string, resouce: any): Observable<any> {
   return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
   }
+
+  storeMasterSelect(methodName: string, resouce: any): Observable<any> {
+    return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
+    }
 }

@@ -53,7 +53,8 @@ export class LoginPage implements OnInit {
     const dataObject = { ProviderUserName:this.providerName.value,Password:this.password.value };
     this.registrationServiceService.validateUser('ProviderLogin', dataObject)
       .subscribe((data: any) => {       
-        sessionStorage.setItem("AuthToken",data.token);       
+        sessionStorage.setItem("AuthToken",data.token);    
+        sessionStorage.setItem("providerId", data.providerId);      
       let providerDetails:IProviderDetails
       providerDetails = {
         name: data.providerName, roleId: data.providerRoleId, 

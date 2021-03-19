@@ -32,4 +32,21 @@ async createLoadingController(displayMessage:string): Promise<any> {
 }
 
 
+prepareDropDownData(items: any): iDropdown[] {
+  let iDropdownItems: iDropdown[];
+  const defaultSelectText = '-- Please Select --';
+  iDropdownItems = [{ label: defaultSelectText, value: null }];
+  if (items) {
+    for (const item of items) {
+      iDropdownItems.push({ label: item.text, value: item.value });
+    }
+  }
+  return iDropdownItems;
+}
+
+}
+
+export interface iDropdown {
+  label: string;
+  value: number;
 }

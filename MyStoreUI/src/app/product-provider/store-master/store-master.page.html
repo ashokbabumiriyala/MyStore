@@ -3,30 +3,33 @@
 		<ion-row *ngIf="!storeMasterList">
 		 <ion-col size="8"></ion-col>
 		 <ion-col size="4">
-		<ion-button type="button" shape="round" class="ion-button" (click)="editMasterInfo()">Add</ion-button>
+		<ion-button type="button" shape="round" class="ion-button" *ngIf="showAddButton" (click)="editMasterInfo(null)">Add</ion-button>
 		</ion-col>
 	</ion-row>
 	<ion-grid *ngIf="!storeMasterList">
             <ion-row>
                 <ion-col size="3">Action</ion-col>
                 <ion-col size="4">Store Type</ion-col>
-                <ion-col size="5">Store Master Name</ion-col>
+                <ion-col size="5">Store Name</ion-col>
             </ion-row>
-            <ion-row>
+           
+            <ion-row *ngFor="let storeMaster of provideStoreList;">
                 <ion-col size="3">
                     <ion-icon name="trash" class="table-icons" color="danger"></ion-icon>
-                    <ion-icon name="create" class="table-icons" (click)="editMasterInfo()"></ion-icon>
+                    <ion-icon name="create" class="table-icons" (click)="editMasterInfo(storeMaster)"></ion-icon>
                 </ion-col>
-                <ion-col size="4">Test-1</ion-col>
-                <ion-col size="5">Master-1</ion-col>
+                <ion-col>{{ storeMaster.storeType }}</ion-col>
+                <ion-col>{{ storeMaster.name}}</ion-col>
             </ion-row>
         </ion-grid>
-    <form [formGroup]="storeMasterFormGroup" *ngIf="storeMasterList">
+
+        <form [formGroup]="storeMasterFormGroup" *ngIf="storeMasterList">
         <ion-item class="ion-ele">
             <ion-label position="floating">Store Type</ion-label>
             <ion-select formControlName="StoreType">
-                <ion-select-option value="virtual">Physical</ion-select-option>
-                <ion-select-option value="physicalitems">Virtual</ion-select-option>
+
+                <ion-select-option  *ngFor="let store of storeType"  value="{{store.value}}">{{store.text}}</ion-select-option>
+              
             </ion-select>
             <ion-icon name="cog-outline" slot="start"></ion-icon>
         </ion-item>
@@ -126,7 +129,7 @@
 
         <ion-row>
             <ion-col class="ion-text-center ion-margin-top">
-                <ion-button type="submit" shape="round" expand="block" (click)="saveStoreMaster();" class="ion-margin-bottom ion-button">Register</ion-button>
+                <ion-button type="submit" shape="round" expand="block" (click)="saveStoreMaster();" class="ion-margin-bottom ion-button">{{title}}</ion-button>
             </ion-col>
         </ion-row>
     </form>

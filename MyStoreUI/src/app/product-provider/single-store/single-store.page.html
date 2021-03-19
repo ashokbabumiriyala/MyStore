@@ -32,13 +32,22 @@
             </ion-row>
 			</ion-grid>
     <form [formGroup]="singleStoreFormGroup" *ngIf="editStore">
+
+        <ion-item class="ion-ele">
+            <ion-label position="floating">Store Type</ion-label>
+            <ion-select formControlName="StoreType">
+                <ion-select-option value="virtual">Physical</ion-select-option>
+                <ion-select-option value="physicalitems">Virtual</ion-select-option>
+            </ion-select>
+            <ion-icon name="cog-outline" slot="start"></ion-icon>
+        </ion-item>
+
         <ion-item class="ion-ele">
             <ion-label position="floating">Store Name</ion-label>
             <ion-input type="text" formControlName="StoreName" required></ion-input>
             <ion-icon name="bag-remove-outline" slot="start"></ion-icon>
         </ion-item>
-        <small  *ngIf="isFormSubmitted &&  StoreName.errors"><span style="color: red;" >*Store Name Required </span>                 
-        </small>
+       
 
         <ion-item class="ion-ele">
             <ion-label position="floating">Store Manager Name</ion-label>
