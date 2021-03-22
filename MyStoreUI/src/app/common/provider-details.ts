@@ -1,3 +1,4 @@
+import {FormGroup} from '@angular/forms';
 export interface IProviderDetails {
     name: string;    
     roleId: number;
@@ -5,4 +6,5 @@ export interface IProviderDetails {
     menus: any[];
     defaultMenuId: number;
 }
+
 
