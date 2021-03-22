@@ -25,7 +25,7 @@
 
         <form [formGroup]="storeMasterFormGroup" *ngIf="storeMasterList">
         <ion-item class="ion-ele">
-            <ion-label position="floating">Store Type</ion-label>
+            <ion-label position="floating">Store Master Type</ion-label>
             <ion-select formControlName="StoreType">
                 <ion-select-option  *ngFor="let store of storeType"  value="{{store.value}}">{{store.text}}</ion-select-option>
               

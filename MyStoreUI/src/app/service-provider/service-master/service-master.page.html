@@ -23,7 +23,7 @@
         </ion-grid>
     <form [formGroup]="serviceMasterFormGroup"  *ngIf="serviceMasterList">
         <ion-item class="ion-ele">
-            <ion-label position="floating">Business Type</ion-label>
+            <ion-label position="floating">Business Master Type</ion-label>
             <ion-select formControlName="BusinessType">
                 <ion-select-option  *ngFor="let service of serviceType"  value="{{service.value}}">{{service.text}}</ion-select-option>              
             </ion-select>
