@@ -6,6 +6,8 @@ export const environment = {
   production: false,
   authenticationServiceUrl: 'https://localhost:44337/api/Authentication/',
   storeMasterServiceUrl: 'https://localhost:44337/api/Store/',
+  serviceMasterServiceUrl: 'https://localhost:44337/api/Service/',
+  
   //authenticationServiceUrl: 'http://itprototypes.com:5000/api/Authentication/',
 };
 /*

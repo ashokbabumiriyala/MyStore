@@ -27,7 +27,6 @@
         <ion-item class="ion-ele">
             <ion-label position="floating">Store Type</ion-label>
             <ion-select formControlName="StoreType">
-
                 <ion-select-option  *ngFor="let store of storeType"  value="{{store.value}}">{{store.text}}</ion-select-option>
               
             </ion-select>
@@ -67,7 +66,7 @@
         </small>
         <ion-item class="ion-ele">
             <ion-label position="floating">TIN/GST Number</ion-label>
-            <ion-input type="text" formControlName="TinorGstNumber" required></ion-input>
+            <ion-input type="number" formControlName="TinorGstNumber" required></ion-input>
             <ion-icon name="bookmark-outline" slot="start"></ion-icon>
         </ion-item>
 
@@ -103,7 +102,7 @@
 
         <ion-item class="ion-ele">
             <ion-label position="floating">Account Number</ion-label>
-            <ion-input type="text" formControlName="AccountNumber" required></ion-input>
+            <ion-input type="number" formControlName="AccountNumber" required></ion-input>
             <ion-icon name="desktop-outline" slot="start"></ion-icon>
         </ion-item>
 

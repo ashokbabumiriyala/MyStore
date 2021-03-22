@@ -10,7 +10,7 @@ import { Router, NavigationStart } from '@angular/router';
   styleUrls: ['./store-master.page.scss'],
 })
 export class StoreMasterPage implements OnInit {
-storeMasterList:boolean = false;
+storeMasterList:boolean;
 istoreMaster:IStoreMaster;
 storeMasterFormGroup:FormGroup;
 isFormSubmitted:boolean;
@@ -25,13 +25,11 @@ title:string;
     private router: Router,
     private helperService:HelperService,
     private toastController:ToastController) { }
-
   ngOnInit() {   
     this.createstoreMasterForm();
     this.storeMasterListSelect();
     this.title="Register";
   }
-
 
   //#region list
 async storeMasterListSelect(){  
@@ -47,15 +45,13 @@ async storeMasterListSelect(){
     }else{
       this.showAddButton=true;
       this.provideStoreList=[];   
-    }
-  
+    }  
   },
     (error: any) => {         
                  
     });
     await loadingController.dismiss();
 }
-
   //#endregion
 
 //#region store master save  [raba(0,205,30,0.1)] 
@@ -131,8 +127,6 @@ async storeMasterListSelect(){
       AccountHolderName: this.AccountHolderName.value, AccountNumber: this.AccountNumber.value.toString(), IFSCCode: this.IFSCCode.value,
       BranchName: this.BranchName.value,Id:this.storeId,Mode:this.title
     };
-debugger;
-    console.log(this.istoreMaster);
     this.StoreMasterService.storeMasterSave('StoreMasterSave', this.istoreMaster)
     .subscribe((data: any) => {      
       this.presentToast("Store master " + this.title+ "  successfully.","success");
@@ -148,7 +142,7 @@ debugger;
 
 // this.caseCategoryData = this.helperService.prepareDropDownData(dropdownData.caseCategoryDetails);
 //#region edit store master
-editMasterInfo(rowdata:any) {  
+editMasterInfo(rowdata:any) {   
   if(rowdata==null){
     this.storeId=0;
     this.title="Register";
@@ -159,8 +153,6 @@ editMasterInfo(rowdata:any) {
     .subscribe((data: any) => { 
       this.storeType=[];
       this.storeType= data.provideStoreType;
-      debugger;
-      console.log(this.storeType);  
       this.setForamADetailsToPage(data.provideStoreList[0]);
     },
       (error: any) => {  
@@ -170,6 +162,7 @@ editMasterInfo(rowdata:any) {
 	this.storeMasterList = true;
  }
  private setForamADetailsToPage(data: any): void {
+   console.log(data);
     this.storeMasterFormGroup.patchValue({
     StoreType:String(data.storeTypeId),
     NumberOfStores:Number(data.numberOfStores),

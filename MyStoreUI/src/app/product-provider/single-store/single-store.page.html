@@ -5,17 +5,7 @@
 		 <ion-col size="4">
 		<ion-button *ngIf="!editMaster" type="button" shape="round" class="ion-button" (click)="editStoreInfo()">Add</ion-button>
 		</ion-col>
-	</ion-row>
-	<ion-row *ngIf="!editStore">
-	 <ion-item class="ion-ele sub-store">
-		<ion-label position="floating">Select Store</ion-label>
-		<ion-select>
-			<ion-select-option value="1">Store-1</ion-select-option>
-			<ion-select-option value="2">Store-2</ion-select-option>
-		</ion-select>
-		<ion-icon name="cog-outline" slot="start"></ion-icon>
-     </ion-item>
-	</ion-row>
+	</ion-row>	
 	<ion-grid *ngIf="!editStore">
             <ion-row>
                 <ion-col size="3">Action</ion-col>
@@ -30,9 +20,19 @@
                 <ion-col size="4">Store-1</ion-col>
                 <ion-col size="5">Manger-1</ion-col>
             </ion-row>
-			</ion-grid>
+	</ion-grid>
     <form [formGroup]="singleStoreFormGroup" *ngIf="editStore">
 
+        <ion-item class="ion-ele">
+            <ion-label position="floating">Master Store</ion-label>
+            <ion-select formControlName="StoreMasterID">
+                <ion-select-option value="virtual">Physical</ion-select-option>
+                <ion-select-option value="physicalitems">Virtual</ion-select-option>
+            </ion-select>
+            <ion-icon name="cog-outline" slot="start"></ion-icon>
+        </ion-item>
+        <small  *ngIf="isFormSubmitted &&  StoreMasterID.errors"><span style="color: red;" >*Master Store Required </span>                 
+        </small>
         <ion-item class="ion-ele">
             <ion-label position="floating">Store Type</ion-label>
             <ion-select formControlName="StoreType">
@@ -42,12 +42,15 @@
             <ion-icon name="cog-outline" slot="start"></ion-icon>
         </ion-item>
 
+        <small  *ngIf="isFormSubmitted &&  StoreType.errors"><span style="color: red;" >*Store Type Required </span>                 
+        </small>
         <ion-item class="ion-ele">
             <ion-label position="floating">Store Name</ion-label>
-            <ion-input type="text" formControlName="StoreName" required></ion-input>
+            <ion-input type="text" formControlName="Name" required></ion-input>
             <ion-icon name="bag-remove-outline" slot="start"></ion-icon>
         </ion-item>
-       
+        <small  *ngIf="isFormSubmitted &&  Name.errors"><span style="color: red;" >*Store Name Required </span>                 
+        </small>
 
         <ion-item class="ion-ele">
             <ion-label position="floating">Store Manager Name</ion-label>
@@ -58,20 +61,19 @@
         </small>
         <ion-item class="ion-ele">
             <ion-label position="floating">Manager Id Number</ion-label>
-            <ion-input type="text" formControlName="ManagerID" required></ion-input>
+            <ion-input type="number" formControlName="ManagerID" required></ion-input>
             <ion-icon name="bookmark-outline" slot="start"></ion-icon>
         </ion-item>
 
         <small  *ngIf="isFormSubmitted &&  ManagerID.errors"><span style="color: red;" >*Manager ID Required </span>                 
         </small>
-
         <ion-item class="ion-ele">
             <ion-label position="floating">Mobile Number</ion-label>
-            <ion-input type="text" formControlName="ManagerName" required></ion-input>
+            <ion-input type="number" formControlName="MobileNmuber" required></ion-input>
             <ion-icon name="phone-portrait-outline" slot="start"></ion-icon>
         </ion-item>
 
-        <small  *ngIf="isFormSubmitted &&  ManagerName.errors"><span style="color: red;" >*Manager Name Required </span>                 
+        <small  *ngIf="isFormSubmitted &&  MobileNmuber.errors"><span style="color: red;" >*Mobile Nmuber Required </span>                 
         </small>
 
         <ion-item class="ion-ele">
@@ -100,7 +102,7 @@
         </small>
         <ion-item class="ion-ele">
             <ion-label position="floating">Pin Code</ion-label>
-            <ion-input type="text" formControlName="PinCode" required></ion-input>
+            <ion-input type="number" formControlName="PinCode" required></ion-input>
             <ion-icon name="diamond-outline" slot="start"></ion-icon>
         </ion-item>
 
@@ -122,13 +124,13 @@
         </ion-item>
         <ion-item class="ion-ele">
             <ion-label>From:</ion-label>
-            <ion-datetime displayFormat="h:mm a" [(ngModel)]="fromDate" name="fromDate"></ion-datetime>
+            <ion-datetime displayFormat="hh:mm A" name="fromDate"></ion-datetime>
             <ion-label>&nbsp;To:</ion-label>
-            <ion-datetime displayFormat="h:mm a" [(ngModel)]="toDate" name="toDate"></ion-datetime>
+            <ion-datetime displayFormat="hh:mm A"  name="toDate"></ion-datetime>
         </ion-item>
         <ion-row>
             <ion-col class="ion-text-center ion-margin-top">
-                <ion-button type="submit" shape="round" expand="block" class="ion-margin-bottom ion-button">Add Store</ion-button>
+                <ion-button type="submit" shape="round" expand="block" (click)="saveStore();" class="ion-margin-bottom ion-button">Add Store</ion-button>
             </ion-col>
         </ion-row>
     </form>
