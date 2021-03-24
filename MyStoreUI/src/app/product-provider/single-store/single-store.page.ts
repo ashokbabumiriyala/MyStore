@@ -41,6 +41,7 @@ const loadingController = await this.helperService.createLoadingController("load
    this.storeType= data.provideStoreType;
     if(data.provideStoreList.length>0){   
       this.provideSubStoreList=data.provideStoreList;
+
     }else{
       this.provideSubStoreList=[];   
     }  
@@ -126,10 +127,12 @@ async saveStore():Promise<void>{
       State:this.State.value,PinCode:this.PinCode.value.toString(),LandMark:this.LandMark.value,FromTime:this.FromTime.value,
       ToTime:this.ToTime.value,Id:this.storeId,Mode:this.title
     };
-    console.log(this.iSingleStore);
+ 
     this.singleStoreService.singleStoreSave('StoreSave', this.iSingleStore)
     .subscribe((data: any) => {      
-      this.presentToast("Store master " + this.title+ "  successfully.","success");     
+      this.presentToast("Store " + this.title+ "  successfully.","success");  
+      this.editStore=false;
+      this.subStoreList();   
     },
       (error: any) => {        
                    
@@ -138,9 +141,44 @@ async saveStore():Promise<void>{
   }
 }
 //#endregion
-
-editStoreInfo(){
-	this.editStore = true;
+editStoreInfo(rowdata:any){
+  this.editStore = true;
+  if(rowdata==null){
+    this.storeId=0;
+    this.title="Register";
+  }else{
+    const dataObject={Id: Number(rowdata.id),Mode:'Edit'};   
+    this.storeId=Number(rowdata.id);
+    this.singleStoreService.subStoreListSelect('ProviderSubStoreSelect', dataObject)
+    .subscribe((data: any) => { 
+      this.masterStore=[];
+      this.storeType=[];
+      this.masterStore= data.storeMaster;
+      this.storeType= data.provideStoreType;    
+      this.setForamADetailsToPage(data.provideStoreList[0]);
+    },
+      (error: any) => {  
+      });
+    this.title="Update";    
+  }
+	// this.storeMasterList = true;
+}
+private setForamADetailsToPage(data: any): void {
+  this.singleStoreFormGroup.patchValue({ 
+    StoreMasterID:String(data.storeMasterID),
+    StoreType:String(data.storeTypeId),
+    Name: data.storeName,
+    ManagerName: data.managerName,
+    ManagerID: data.managerID,
+    MobileNmuber: data.mobileNmuber,
+    Address: data.address,
+    City: data.city,
+    State:data.state,
+    PinCode: data.pinCode,
+    LandMark: data.landMark,
+    FromTime:  data.fromTime   , 
+    ToTime: data.toTime  
+});
 }
 
 async presentToast(data: string,tostarColor:string) {
