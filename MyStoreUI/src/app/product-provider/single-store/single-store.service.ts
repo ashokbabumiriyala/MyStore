@@ -12,7 +12,7 @@ export class SingleStoreService {
     singleStoreSave(methodName: string, resouce: any): Observable<any> {
     return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
     }  
-    singleStoreSelect(methodName: string, resouce: any): Observable<any> {
+     subStoreListSelect(methodName: string, resouce: any): Observable<any> {
       return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
       }
 }

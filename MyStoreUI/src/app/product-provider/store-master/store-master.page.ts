@@ -161,8 +161,7 @@ editMasterInfo(rowdata:any) {
   }
 	this.storeMasterList = true;
  }
- private setForamADetailsToPage(data: any): void {
-   console.log(data);
+ private setForamADetailsToPage(data: any): void {  
     this.storeMasterFormGroup.patchValue({
     StoreType:String(data.storeTypeId),
     NumberOfStores:Number(data.numberOfStores),

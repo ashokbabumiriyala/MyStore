@@ -1,3 +1,4 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoadingController } from '@ionic/angular';
@@ -16,15 +17,41 @@ iSingleStore:ISingleStore;
 isFormSubmitted:boolean;
 singleStoreFormGroup:FormGroup;
 title:string;
+masterStore=[];
+storeType=[];
+provideSubStoreList= [];
 storeId:number;
   constructor(private   toastController:ToastController,private helperService:HelperService,
     private singleStoreService:SingleStoreService) { }
-  fromDate = "2021-03-10T09:30";
-  toDate = "2021-03-10T21:30";
-  ngOnInit() {
+ 
+ngOnInit() {
     this.createSingleStoreForm();
-    this.title="Register";
+    this.subStoreList();
+    this.title="Register";   
   }
+//#region   sub store list
+async subStoreList(){
+
+const loadingController = await this.helperService.createLoadingController("loading");
+  await loadingController.present();  
+  const dataObject={Id: Number(sessionStorage.getItem("providerId")),Mode:'Select'};
+  this.singleStoreService.subStoreListSelect('ProviderSubStoreSelect', dataObject)
+  .subscribe((data: any) => {
+   this.masterStore= data.storeMaster;
+   this.storeType= data.provideStoreType;
+    if(data.provideStoreList.length>0){   
+      this.provideSubStoreList=data.provideStoreList;
+    }else{
+      this.provideSubStoreList=[];   
+    }  
+  },
+    (error: any) => {         
+                 
+    });
+    await loadingController.dismiss();
+}
+//#endregion
+
 //#region   store save
 get ToTime() {
   return this.singleStoreFormGroup.get('ToTime');
@@ -82,6 +109,7 @@ private createSingleStoreForm() {
     ToTime: new FormControl('', Validators.required)     
   });
 }
+//2021-03-23T10:17:21.362+05:30
 
 async saveStore():Promise<void>{
   this.isFormSubmitted=true;
@@ -95,9 +123,10 @@ async saveStore():Promise<void>{
       StoreMasterID:Number(this.StoreMasterID.value), StoreType:Number(this.StoreType.value), 
       Name: this.Name.value, ManagerName: this.ManagerName.value.toString(), ManagerID: Number(this.ManagerID.value),
       MobileNmuber: this.MobileNmuber.value.toString(), Address:this.Address.value,City:this.City.value,
-      State:this.State.value,PinCode:this.PinCode.value,LandMark:this.LandMark.value,FromTime:this.FromTime.value,
+      State:this.State.value,PinCode:this.PinCode.value.toString(),LandMark:this.LandMark.value,FromTime:this.FromTime.value,
       ToTime:this.ToTime.value,Id:this.storeId,Mode:this.title
     };
+    console.log(this.iSingleStore);
     this.singleStoreService.singleStoreSave('StoreSave', this.iSingleStore)
     .subscribe((data: any) => {      
       this.presentToast("Store master " + this.title+ "  successfully.","success");     
