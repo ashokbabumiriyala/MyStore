@@ -131,7 +131,8 @@ async storeMasterListSelect(){
     .subscribe((data: any) => {      
       this.presentToast("Store master " + this.title+ "  successfully.","success");
       this.storeMasterList=false;
-      this.storeMasterListSelect();    
+      this.storeMasterListSelect();  
+      this.storeMasterFormGroup.reset();  
     },
       (error: any) => {         
                    

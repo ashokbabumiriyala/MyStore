@@ -132,6 +132,7 @@ async saveStore():Promise<void>{
     .subscribe((data: any) => {      
       this.presentToast("Store " + this.title+ "  successfully.","success");  
       this.editStore=false;
+      this.singleStoreFormGroup.reset();
       this.subStoreList();   
     },
       (error: any) => {        
