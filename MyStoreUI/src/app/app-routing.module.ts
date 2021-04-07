@@ -38,7 +38,15 @@ const routes: Routes = [
   {
     path: 'introduction',
     loadChildren: () => import('./Shared/introduction/introduction.module').then( m => m.IntroductionPageModule)
+  },  {
+    path: 'admin-product-provider',
+    loadChildren: () => import('./admin-product-provider/admin-product-provider.module').then( m => m.AdminProductProviderPageModule)
+  },
+  {
+    path: 'admin-service-provider',
+    loadChildren: () => import('./admin-service-provider/admin-service-provider.module').then( m => m.AdminServiceProviderPageModule)
   }
+
 
 
 
