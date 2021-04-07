@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { StoreProductService } from '../store-products/store-product.service'
 @Component({
   selector: 'app-store-products',
   templateUrl: './store-products.page.html',
@@ -8,12 +9,106 @@ import { Component, OnInit } from '@angular/core';
 export class StoreProductsPage implements OnInit {
 editProduct:boolean;
 editMaster:boolean;
-  constructor() { }
+storeProductsForm:FormGroup;
+istoreProduct:IStoreProduct;
+isFormSubmitted:boolean;
+showTempList:boolean;
+tempProducts=[];
+constructor(private storeProductService:StoreProductService) { }
 
   ngOnInit() {
+    this.createStoreProductForm();
   }
+  get StoreID(){
+    return this.storeProductsForm.get('StoreID');
+  }
+  get Category(){
+    return this.storeProductsForm.get('Category');
+  }
+  get ProductName(){
+    return this.storeProductsForm.get('ProductName');
+  }
+  get Units(){
+    return this.storeProductsForm.get('Units');
+  }
+  get Quantity(){
+    return this.storeProductsForm.get('Quantity');
+  }
+  get DiscountType(){
+    return this.storeProductsForm.get('DiscountType');
+  }
+  get Discount(){
+    return this.storeProductsForm.get('Discount');
+  }
+  get PriceBeforeDiscount(){
+    return this.storeProductsForm.get('PriceBeforeDiscount');
+  }
+  get PriceAfterDiscount(){
+    return this.storeProductsForm.get('PriceAfterDiscount');
+  }
+
+private createStoreProductForm(){
+  this.storeProductsForm = new FormGroup({
+    StoreID: new FormControl('', Validators.required),
+    Category: new FormControl('', Validators.required)  ,   
+    ProductName: new FormControl('', Validators.required)  ,   
+    Units: new FormControl('', Validators.required),
+    Quantity: new FormControl('', Validators.required)  ,  
+    DiscountType: new FormControl('', Validators.required),
+    Discount: new FormControl('', Validators.required) ,  
+    PriceBeforeDiscount: new FormControl('', Validators.required) ,    
+    PriceAfterDiscount: new FormControl('', Validators.required)
+  });
+}
+addProduct():void{
+  this.isFormSubmitted=true;
+  if (this.storeProductsForm.invalid) {
+    return;
+  }else{
+    this.isFormSubmitted=false;
+    const serialNumber:number=this.tempProducts.length+1;
+    const productObject = {slNo:Number(serialNumber), StoreID: Number(this.StoreID.value), Category:this.Category.value, 
+      ProductName:this.ProductName.value,
+      Units:String(this.Units.value),Quantity:Number(this.Quantity.value),
+      DiscountType :this.DiscountType.value, discount:Number(this.Discount.value),PriceBeforeDiscount:Number(this.PriceBeforeDiscount.value)
+       ,PriceAfterDiscount:Number(this.PriceAfterDiscount.value)};
+       this.tempProducts.push(productObject);
+       this.showTempList=true;
+       this.storeProductsForm.reset();
+  }
+}
+uploadProduct():void{
+  this.storeProductService.storeProductSave('StoreProductSave', this.tempProducts)
+  .subscribe((data: any) => {     
+  },
+    (error: any) => {        
+                 
+    });
+}
+deleteProduct(rowdata:any){ 
+  this.tempProducts.forEach((element,index)=>{   
+    if(Number(element.slNo) ==Number(rowdata.slNo)){    
+     this.tempProducts.splice(index,1);
+    }
+ });
+ if(this.tempProducts.length===0){
+  this.showTempList=false;
+ }
+}
   editProductInfo(){
 	  this.editProduct = true;
   }
 
+}
+
+interface IStoreProduct{
+   StoreID :number;
+   Category :string;
+   ProductName :string;
+   Units :string;
+   Quantity:string;
+   DiscountType:string;
+   Discount :number;
+   PriceBeforeDiscount :number;
+   PriceAfterDiscount:number;
 }

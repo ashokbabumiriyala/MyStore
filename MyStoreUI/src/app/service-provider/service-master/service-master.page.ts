@@ -31,7 +31,7 @@ async serviceMasterListSelect(){
   const loadingController = await this.helperService.createLoadingController("loading");
   await loadingController.present();  
   const dataObject={Id: Number(sessionStorage.getItem("providerId")),Mode:'Select'};
-  this.serviceMasterService.serviceMasterSelect('serviceProviderStoreMasterSelect', dataObject)
+  this.serviceMasterService.serviceMasterSelect('serviceProviderMasterListSelect', dataObject)
   .subscribe((data: any) => {
    this.serviceType= data.provideServiceType;  
     if(data.provideServiceList.length>0){   
@@ -136,7 +136,7 @@ async serviceMasterListSelect(){
     this.serviceId=rowdata.id;
     this.title="Update";
     const dataObject={Id: Number(rowdata.id),Mode:'Edit'};
-    this.serviceMasterService.serviceMasterSelect('serviceProviderStoreMasterSelect', dataObject)
+    this.serviceMasterService.serviceMasterSelect('serviceProviderMasterListSelect', dataObject)
     .subscribe((data: any) => {
      this.serviceType= data.provideServiceType;  
       if(data.provideServiceList.length>0){   

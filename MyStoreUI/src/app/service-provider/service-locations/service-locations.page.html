@@ -1,27 +1,27 @@
 <ion-content class="ion-padding after-login-bg">
     <h2 class="page-title">Service Location</h2>
-    <ion-row *ngIf="!editService">
+    <ion-row>
 		 <ion-col size="8"></ion-col>
 		 <ion-col size="4">
-		<ion-button *ngIf="!editMaster" type="button" shape="round" class="ion-button" (click)="editServiceInfo()">Add</ion-button>
+		<ion-button *ngIf="!editLocation" type="button" shape="round" class="ion-button" (click)="editServiceInfo(null)">Add</ion-button>
 		</ion-col>
 	</ion-row>
-	<ion-grid *ngIf="!editService">
+	<ion-grid *ngIf="!editLocation">
             <ion-row>
                 <ion-col size="3">Action</ion-col>
                 <ion-col size="4">Service Name</ion-col>
                 <ion-col size="5">Manager Name</ion-col>
             </ion-row>
-            <ion-row>
+            <ion-row  *ngFor="let location of providerLocationList;">
                 <ion-col size="3">
                     <ion-icon name="trash" class="table-icons" color="danger"></ion-icon>
-                    <ion-icon name="create" class="table-icons" (click)="editServiceInfo()"></ion-icon>
+                    <ion-icon name="create" class="table-icons" (click)="editServiceInfo(location)"></ion-icon>
                 </ion-col>
-                <ion-col size="4">Service-1</ion-col>
-                <ion-col size="5">Manger-1</ion-col>
+                <ion-col>{{ location.businessName }}</ion-col>
+                <ion-col>{{ location.businessManagerName}}</ion-col>
             </ion-row>
-			</ion-grid>
-    <form *ngIf="editService">
+	</ion-grid>
+    <form *ngIf="editLocation"  [formGroup]="serviceLocationForm" >
 
         <ion-item class="ion-ele">
             <ion-label position="floating">Master Service</ion-label>
@@ -141,10 +141,7 @@
             <ion-icon name="time-outline" slot="start"></ion-icon>
             <ion-label>From:</ion-label>
             <ion-datetime formControlName="FromTime"  displayFormat="h:mm a"></ion-datetime>
-
         </ion-item>
-
-
         <small  *ngIf="isFormSubmitted &&  FromTime.errors"><span style="color: red;" >*From Time Required </span>                 
         </small>
         <ion-item class="ion-ele">
@@ -152,14 +149,11 @@
             <ion-label>To:</ion-label>
             <ion-datetime formControlName="ToTime" displayFormat="hh:mm a"></ion-datetime>
         </ion-item>
-
-       
-
          <small  *ngIf="isFormSubmitted &&  ToTime.errors"><span style="color: red;" >*To Time Required </span>                 
         </small> 
         <ion-row>
             <ion-col class="ion-text-center ion-margin-top">
-                <ion-button type="submit" shape="round" expand="block" class="ion-button ion-margin-bottom">Add Business</ion-button>
+                <ion-button type="submit" shape="round" expand="block"  (click)="saveLocation()" class="ion-button ion-margin-bottom">Add Business</ion-button>
             </ion-col>
         </ion-row>
     </form>

@@ -31,27 +31,39 @@
                 <ion-col size="5">Manger-1</ion-col>
             </ion-row>
 			</ion-grid>
-    <form *ngIf="editProduct">
+    <form [formGroup]="storeProductsForm"  *ngIf="editProduct">
         <ion-item class="ion-ele">
             <ion-label position="floating">Select Store</ion-label>
-            <ion-select>
+            <ion-select formControlName="StoreID" >
                 <ion-select-option value="allstores">All Stores</ion-select-option>
             </ion-select>
             <ion-icon name="cog-outline" slot="start"></ion-icon>
         </ion-item>
+
+        <small  *ngIf="isFormSubmitted &&  StoreID.errors"><span style="color: red;" >*Store Required </span>                 
+        </small>
+
         <ion-item class="ion-ele">
             <ion-label position="floating">Category</ion-label>
-            <ion-input type="text" required></ion-input>
+            <ion-input type="text" formControlName="Category" required></ion-input>
             <ion-icon name="aperture-outline" slot="start"></ion-icon>
         </ion-item>
+
+        <small  *ngIf="isFormSubmitted &&  Category.errors"><span style="color: red;" >*Category Required </span>                 
+        </small>
+
         <ion-item class="ion-ele">
             <ion-label position="floating">Product name</ion-label>
-            <ion-input type="text" required></ion-input>
+            <ion-input type="text" formControlName="ProductName" required></ion-input>
             <ion-icon name="apps-outline" slot="start"></ion-icon>
         </ion-item>
+
+        <small  *ngIf="isFormSubmitted &&  ProductName.errors"><span style="color: red;" >*Product name Required </span>                 
+        </small>
+
         <ion-item class="ion-ele">
             <ion-label position="floating">Units</ion-label>
-            <ion-select>
+            <ion-select formControlName="Units" >
                 <ion-select-option value="kgs">Kgs</ion-select-option>
                 <ion-select-option value="litres">Litres</ion-select-option>
                 <ion-select-option value="items">Items</ion-select-option>
@@ -59,34 +71,58 @@
             </ion-select>
             <ion-icon name="bar-chart-outline" slot="start"></ion-icon>
         </ion-item>
+
+        <small  *ngIf="isFormSubmitted &&  Units.errors"><span style="color: red;" >*Units Required </span>                 
+        </small>
+
         <ion-item class="ion-ele">
             <ion-label position="floating">Quantity</ion-label>
-            <ion-input type="text" required></ion-input>
+            <ion-input type="number" formControlName="Quantity" required></ion-input>
             <ion-icon name="basket-outline" slot="start"></ion-icon>
         </ion-item>
+
+        <small  *ngIf="isFormSubmitted &&  Quantity.errors"><span style="color: red;" >*Quantity Required </span>                 
+        </small>
+
         <ion-item class="ion-ele">
             <ion-label position="floating">Select Discount</ion-label>
-            <ion-select>
+            <ion-select formControlName="DiscountType" >
                 <ion-select-option value="percentage">Percentage</ion-select-option>
                 <ion-select-option value="rupees">Rupees</ion-select-option>
             </ion-select>
             <ion-icon name="code-outline" slot="start"></ion-icon>
         </ion-item>
+
+        <small  *ngIf="isFormSubmitted &&  DiscountType.errors"><span style="color: red;" >*Discount Type Required </span>                 
+        </small>
+
         <ion-item class="ion-ele">
             <ion-label position="floating">Discount</ion-label>
-            <ion-input type="text" required></ion-input>
+            <ion-input type="number" formControlName="Discount" required></ion-input>
             <ion-icon name="pricetag-outline" slot="start"></ion-icon>
         </ion-item>
+
+        <small  *ngIf="isFormSubmitted &&  Discount.errors"><span style="color: red;" >*Discount Required </span>                 
+        </small>
+
         <ion-item class="ion-ele">
             <ion-label position="floating">Price Before Discount</ion-label>
-            <ion-input type="text" required></ion-input>
+            <ion-input type="number" formControlName="PriceBeforeDiscount" required></ion-input>
             <ion-icon name="print-outline" slot="start"></ion-icon>
         </ion-item>
+
+        <small  *ngIf="isFormSubmitted &&  PriceBeforeDiscount.errors"><span style="color: red;" >*Price Before Discount Required </span>                 
+        </small>
+
         <ion-item class="ion-ele">
             <ion-label position="floating">Price After Discount</ion-label>
-            <ion-input type="text" required></ion-input>
+            <ion-input type="number" formControlName="PriceAfterDiscount" required></ion-input>
             <ion-icon name="pricetags-outline" slot="start"></ion-icon>
         </ion-item>
+
+        <small  *ngIf="isFormSubmitted &&  PriceAfterDiscount.errors"><span style="color: red;" >*Price After Discount Required </span>                 
+        </small>
+
         <ion-item class="ion-ele">
             <ion-label position="fixed">Upload Images</ion-label>
             <ion-input type="file" multiple></ion-input>
@@ -94,27 +130,26 @@
         </ion-item>
         <ion-row>
             <ion-col class="ion-text-center ion-margin-top">
-                <ion-button type="submit" shape="round" expand="block" class="ion-margin-bottom ion-button">Add</ion-button>
+                <ion-button type="submit" shape="round" expand="block" (click)="addProduct();" class="ion-margin-bottom ion-button">Add</ion-button>
             </ion-col>
         </ion-row>
-        <ion-grid>
+        <ion-grid *ngIf="showTempList">
             <ion-row>
                 <ion-col size="3">Action</ion-col>
                 <ion-col size="5">Product Name</ion-col>
-                <ion-col size="4">Price After Discount</ion-col>
+                <ion-col size="4">Category</ion-col>
             </ion-row>
-            <ion-row>
+            <ion-row  *ngFor="let product of tempProducts;">
                 <ion-col size="3">
-                    <ion-icon name="trash" class="table-icons" color="danger"></ion-icon>
-                    <ion-icon name="create" class="table-icons"></ion-icon>
+                    <ion-icon name="trash" (click)="deleteProduct(product);" class="table-icons" color="danger"></ion-icon>                 
                 </ion-col>
-                <ion-col size="5"> </ion-col>
-                <ion-col size="4"></ion-col>
+                <ion-col style="font-size: 12px;" >{{ product.ProductName }}</ion-col>
+                <ion-col style="font-size: 12px;">{{ product.Category}}</ion-col>
             </ion-row>
         </ion-grid>
-        <ion-row>
+        <ion-row *ngIf="showTempList">
             <ion-col class="ion-text-center ion-margin-top">
-                <ion-button type="submit" shape="round" expand="block" class="ion-margin-bottom ion-button">Upload</ion-button>
+                <ion-button type="submit" (click)="uploadProduct();" shape="round" expand="block" class="ion-margin-bottom ion-button">Upload</ion-button>
             </ion-col>
         </ion-row>
     </form>
