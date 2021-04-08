@@ -1,0 +1,10 @@
+.accordian {
+    border: 1px solid #bbb;
+    border-radius: 10px;
+    background: transparent;
+    ion-card-content {
+        padding: 0px !important;
+        background-color: #FFF;
+        font-size: 16px;
+    }
+}
