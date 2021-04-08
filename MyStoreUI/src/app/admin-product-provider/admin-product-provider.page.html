@@ -1,7 +1,10 @@
 <ion-content class="ion-padding after-login-bg">
   <h2 class="page-title">Merchant Master</h2>
-
-  <ion-card *ngFor="let item of items" class="accordian">
+  <ion-searchbar  [(ngModel)]="searchTerm" (ionChange)="filterItems()"></ion-searchbar>
+  <ion-icon name="funnel-outline"></ion-icon>
+  <ion-icon name="caret-up-outline" *ngIf="asc" (click)="sorting()"></ion-icon>
+  <ion-icon name="caret-down-outline" *ngIf="!asc" (click)="sorting()"></ion-icon>
+  <ion-card *ngFor="let item of masterData" class="accordian">
     <ion-card-header (click)="expandItem(item)">
       <ion-card-title>{{item.master}}</ion-card-title>
     </ion-card-header>
