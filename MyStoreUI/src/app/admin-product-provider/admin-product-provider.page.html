@@ -1,16 +1,18 @@
 <ion-content class="ion-padding after-login-bg">
   <h2 class="page-title">Merchant Master</h2>
   <ion-searchbar  [(ngModel)]="searchMaster" (ionChange)="filterItems()"></ion-searchbar>
-  <!-- <ion-icon name="funnel-outline" class="filter"></ion-icon>
-  <ion-icon name="caret-up-outline" *ngIf="asc" class="sort" (click)="sorting()"></ion-icon>
-  <ion-icon name="caret-down-outline" *ngIf="!asc" class="sort" (click)="sorting()"></ion-icon> -->
-  <ion-card *ngFor="let item of masterData" class="accordian">
-    <ion-card-header (click)="expandItem(item)">
-      <ion-card-title>{{item.master}}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <app-row-expand-store-provider expandHeight="250px" [expanded]="item.expanded">
-      </app-row-expand-store-provider>
-    </ion-card-content>
-  </ion-card>
+  <ion-grid class="table">
+    <ion-row>
+      <ion-col size="2" style="border-right: none;"></ion-col>
+      <ion-col style="border-left: none;">Master Name</ion-col>      
+    </ion-row>
+    <ion-row *ngFor="let item of masterData">
+      <ion-col size="2" (click)="expandItem(item)" style="border-right: none;">
+        <ion-icon name="chevron-forward-circle-outline" *ngIf="!item.expanded"></ion-icon>
+        <ion-icon name="chevron-down-circle-outline" *ngIf="item.expanded"></ion-icon>
+      </ion-col>
+      <ion-col (click)="expandItem(item)" style="border-left: none;">{{item.master}}</ion-col>
+      <app-row-expand-store-provider [expanded]="item.expanded"></app-row-expand-store-provider>
+    </ion-row>    
+  </ion-grid>
 </ion-content>

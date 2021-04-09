@@ -12,7 +12,6 @@ export class RowExpandStoreProviderComponent implements AfterViewInit {
   public searchStore:string= "";
   @ViewChild("expandWrapper", { read: ElementRef }) expandWrapper: ElementRef;
   @Input("expanded") expanded: boolean;
-  @Input("expandHeight") expandHeight: string = "250px";
 
   constructor(public renderer: Renderer2) {
     this.items = [
@@ -30,7 +29,6 @@ export class RowExpandStoreProviderComponent implements AfterViewInit {
     });
   }
   ngAfterViewInit() {
-    this.renderer.setStyle(this.expandWrapper.nativeElement, "height", this.expandHeight);
   }
   ngOnChanges(SimpleValues:any) {
    this.expanded = SimpleValues.expanded.currentValue;

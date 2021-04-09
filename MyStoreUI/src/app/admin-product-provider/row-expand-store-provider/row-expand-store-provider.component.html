@@ -1,21 +1,21 @@
 <div #expandWrapper class='expand-wrapper' [ngClass]="!expanded ? 'collapsed':'expanded'">
-  <ion-searchbar  placeholder="Search Stores" [(ngModel)]="searchStore" (ionChange)="filterItems()"></ion-searchbar>
+  <!-- <ion-searchbar  placeholder="Search Stores" [(ngModel)]="searchStore" (ionChange)="filterItems()"></ion-searchbar> -->
   <ion-grid class="table">
     <ion-row>
-      <ion-col size="8">
-       Store
+      <ion-col size="8" class="ion-text-center">
+       Store Name
       </ion-col>
-      <ion-col size="4">
+      <ion-col size="4" class="ion-text-center">
         Action
       </ion-col>      
     </ion-row>
     <ion-row *ngFor="let item of storeData">
       <ion-col size="8">{{item.store}}</ion-col>
-      <ion-col size="4">
-        <ion-icon name="alert-circle" *ngIf="item.status != 'Active'"></ion-icon>
-        <ion-icon name="checkbox" *ngIf="item.status == 'Active'"></ion-icon>
-        <ion-icon name="create"></ion-icon>
+      <ion-col size="4" class="ion-text-center">
+        <ion-icon name="alert-circle"  [ngClass]="item.status=='Active' ? 'active' : 'deactive'"></ion-icon>
+        <ion-icon name="checkbox" [ngClass]="item.status!='Active'  ? 'active' : 'deactive'"></ion-icon>
       </ion-col>      
     </ion-row>    
   </ion-grid>
+  
 </div>

@@ -2,14 +2,15 @@
     transition: max-height 0.4s ease-in-out;
     overflow: hidden;
     height: auto;
+    width:90vw;
   }
   
   .collapsed {
     max-height: 0px;
   }
   .expanded {
-    height: 250px;
-    max-height: 250px;
+    height: 200px;
+    max-height: 200px;
     overflow-y: auto;
   }
   .table {
@@ -31,4 +32,13 @@
         color:green;
       }
   }
+  .active {
+    pointer-events: default;
+    opacity: 1;
+  }
+  .deactive {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  
   
