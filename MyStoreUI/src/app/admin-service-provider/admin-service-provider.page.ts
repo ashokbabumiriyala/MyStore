@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminServiceProviderPage implements OnInit {
   public items: any = [];
+  public masterData:any = [];
+  public searchMaster: string = "";
+  public asc:boolean = true;
 
   constructor() {
     this.items = [
@@ -16,8 +19,14 @@ export class AdminServiceProviderPage implements OnInit {
       {master:'Master-4', expanded: false },
       {master:'Master-5', expanded: false }
     ];
+    Object.assign(this.masterData,this.items);
   }
   ngOnInit() {
+  }
+  filterItems() {
+    this.masterData = this.items.filter(item => {
+      return item.master.toLowerCase().indexOf(this.searchMaster.toLowerCase()) > -1;
+    });
   }
   expandItem(item): void {
     if (item.expanded) {

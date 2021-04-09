@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { RowExpandAccordianComponent } from './row-expand-accordian.component';
+import { RowExpandStoreProviderComponent } from './row-expand-store-provider.component';
 
-describe('RowExpandAccordianComponent', () => {
-  let component: RowExpandAccordianComponent;
-  let fixture: ComponentFixture<RowExpandAccordianComponent>;
+describe('RowExpandStoreProviderComponent', () => {
+  let component: RowExpandStoreProviderComponent;
+  let fixture: ComponentFixture<RowExpandStoreProviderComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ RowExpandAccordianComponent ],
+      declarations: [ RowExpandStoreProviderComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(RowExpandAccordianComponent);
+    fixture = TestBed.createComponent(RowExpandStoreProviderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

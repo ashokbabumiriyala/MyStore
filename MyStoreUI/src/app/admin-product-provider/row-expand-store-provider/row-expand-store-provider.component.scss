@@ -1,0 +1,34 @@
+.expand-wrapper {
+    transition: max-height 0.4s ease-in-out;
+    overflow: hidden;
+    height: auto;
+  }
+  
+  .collapsed {
+    max-height: 0px;
+  }
+  .expanded {
+    height: 250px;
+    max-height: 250px;
+    overflow-y: auto;
+  }
+  .table {
+    border-collapse: collapse;
+    ion-col {
+      border: 1px solid #dddddd;
+      text-align: left;
+    }
+    ion-icon {
+      font-size: 25px;
+      padding: 0px 5px !important;
+    }
+      ion-icon[name="alert-circle"] {
+        --ionicon-stroke-width: 16px;
+        color:red;
+      }
+      ion-icon[name="checkbox"] {
+        --ionicon-stroke-width: 16px;
+        color:green;
+      }
+  }
+  

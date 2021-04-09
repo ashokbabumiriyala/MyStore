@@ -1,15 +1,17 @@
 import { Component, AfterViewInit, Input, ViewChild,  ElementRef, Renderer2 } from "@angular/core";
 
 @Component({
-  selector: 'app-row-expand-accordian',
-  templateUrl: './row-expand-accordian.component.html',
-  styleUrls: ['./row-expand-accordian.component.scss'],
+  selector: 'app-row-expand-service-provider',
+  templateUrl: './row-expand-service-provider.component.html',
+  styleUrls: ['./row-expand-service-provider.component.scss'],
 })
-export class RowExpandAccordianComponent implements AfterViewInit {
+export class RowExpandServiceProviderComponent implements AfterViewInit {
   public items: any = [];
+  public storeData:any = [];
+  public searchStore:string= "";
   @ViewChild("expandWrapper", { read: ElementRef }) expandWrapper: ElementRef;
   @Input("expanded") expanded: boolean;
-  @Input("expandHeight") expandHeight: string = "120px";
+  @Input("expandHeight") expandHeight: string = "250px";
 
   constructor(public renderer: Renderer2) {
     this.items = [
@@ -19,8 +21,13 @@ export class RowExpandAccordianComponent implements AfterViewInit {
       {store:'Store-4', status:'Active'},
       {store:'Store-5', status:'Active'}
     ];
+    Object.assign(this.storeData,this.items);
   }
-
+  filterItems() {
+    this.storeData = this.items.filter(item => {
+      return item.store.toLowerCase().indexOf(this.searchStore.toLowerCase()) > -1;
+    });
+  }
   ngAfterViewInit() {
     this.renderer.setStyle(this.expandWrapper.nativeElement, "height", this.expandHeight);
   }

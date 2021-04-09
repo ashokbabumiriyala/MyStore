@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { AdminProductProviderPageRoutingModule } from './admin-product-provider-routing.module';
 
 import { AdminProductProviderPage } from './admin-product-provider.page';
-import { RowExpandAccordianComponent } from '../row-expand-accordian/row-expand-accordian.component';
+import { RowExpandStoreProviderComponent } from './row-expand-store-provider/row-expand-store-provider.component';
 
 @NgModule({
   imports: [
@@ -16,6 +16,6 @@ import { RowExpandAccordianComponent } from '../row-expand-accordian/row-expand-
     IonicModule,
     AdminProductProviderPageRoutingModule
   ],
-  declarations: [AdminProductProviderPage,RowExpandAccordianComponent]
+  declarations: [AdminProductProviderPage,RowExpandStoreProviderComponent]
 })
 export class AdminProductProviderPageModule {}

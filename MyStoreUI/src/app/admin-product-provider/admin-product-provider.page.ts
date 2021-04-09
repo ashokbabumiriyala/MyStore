@@ -8,12 +8,12 @@ import { Component, OnInit } from '@angular/core';
 export class AdminProductProviderPage implements OnInit {
   public items: any = [];
   public masterData:any = [];
-  public searchTerm: string = "";
+  public searchMaster: string = "";
   public asc:boolean = true;
 
   constructor() {
     this.items = [
-      {master:'A', expanded: true },
+      {master:'A', expanded: false },
       {master:'B', expanded: false },
       {master:'C', expanded: false },
       {master:'D', expanded: false },
@@ -25,19 +25,10 @@ export class AdminProductProviderPage implements OnInit {
   }
   sorting() {
     this.asc = !this.asc;
-     this.items.sort(function (a, b) {
-      if(a.master < b.master) {
-        return 1;
-    } else {
-        return -1; 
-    }
-      return 0;
-    });
-    console.log(this.items);
   }
   filterItems() {
     this.masterData = this.items.filter(item => {
-      return item.master.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
+      return item.master.toLowerCase().indexOf(this.searchMaster.toLowerCase()) > -1;
     });
   }
   expandItem(item): void {
