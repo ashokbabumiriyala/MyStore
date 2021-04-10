@@ -43,9 +43,7 @@ export class AppComponent implements OnInit {
     menus.forEach(menu => {
       const menuObject = { title: menu.displayName, id: menu.menuID,icon:menu.icon };
       this.menuItems.push(menuObject);
-    });
-
-    console.log(this.menuItems)
+    });  
   }
   public navigatePage(menuId: number): void {  
     if (menuId === 0 || menuId == null || menuId === undefined) {
@@ -84,7 +82,15 @@ export class AppComponent implements OnInit {
         break;
       case AppConstants.menuNavigation.Services:
         this.router.navigate(['service-provider/services']); 
-        break;     
+        break;    
+        
+        case AppConstants.menuNavigation.AdminStores:
+        this.router.navigate(['admin-product-provider']); 
+        break; 
+
+        case AppConstants.menuNavigation.AdminServices:
+        this.router.navigate(['admin-service-provider']); 
+        break; 
     }
   }
 }

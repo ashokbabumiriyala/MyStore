@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { StoreProductService } from '../store-products/store-product.service'
+import { NavController, ToastController } from '@ionic/angular';
+import {HelperService} from '../../common/helper.service';
 @Component({
   selector: 'app-store-products',
   templateUrl: './store-products.page.html',
@@ -10,14 +12,21 @@ export class StoreProductsPage implements OnInit {
 editProduct:boolean;
 editMaster:boolean;
 storeProductsForm:FormGroup;
-istoreProduct:IStoreProduct;
 isFormSubmitted:boolean;
 showTempList:boolean;
 tempProducts=[];
-constructor(private storeProductService:StoreProductService) { }
+iProductUpload: IProductUpload;
+title:string;
+storeProductsData= [];
+stores=[];
+// Product:IProduct[]=[];
+constructor(private storeProductService:StoreProductService,
+  private   toastController:ToastController,private helperService:HelperService) { }
 
   ngOnInit() {
     this.createStoreProductForm();
+    this.title="Register";   
+    this.storeProductsList();
   }
   get StoreID(){
     return this.storeProductsForm.get('StoreID');
@@ -47,6 +56,24 @@ constructor(private storeProductService:StoreProductService) { }
     return this.storeProductsForm.get('PriceAfterDiscount');
   }
 
+
+  async storeProductsList(){
+
+    const loadingController = await this.helperService.createLoadingController("loading");
+      await loadingController.present();  
+      const selectedStoreId=this.StoreID.value;     
+      const dataObject={Id: Number(sessionStorage.getItem("providerId")),Mode:'Select',StoreId:0};
+      this.storeProductService.storeProductList('ProviderStoreProductsSelect', dataObject)
+      .subscribe((data: any) => {
+        this.stores=data.storeDropdown;
+        this.storeProductsData =data.storeProducts;
+      },
+        (error: any) => {         
+                     
+        });
+        await loadingController.dismiss();
+    }
+
 private createStoreProductForm(){
   this.storeProductsForm = new FormGroup({
     StoreID: new FormControl('', Validators.required),
@@ -67,19 +94,27 @@ addProduct():void{
   }else{
     this.isFormSubmitted=false;
     const serialNumber:number=this.tempProducts.length+1;
-    const productObject = {slNo:Number(serialNumber), StoreID: Number(this.StoreID.value), Category:this.Category.value, 
+    const productObject= {slNo:Number(serialNumber), StoreID:1, Category:this.Category.value, 
       ProductName:this.ProductName.value,
-      Units:String(this.Units.value),Quantity:Number(this.Quantity.value),
-      DiscountType :this.DiscountType.value, discount:Number(this.Discount.value),PriceBeforeDiscount:Number(this.PriceBeforeDiscount.value)
+      Units:this.Units.value,Quantity:Number(this.Quantity.value),
+      DiscountType :this.DiscountType.value, Discount:Number(this.Discount.value),PriceBeforeDiscount:Number(this.PriceBeforeDiscount.value)
        ,PriceAfterDiscount:Number(this.PriceAfterDiscount.value)};
-       this.tempProducts.push(productObject);
+       this.tempProducts.push(productObject);      
        this.showTempList=true;
        this.storeProductsForm.reset();
+       this.presentToast("Store " + this.title+ "  successfully.","success");  
   }
 }
 uploadProduct():void{
-  this.storeProductService.storeProductSave('StoreProductSave', this.tempProducts)
+  this.iProductUpload={
+    tempProducts:[]
+  }
+  Object.assign(this.iProductUpload.tempProducts,this.tempProducts);
+  this.storeProductService.storeProductSave('StoreProductSave', this.iProductUpload)
   .subscribe((data: any) => {     
+    this.tempProducts=[];
+    this.showTempList=false;
+    this.editProduct = false;
   },
     (error: any) => {        
                  
@@ -89,6 +124,7 @@ deleteProduct(rowdata:any){
   this.tempProducts.forEach((element,index)=>{   
     if(Number(element.slNo) ==Number(rowdata.slNo)){    
      this.tempProducts.splice(index,1);
+     
     }
  });
  if(this.tempProducts.length===0){
@@ -99,16 +135,18 @@ deleteProduct(rowdata:any){
 	  this.editProduct = true;
   }
 
+  async presentToast(data: string,tostarColor:string) {
+    const toast = await this.toastController.create({
+      message: data,
+      duration: 2000,
+      position: 'bottom',      
+      color: tostarColor
+    });
+    toast.present();
+  }  
 }
 
-interface IStoreProduct{
-   StoreID :number;
-   Category :string;
-   ProductName :string;
-   Units :string;
-   Quantity:string;
-   DiscountType:string;
-   Discount :number;
-   PriceBeforeDiscount :number;
-   PriceAfterDiscount:number;
+interface IProductUpload{
+ tempProducts:any;
 }
+

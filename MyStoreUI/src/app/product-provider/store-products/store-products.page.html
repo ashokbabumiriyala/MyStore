@@ -10,8 +10,7 @@
 	 <ion-item class="ion-ele sub-store">
 		<ion-label position="floating">Select Store</ion-label>
 		<ion-select>
-			<ion-select-option value="1">Store-1</ion-select-option>
-			<ion-select-option value="2">Store-2</ion-select-option>
+            <ion-select-option  *ngFor="let storeItem of stores"  value="{{storeItem.value}}">{{storeItem.text}}</ion-select-option>
 		</ion-select>
 		<ion-icon name="cog-outline" slot="start"></ion-icon>
      </ion-item>
@@ -31,11 +30,11 @@
                 <ion-col size="5">Manger-1</ion-col>
             </ion-row>
 			</ion-grid>
-    <form [formGroup]="storeProductsForm"  *ngIf="editProduct">
+            <form [formGroup]="storeProductsForm"  *ngIf="editProduct">
         <ion-item class="ion-ele">
             <ion-label position="floating">Select Store</ion-label>
             <ion-select formControlName="StoreID" >
-                <ion-select-option value="allstores">All Stores</ion-select-option>
+                <ion-select-option  *ngFor="let storeItem of stores"  value="{{storeItem.value}}">{{storeItem.text}}</ion-select-option>
             </ion-select>
             <ion-icon name="cog-outline" slot="start"></ion-icon>
         </ion-item>
@@ -152,5 +151,6 @@
                 <ion-button type="submit" (click)="uploadProduct();" shape="round" expand="block" class="ion-margin-bottom ion-button">Upload</ion-button>
             </ion-col>
         </ion-row>
+     
     </form>
 </ion-content>

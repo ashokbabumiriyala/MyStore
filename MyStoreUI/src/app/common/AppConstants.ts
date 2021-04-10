@@ -10,7 +10,9 @@ enum menuNavigation {
     ServiceDashboard=8,
     BusinessMaster=9,
     LocationsSubunits=10,
-    Services=11
+    Services=11,
+    AdminStores=12,
+    AdminServices=13
 }
 export class AppConstants {
 
