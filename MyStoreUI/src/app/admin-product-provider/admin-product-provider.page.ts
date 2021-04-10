@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import {AdminProductProviderService} from '../admin-product-provider/admin-product-provider.service';
+import {HelperService} from '../common/helper.service';
 @Component({
   selector: 'app-admin-product-provider',
   templateUrl: './admin-product-provider.page.html',
@@ -10,39 +11,74 @@ export class AdminProductProviderPage implements OnInit {
   public masterData:any = [];
   public searchMaster: string = "";
   public asc:boolean = true;
+  stores : any = [];
+  showStores:boolean;
+  constructor(private adminProductProviderService:AdminProductProviderService,private helperService:HelperService) {
+    // this.items = [
+    //   {name:'A', expanded: false },
+    //   {name:'B', expanded: false },
+    //   {name:'C', expanded: false },
+    //   {name:'D', expanded: false },
+    //   {name:'E', expanded: false }
+    // ];
+    // Object.assign(this.masterData,this.items);
+  }
+  ngOnInit() {    
+    this.adminStoreMasterList();
+  }
 
-  constructor() {
-    this.items = [
-      {master:'A', expanded: false },
-      {master:'B', expanded: false },
-      {master:'C', expanded: false },
-      {master:'D', expanded: false },
-      {master:'E', expanded: false }
-    ];
-    Object.assign(this.masterData,this.items);
+
+
+async adminStoreMasterList(){
+
+  const loadingController = await this.helperService.createLoadingController("loading");
+    await loadingController.present();  
+   
+    this.adminProductProviderService.adminStoreMasterSelect('AdminStoreMasters')
+    .subscribe((data: any) => {
+    
+     this.items= data;
+     Object.assign(this.masterData,this.items);
+    },
+      (error: any) => {         
+                   
+      });
+      await loadingController.dismiss();
   }
-  ngOnInit() {
-  }
+
   sorting() {
     this.asc = !this.asc;
   }
   filterItems() {
     this.masterData = this.items.filter(item => {
-      return item.master.toLowerCase().indexOf(this.searchMaster.toLowerCase()) > -1;
+      return item.name.toLowerCase().indexOf(this.searchMaster.toLowerCase()) > -1;
     });
   }
-  expandItem(item): void {
+  expandItem(item): void { 
+    this.stores=[];
+    this.showStores=false;  
     if (item.expanded) {
       item.expanded = false;
     } else {
       this.items.map(listItem => {
         if (item == listItem) {
           listItem.expanded = !listItem.expanded;
+          const dataObject={Id: Number(item.id)};
+          this.adminProductProviderService.StoresUnderStoreMasterSelect('StoresUnderStoreMaster',dataObject)
+          .subscribe((data: any) => {
+           this.stores=data;
+           this.showStores=true;  
+          },
+            (error: any) => {         
+                         
+            });
         } else {
           listItem.expanded = false;
         }
         return listItem;
       });
+
+     
     }
   }
 }

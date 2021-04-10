@@ -10,7 +10,7 @@
       </ion-col>      
     </ion-row>
     <ion-row *ngFor="let item of storeData">
-      <ion-col size="8">{{item.store}}</ion-col>
+      <ion-col size="8">{{item.name}}</ion-col>
       <ion-col size="4" class="ion-text-center">
         <ion-icon name="alert-circle"  [ngClass]="item.status=='Active' ? 'active' : 'deactive'"></ion-icon>
         <ion-icon name="checkbox" [ngClass]="item.status!='Active'  ? 'active' : 'deactive'"></ion-icon>

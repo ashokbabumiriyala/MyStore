@@ -11,8 +11,9 @@
         <ion-icon name="chevron-forward-circle-outline" *ngIf="!item.expanded"></ion-icon>
         <ion-icon name="chevron-down-circle-outline" *ngIf="item.expanded"></ion-icon>
       </ion-col>
-      <ion-col (click)="expandItem(item)" style="border-left: none;">{{item.master}}</ion-col>
-      <app-row-expand-store-provider [expanded]="item.expanded"></app-row-expand-store-provider>
+      <ion-col (click)="expandItem(item)" style="border-left: none;">{{item.name}}</ion-col>
+      <app-row-expand-store-provider *ngIf="showStores" [items]="stores" [expanded]="item.expanded"></app-row-expand-store-provider>
     </ion-row>    
   </ion-grid>
 </ion-content>
+

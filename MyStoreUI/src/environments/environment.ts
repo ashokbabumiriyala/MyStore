@@ -7,6 +7,7 @@ export const environment = {
   authenticationServiceUrl: 'https://localhost:44337/api/Authentication/',
   storeMasterServiceUrl: 'https://localhost:44337/api/Store/',
   serviceMasterServiceUrl: 'https://localhost:44337/api/Service/',
+  adminServiceUrl: 'https://localhost:44337/api/Admin/',
   
   //authenticationServiceUrl: 'http://itprototypes.com:5000/api/Authentication/',
 };
