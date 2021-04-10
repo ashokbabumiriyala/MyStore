@@ -1,14 +1,17 @@
 <ion-content class="ion-padding after-login-bg">
   <h2 class="page-title">Service Master</h2>
   <ion-searchbar placeholder="Search Service Master"  [(ngModel)]="searchMaster" (ionChange)="filterItems()"></ion-searchbar>
-
-  <ion-card *ngFor="let item of masterData" class="accordian">
-    <ion-card-header (click)="expandItem(item)">
-      <ion-card-title>{{item.master}}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <app-row-expand-service-provider expandHeight="250px" [expanded]="item.expanded">
-      </app-row-expand-service-provider>
-    </ion-card-content>
-  </ion-card>
+   <ion-grid class="table">
+    <ion-row>
+      <ion-item class="ion-padding-start">Master Name</ion-item>
+    </ion-row>
+    <ion-row *ngFor="let item of masterData">
+      <ion-item (click)="expandItem(item)" class="ion-no-border">
+        <ion-icon slot="start" name="chevron-forward-circle-outline" *ngIf="!item.expanded"></ion-icon>
+        <ion-icon slot="start" name="chevron-down-circle-outline" *ngIf="item.expanded"></ion-icon>
+        <h5 class="ion-no-border">{{item.master}}</h5>
+        </ion-item>
+        <app-row-expand-service-provider  [expanded]="item.expanded"></app-row-expand-service-provider>
+    </ion-row>    
+  </ion-grid>
 </ion-content>

@@ -10,7 +10,6 @@ export class AdminProductProviderPage implements OnInit {
   public items: any = [];
   public masterData:any = [];
   public searchMaster: string = "";
-  public asc:boolean = true;
   stores : any = [];
   showStores:boolean;
   constructor(private adminProductProviderService:AdminProductProviderService,private helperService:HelperService) {
@@ -44,10 +43,6 @@ async adminStoreMasterList(){
                    
       });
       await loadingController.dismiss();
-  }
-
-  sorting() {
-    this.asc = !this.asc;
   }
   filterItems() {
     this.masterData = this.items.filter(item => {

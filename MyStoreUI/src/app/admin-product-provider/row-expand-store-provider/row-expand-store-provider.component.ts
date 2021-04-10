@@ -15,20 +15,17 @@ export class RowExpandStoreProviderComponent implements OnInit {
 
   constructor(public renderer: Renderer2) {
     // this.items = [
-    //   {name:'Store-1', status:'Deactive'},
-    //   {name:'Store-2', status:'Deactive'},
-    //   {name:'Store-3', status:'Deactive'},
-    //   {name:'Store-4', status:'Active'},
-    //   {name:'Store-5', status:'Active'}
+    //   {name:'Store-1', status:true},
+    //   {name:'Store-2', status:false},
+    //   {name:'Store-3', status:true},
+    //   {name:'Store-4', status:true},
+    //   {name:'Store-5', status:false}
     // ];
     // Object.assign(this.storeData,this.items);
   } 
-  // ngAfterViewInit() {
-  // }
 
   ngOnInit() {   
     Object.assign(this.storeData,this.items);
-    console.log(this.items);
   }
 
   ngOnChanges(SimpleValues:any) {

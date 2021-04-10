@@ -1,34 +1,43 @@
 .expand-wrapper {
-    transition: max-height 0.4s ease-in-out;
-    overflow: hidden;
-    height: auto;
+  transition: max-height 0.4s ease-in-out;
+  overflow: hidden;
+  height: auto;
+  width:90vw;
+}
+
+.collapsed {
+  max-height: 0px;
+}
+.expanded {
+  height: 200px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.table {
+  border-collapse: collapse;
+  ion-col {
+    border: 1px solid #bbb;
+    text-align: left;
   }
-  
-  .collapsed {
-    max-height: 0px;
+  ion-icon {
+    font-size: 25px;
+    padding: 0px 5px !important;
   }
-  .expanded {
-    height: 250px;
-    max-height: 250px;
-    overflow-y: auto;
-  }
-  .table {
-    border-collapse: collapse;
-    ion-col {
-      border: 1px solid #dddddd;
-      text-align: left;
+    ion-icon[name="alert-circle"] {
+      --ionicon-stroke-width: 16px;
+      color:red;
     }
-    ion-icon {
-      font-size: 25px;
-      padding: 0px 5px !important;
+    ion-icon[name="checkbox"] {
+      --ionicon-stroke-width: 16px;
+      color:green;
     }
-      ion-icon[name="alert-circle"] {
-        --ionicon-stroke-width: 16px;
-        color:red;
-      }
-      ion-icon[name="checkbox"] {
-        --ionicon-stroke-width: 16px;
-        color:green;
-      }
-  }
-  
+}
+.active {
+  pointer-events: default;
+  opacity: 1;
+}
+.deactive {
+  pointer-events: none;
+  opacity: 0.5;
+}
+

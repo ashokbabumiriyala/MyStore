@@ -9,7 +9,6 @@ export class AdminServiceProviderPage implements OnInit {
   public items: any = [];
   public masterData:any = [];
   public searchMaster: string = "";
-  public asc:boolean = true;
 
   constructor() {
     this.items = [

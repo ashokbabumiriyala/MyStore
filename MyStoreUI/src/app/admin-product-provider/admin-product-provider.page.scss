@@ -15,8 +15,12 @@
 
 .table {
     border-collapse: collapse;
-    ion-col {
-      border: 1px solid #dddddd;
+    ion-row {
+      border: 1px solid #bbb;
+    }
+    ion-item {
+      width: 100%;
+    --background: transparent;
       text-align: left;
     }
     ion-icon {

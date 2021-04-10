@@ -3,16 +3,15 @@
   <ion-searchbar  [(ngModel)]="searchMaster" (ionChange)="filterItems()"></ion-searchbar>
   <ion-grid class="table">
     <ion-row>
-      <ion-col size="2" style="border-right: none;"></ion-col>
-      <ion-col style="border-left: none;">Master Name</ion-col>      
+      <ion-item class="ion-padding-start">Master Name</ion-item>
     </ion-row>
     <ion-row *ngFor="let item of masterData">
-      <ion-col size="2" (click)="expandItem(item)" style="border-right: none;">
-        <ion-icon name="chevron-forward-circle-outline" *ngIf="!item.expanded"></ion-icon>
-        <ion-icon name="chevron-down-circle-outline" *ngIf="item.expanded"></ion-icon>
-      </ion-col>
-      <ion-col (click)="expandItem(item)" style="border-left: none;">{{item.name}}</ion-col>
-      <app-row-expand-store-provider *ngIf="showStores" [items]="stores" [expanded]="item.expanded"></app-row-expand-store-provider>
+      <ion-item (click)="expandItem(item)" class="ion-no-border">
+        <ion-icon slot="start" name="chevron-forward-circle-outline" *ngIf="!item.expanded"></ion-icon>
+        <ion-icon slot="start" name="chevron-down-circle-outline" *ngIf="item.expanded"></ion-icon>
+        <h5 class="ion-no-border">{{item.name}}</h5>
+        </ion-item>
+      <app-row-expand-store-provider *ngIf="showStores"  [expanded]="item.expanded"></app-row-expand-store-provider>
     </ion-row>    
   </ion-grid>
 </ion-content>
