@@ -127,6 +127,7 @@ async storeMasterListSelect(){
       AccountHolderName: this.AccountHolderName.value, AccountNumber: this.AccountNumber.value.toString(), IFSCCode: this.IFSCCode.value,
       BranchName: this.BranchName.value,Id:this.storeId,Mode:this.title
     };
+    console.log(this.istoreMaster);
     this.StoreMasterService.storeMasterSave('StoreMasterSave', this.istoreMaster)
     .subscribe((data: any) => {      
       this.presentToast("Store master " + this.title+ "  successfully.","success");

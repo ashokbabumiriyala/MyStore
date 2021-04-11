@@ -3,7 +3,7 @@
   <ion-searchbar  [(ngModel)]="searchMaster" (ionChange)="filterItems()"></ion-searchbar>
   <ion-grid class="table">
     <ion-row>
-      <ion-item class="ion-padding-start">Master Name</ion-item>
+      <ion-item class="ion-padding-start">Store Master Name</ion-item>
     </ion-row>
     <ion-row *ngFor="let item of masterData">
       <ion-item (click)="expandItem(item)" class="ion-no-border">
@@ -11,7 +11,7 @@
         <ion-icon slot="start" name="chevron-down-circle-outline" *ngIf="item.expanded"></ion-icon>
         <h5 class="ion-no-border">{{item.name}}</h5>
         </ion-item>
-      <app-row-expand-store-provider *ngIf="showStores"  [expanded]="item.expanded"></app-row-expand-store-provider>
+      <app-row-expand-store-provider *ngIf="showStores" [items]="stores"  [expanded]="item.expanded"></app-row-expand-store-provider>
     </ion-row>    
   </ion-grid>
 </ion-content>

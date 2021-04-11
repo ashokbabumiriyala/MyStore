@@ -1,17 +1,17 @@
 <ion-content class="ion-padding after-login-bg">
   <h2 class="page-title">Service Master</h2>
-  <ion-searchbar placeholder="Search Service Master"  [(ngModel)]="searchMaster" (ionChange)="filterItems()"></ion-searchbar>
-   <ion-grid class="table">
+  <ion-searchbar placeholder="Search Service Master"  [(ngModel)]="searchService" (ionChange)="filterItems()"></ion-searchbar>
+  <ion-grid class="table">
     <ion-row>
-      <ion-item class="ion-padding-start">Master Name</ion-item>
+      <ion-item class="ion-padding-start">Service Master Name</ion-item>
     </ion-row>
-    <ion-row *ngFor="let item of masterData">
+    <ion-row *ngFor="let item of serviceData">
       <ion-item (click)="expandItem(item)" class="ion-no-border">
         <ion-icon slot="start" name="chevron-forward-circle-outline" *ngIf="!item.expanded"></ion-icon>
         <ion-icon slot="start" name="chevron-down-circle-outline" *ngIf="item.expanded"></ion-icon>
-        <h5 class="ion-no-border">{{item.master}}</h5>
+        <h5 class="ion-no-border">{{item.businessName}}</h5>
         </ion-item>
-        <app-row-expand-service-provider  [expanded]="item.expanded"></app-row-expand-service-provider>
+       
     </ion-row>    
   </ion-grid>
 </ion-content>

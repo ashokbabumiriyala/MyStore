@@ -12,7 +12,8 @@ export class AdminProductProviderPage implements OnInit {
   public searchMaster: string = "";
   stores : any = [];
   showStores:boolean;
-  constructor(private adminProductProviderService:AdminProductProviderService,private helperService:HelperService) {
+  constructor(private adminProductProviderService:AdminProductProviderService,
+    private helperService:HelperService) {
     // this.items = [
     //   {name:'A', expanded: false },
     //   {name:'B', expanded: false },
@@ -25,22 +26,16 @@ export class AdminProductProviderPage implements OnInit {
   ngOnInit() {    
     this.adminStoreMasterList();
   }
-
-
-
 async adminStoreMasterList(){
 
   const loadingController = await this.helperService.createLoadingController("loading");
-    await loadingController.present();  
-   
+    await loadingController.present(); 
     this.adminProductProviderService.adminStoreMasterSelect('AdminStoreMasters')
     .subscribe((data: any) => {
-    
      this.items= data;
      Object.assign(this.masterData,this.items);
     },
-      (error: any) => {         
-                   
+      (error: any) => {    
       });
       await loadingController.dismiss();
   }
@@ -58,7 +53,17 @@ async adminStoreMasterList(){
       this.items.map(listItem => {
         if (item == listItem) {
           listItem.expanded = !listItem.expanded;
-          const dataObject={Id: Number(item.id)};
+          this.getStoresByStoreMaster(Number(item.id));          
+        } else {
+          listItem.expanded = false;        }
+        return listItem;
+      });     
+    }
+  }
+
+  public getStoresByStoreMaster(storeId:number)
+  {
+    const dataObject={Id: storeId};
           this.adminProductProviderService.StoresUnderStoreMasterSelect('StoresUnderStoreMaster',dataObject)
           .subscribe((data: any) => {
            this.stores=data;
@@ -67,13 +72,5 @@ async adminStoreMasterList(){
             (error: any) => {         
                          
             });
-        } else {
-          listItem.expanded = false;
-        }
-        return listItem;
-      });
-
-     
-    }
   }
 }

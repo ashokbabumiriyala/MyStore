@@ -98,8 +98,8 @@ locationId:number;
 //#region   list
 async serviceLocationListSelect(){  
   const loadingController = await this.helperService.createLoadingController("loading");
-  await loadingController.present();  
-  const dataObject={Id: Number(sessionStorage.getItem("providerId")),Mode:'Select'};
+  await loadingController.present();
+  const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Mode:'Select'}; 
   this.serviceLocationService.locationListSelect('serviceLocationSelect', dataObject)
   .subscribe((data: any) => {  
     this.serviceMaster=data.serviceMaster;
@@ -133,7 +133,9 @@ async serviceLocationListSelect(){
       
         this.serviceLocationForm.reset();
         this.editLocation=false;
-         this.serviceLocationListSelect();   
+        this.serviceLocationListSelect();   
+        this.isFormSubmitted=false;
+        
       },
         (error: any) => {        
                      
@@ -158,7 +160,7 @@ editServiceInfo(rowdata:any) {
   }else{
     this.locationId=rowdata.id;
     this.title="Update";
-    const dataObject={Id: Number(rowdata.id),Mode:'Edit'};
+    const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Id: Number(rowdata.id),Mode:'Edit'};
     this.serviceLocationService.locationListSelect('serviceLocationSelect', dataObject)
     .subscribe((data: any) => {
       this.serviceMaster=[];

@@ -114,6 +114,7 @@ async serviceMasterListSelect(){
       AccountHolderName: this.AccountHolderName.value, AccountNumber: String(this.AccountNumber.value), IFSCCode: this.IFSCCode.value,
       BranchName: this.BranchName.value,Id:this.serviceId,Mode:this.title
     };
+    console.log(this.iServiceMaster);
     this.serviceMasterService.serviceMasterSave('ServiceMasterSave', this.iServiceMaster)
     .subscribe((data: any) => {      
       this.presentToast("Store master " + this.title+ "  successfully.","success");

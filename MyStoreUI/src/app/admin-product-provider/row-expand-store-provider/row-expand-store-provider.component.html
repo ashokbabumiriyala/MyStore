@@ -12,8 +12,8 @@
     <ion-row *ngFor="let item of storeData">
       <ion-col size="8">{{item.name}}</ion-col>
       <ion-col size="4" class="ion-text-center">
-        <ion-icon name="alert-circle" *ngIf="!item.status"></ion-icon>
-        <ion-icon name="checkbox" *ngIf="item.status"></ion-icon>
+        <ion-icon name="alert-circle" (click)="changeStatus(item)" *ngIf="!item.status"></ion-icon>
+        <ion-icon name="checkbox" (click)="changeStatus(item)" *ngIf="item.status"></ion-icon>
       </ion-col>      
     </ion-row>    
   </ion-grid>

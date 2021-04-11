@@ -34,7 +34,7 @@ async subStoreList(){
 
 const loadingController = await this.helperService.createLoadingController("loading");
   await loadingController.present();  
-  const dataObject={Id: Number(sessionStorage.getItem("providerId")),Mode:'Select'};
+  const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Mode:'Select'};
   this.singleStoreService.subStoreListSelect('ProviderSubStoreSelect', dataObject)
   .subscribe((data: any) => {
    this.masterStore= data.storeMaster;
@@ -133,6 +133,7 @@ async saveStore():Promise<void>{
       this.presentToast("Store " + this.title+ "  successfully.","success");  
       this.editStore=false;
       this.singleStoreFormGroup.reset();
+      this.isFormSubmitted=false
       this.subStoreList();   
     },
       (error: any) => {        
@@ -147,8 +148,8 @@ editStoreInfo(rowdata:any){
   if(rowdata==null){
     this.storeId=0;
     this.title="Register";
-  }else{
-    const dataObject={Id: Number(rowdata.id),Mode:'Edit'};   
+  }else{   
+    const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Id: Number(rowdata.id),Mode:'Edit'};
     this.storeId=Number(rowdata.id);
     this.singleStoreService.subStoreListSelect('ProviderSubStoreSelect', dataObject)
     .subscribe((data: any) => { 
