@@ -65,7 +65,7 @@ export class AdminServiceProviderPage implements OnInit {
 
   public getLocationsByServiceMaster(serviceId:number)
   {   
-    const dataObject={ServiceId: serviceId};
+    const dataObject={Id: serviceId};
           this.adminServiceProviderService.LocationUnderServiceMasterSelect('ServicesUnderServiceMaster',dataObject)
           .subscribe((data: any) => {           
            this.locations=data;

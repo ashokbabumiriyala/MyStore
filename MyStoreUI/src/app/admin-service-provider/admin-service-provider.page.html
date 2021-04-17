@@ -11,7 +11,7 @@
         <ion-icon slot="start" name="chevron-down-circle-outline" *ngIf="item.expanded"></ion-icon>
         <h5 class="ion-no-border">{{item.businessName}}</h5>
         </ion-item>
-       
+        <app-row-expand-service-provider *ngIf="showServices" [items]="locations"  [expanded]="item.expanded"></app-row-expand-service-provider>
     </ion-row>    
   </ion-grid>
 </ion-content>

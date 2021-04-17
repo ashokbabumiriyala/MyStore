@@ -51,7 +51,7 @@ export class LoginPage implements OnInit {
     const loadingController = await this.helperService.createLoadingController("loading");
     await loadingController.present(); 
     const dataObject = { ProviderUserName:this.providerName.value,Password:this.password.value };
-    this.registrationServiceService.validateUser('ProviderLogin', dataObject)
+    await  this.registrationServiceService.validateUser('ProviderLogin', dataObject)
       .subscribe((data: any) => {       
         sessionStorage.setItem("AuthToken",data.token);    
         sessionStorage.setItem("providerId", data.providerId);      
@@ -63,11 +63,13 @@ export class LoginPage implements OnInit {
       };    
        this.helperService.setProfileObs(providerDetails);
        this.presentToast("login success.","success");
+       loadingController.dismiss();
       },
         (error: any) => {         
             this.presentToast("Invalid User Name or Password.","danger");
+            loadingController.dismiss();
         });
-        await loadingController.dismiss();
+     
   }
 
 }

@@ -3,6 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { StoreProductService } from '../store-products/store-product.service'
 import { NavController, ToastController } from '@ionic/angular';
 import {HelperService} from '../../common/helper.service';
+
+declare var file;
+
 @Component({
   selector: 'app-store-products',
   templateUrl: './store-products.page.html',
@@ -19,9 +22,11 @@ iProductUpload: IProductUpload;
 title:string;
 storeProductsData= [];
 stores=[];
-// Product:IProduct[]=[];
 constructor(private storeProductService:StoreProductService,
-  private   toastController:ToastController,private helperService:HelperService) { }
+  private   toastController:ToastController,
+  private helperService:HelperService
+
+  ) { }
 
   ngOnInit() {
     this.createStoreProductForm();
@@ -55,25 +60,53 @@ constructor(private storeProductService:StoreProductService,
   get PriceAfterDiscount(){
     return this.storeProductsForm.get('PriceAfterDiscount');
   }
-
-
   async storeProductsList(){
-
     const loadingController = await this.helperService.createLoadingController("loading");
       await loadingController.present();  
       const selectedStoreId=this.StoreID.value;     
-      const dataObject={Id: Number(sessionStorage.getItem("providerId")),Mode:'Select',StoreId:0};
+      const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Mode:'Select',StoreId:0};
       this.storeProductService.storeProductList('ProviderStoreProductsSelect', dataObject)
       .subscribe((data: any) => {
         this.stores=data.storeDropdown;
-        this.storeProductsData =data.storeProducts;
+        this.storeProductsData =data.storeProducts;        
       },
-        (error: any) => {         
-                     
+        (error: any) => {
         });
         await loadingController.dismiss();
     }
-
+uploadDoc() {
+      // this.chooser.getFile()
+      //   .then((file) => {
+      //     this.file.resolveLocalFilesystemUrl(file.uri).then((entry: FileEntry) => {
+      //       entry.file(file => {  
+      //         const formData = new FormData();
+      //         const reader = new FileReader();
+      //         reader.onload = () => {
+      //           const blob = new Blob([reader.result], {
+      //             type: file.type
+      //           });
+      //           formData.append('Files', blob, file.name);
+      //           // this.uploadDocumentService.uploadPhoto('RasidInspectionDocumentsUpload', formData)
+      //           //   .subscribe((result: any) => {
+      //           //     if (result.responseCode === 6000) {
+      //           //       // Get Updated Documents List
+      //           //       this.getUploadDocumentsList();
+      //           //     } else {
+      //           //       this.sharedService.presentToast('Error Code: ' + result.responseCode);
+      //           //     }  
+      //           //   },
+      //           //     () => {
+      //           //       // this.showLoadingIndicator = false;
+      //           //       this.sharedService.presentToast(this.translate.instant('Common.somethingWentWrong'));
+      //           //       this.sharedService.navigateToLogin();
+      //           //     });
+      //         };
+      //         reader.readAsArrayBuffer(file);  
+      //       });
+      //     });
+      //   })
+      //   .catch((error: any) => console.error(error));
+}
 private createStoreProductForm(){
   this.storeProductsForm = new FormGroup({
     StoreID: new FormControl('', Validators.required),
@@ -94,7 +127,7 @@ addProduct():void{
   }else{
     this.isFormSubmitted=false;
     const serialNumber:number=this.tempProducts.length+1;
-    const productObject= {slNo:Number(serialNumber), StoreID:1, Category:this.Category.value, 
+    const productObject= {slNo:Number(serialNumber), StoreID:this.StoreID.value, Category:this.Category.value, 
       ProductName:this.ProductName.value,
       Units:this.Units.value,Quantity:Number(this.Quantity.value),
       DiscountType :this.DiscountType.value, Discount:Number(this.Discount.value),PriceBeforeDiscount:Number(this.PriceBeforeDiscount.value)
@@ -102,7 +135,8 @@ addProduct():void{
        this.tempProducts.push(productObject);      
        this.showTempList=true;
        this.storeProductsForm.reset();
-       this.presentToast("Store " + this.title+ "  successfully.","success");  
+       this.uploadDoc();
+      //  this.presentToast("Store " + this.title+ "  successfully.","success");  
   }
 }
 uploadProduct():void{
@@ -131,10 +165,9 @@ deleteProduct(rowdata:any){
   this.showTempList=false;
  }
 }
-  editProductInfo(){
+editProductInfo(){
 	  this.editProduct = true;
-  }
-
+}
   async presentToast(data: string,tostarColor:string) {
     const toast = await this.toastController.create({
       message: data,
@@ -145,7 +178,6 @@ deleteProduct(rowdata:any){
     toast.present();
   }  
 }
-
 interface IProductUpload{
  tempProducts:any;
 }

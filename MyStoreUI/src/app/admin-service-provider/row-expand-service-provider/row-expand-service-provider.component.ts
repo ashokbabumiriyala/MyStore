@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Input, ViewChild,  ElementRef, Renderer2 } from "@angular/core";
+import { Component, AfterViewInit, Input, ViewChild,  ElementRef, Renderer2, OnInit } from "@angular/core";
 import {AdminServiceProviderService} from '../admin-service-provider.service'
 import { NavController, ToastController } from '@ionic/angular';
 @Component({
@@ -6,11 +6,11 @@ import { NavController, ToastController } from '@ionic/angular';
   templateUrl: './row-expand-service-provider.component.html',
   styleUrls: ['./row-expand-service-provider.component.scss'],
 })
-export class RowExpandServiceProviderComponent implements AfterViewInit {
+export class RowExpandServiceProviderComponent implements  OnInit  {
 
   @ViewChild("expandWrapper", { read: ElementRef }) expandWrapper: ElementRef;
   @Input("expandHeight") expandHeight: string = "250px";
-  @Input() locations: any = [];
+  @Input() items: any = [];
   serviceData:any = [];
   public searchService:string= "";
   @Input("expanded") expanded: boolean;
@@ -27,18 +27,22 @@ export class RowExpandServiceProviderComponent implements AfterViewInit {
     //   {name:'Store-4', status:true},
     //   {name:'Store-5', status:false}
     // ];
-    Object.assign(this.serviceData,this.locations);
-    debugger;
-    console.log(this.serviceData);
+    // Object.assign(this.serviceData,this.locations);   
+    // console.log(this.serviceData);
   }
+
+  ngOnInit() { 
+    Object.assign(this.serviceData,this.items);
+  }
+
   filterItems() {
-    this.serviceData = this.locations.filter(item => {
+    this.serviceData = this.items.filter(item => {
       return item.store.toLowerCase().indexOf(this.searchService.toLowerCase()) > -1;
     });
   }
-  ngAfterViewInit() {
-    this.renderer.setStyle(this.expandWrapper.nativeElement, "height", this.expandHeight);
-  }
+  // ngAfterViewInit() {
+  //   this.renderer.setStyle(this.expandWrapper.nativeElement, "height", this.expandHeight);
+  // }
   ngOnChanges(SimpleValues:any) {
    this.expanded = SimpleValues.expanded.currentValue;
   }
@@ -62,9 +66,9 @@ export class RowExpandServiceProviderComponent implements AfterViewInit {
      const dataObject={Id:Number(data.serviceMasterID)};
      this.adminServiceProviderService.LocationUnderServiceMasterSelect('ServicesUnderServiceMaster',dataObject)
      .subscribe((data: any) => {
-       this.locations=[];
-       this.locations=data;
-      Object.assign(this.serviceData,this.locations);
+       this.items=[];
+       this.items=data;
+      Object.assign(this.serviceData,this.items);
       this.presentToast(this.title,this.color);  
      },
        (error: any) => {
