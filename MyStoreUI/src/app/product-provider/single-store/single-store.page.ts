@@ -41,7 +41,6 @@ const loadingController = await this.helperService.createLoadingController("load
    this.storeType= data.provideStoreType;
     if(data.provideStoreList.length>0){   
       this.provideSubStoreList=data.provideStoreList;
-
     }else{
       this.provideSubStoreList=[];   
     }  

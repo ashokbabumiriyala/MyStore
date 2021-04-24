@@ -9,13 +9,15 @@ export const environment = {
   serviceMasterServiceUrl: 'https://localhost:44337/api/Service/',
   adminServiceUrl: 'https://localhost:44337/api/Admin/',
 
+  // authenticationServiceUrl: 'http://my3api.itprototypes.com/api/Authentication/',
+  // storeMasterServiceUrl: 'http://my3api.itprototypes.com/api/Store/',
+  // serviceMasterServiceUrl: 'http://my3api.itprototypes.com/api/Service/',
+  // adminServiceUrl: 'http://my3api.itprototypes.com/api/Admin/',
 
-  // authenticationServiceUrl: 'https://my3api.itprototypes.com/api/Authentication/',
-  // storeMasterServiceUrl: 'https://my3api.itprototypes.com/api/Store/',
-  // serviceMasterServiceUrl: 'https://my3api.itprototypes.com/api/Service/',
-  // adminServiceUrl: 'https://my3api.itprototypes.com/api/Admin/',
 
-  //authenticationServiceUrl: 'http://itprototypes.com:5000/api/Authentication/',
+
+  
+
 };
 /*
  * For easier debugging in development mode, you can import the following file
