@@ -25,9 +25,14 @@
         "@ionic-native/core": "^5.32.1",
         "@ionic/angular": "^5.5.2",
         "chart.js": "^2.9.4",
+        "cordova-common": "^4.0.2",
+        "human-signals": "^2.1.0",
         "ionic-angular": "^3.9.10",
         "ionic-stepper": "^1.1.0",
+        "osenv": "^0.1.5",
+        "properties-parser": "^0.3.1",
         "rxjs": "~6.6.0",
+        "strip-final-newline": "^2.0.0",
         "tslib": "^2.0.0",
         "zone.js": "~0.10.2"
     },
@@ -55,7 +60,6 @@
         "karma-chrome-launcher": "~3.1.0",
         "karma-coverage": "~2.0.3",
         "karma-coverage-istanbul-reporter": "~3.0.2",
-        
         "karma-jasmine": "~4.0.0",
         "karma-jasmine-html-reporter": "^1.5.0",
         "protractor": "~7.0.0",

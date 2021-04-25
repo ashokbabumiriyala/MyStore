@@ -4,8 +4,4 @@ export const environment = {
   storeMasterServiceUrl: 'http://my3api.itprototypes.com/api/Store/',
   serviceMasterServiceUrl: 'http://my3api.itprototypes.com/api/Service/',
   adminServiceUrl: 'http://my3api.itprototypes.com/api/Admin/',
-
-
-
-  
 };
