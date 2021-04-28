@@ -6,11 +6,14 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { Camera } from '@ionic-native/camera/ngx';
+// import { FCM } from '@ionic-native/fcm/ngx';
+import { FCM } from "cordova-plugin-fcm-with-dependecy-updated/ionic/ngx";
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, HttpClientModule, IonicModule.forRoot(), AppRoutingModule],
   providers: [ Camera,
+    FCM,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })

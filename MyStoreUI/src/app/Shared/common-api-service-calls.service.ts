@@ -15,8 +15,9 @@ export class CommonApiServiceCallsService {
   createHttpHeader() {
     this.httpHeaders = new HttpHeaders();
     let authToken: any;
-    authToken = JSON.parse(sessionStorage.getItem('AuthToken'));   
+    authToken = JSON.parse(sessionStorage.getItem('AuthToken'));
     if (authToken != null && authToken !== undefined) {
+      this.httpHeaders = this.httpHeaders.set('Access-Control-Allow-Origin', '*');
       this.httpHeaders = this.httpHeaders.set('Content-Type', 'application/json');
       this.httpHeaders = this.httpHeaders.set('Authorization', 'Bearer ' + authToken);
     }
@@ -97,11 +98,11 @@ export class CommonApiServiceCallsService {
     const toast = await this.toastController.create({
       message: data,
       duration: 2000,
-      position: 'top',      
+      position: 'top',
       color: tostarColor
     });
     toast.present();
   }
- 
+
 }
 

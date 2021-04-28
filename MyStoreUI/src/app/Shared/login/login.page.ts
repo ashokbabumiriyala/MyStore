@@ -28,48 +28,48 @@ export class LoginPage implements OnInit {
   get password() {
     return this.loginFormGroup.get('password');
   }
-  private createloginForm() {   
+  private createloginForm() {
     this.loginFormGroup = new FormGroup({
       providerName: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required)      
+      password: new FormControl('', Validators.required)
     });
   }
   async presentToast(data: string,tostarColor:string) {
     const toast = await this.toastController.create({
       message: data,
       duration: 2000,
-      position: 'bottom',      
+      position: 'bottom',
       color: tostarColor
     });
     toast.present();
   }
-  async validateUser(): Promise<void> {   
+  async validateUser(): Promise<void> {
     this.isFormSubmitted = true;
     if (this.loginFormGroup.invalid) {
       return;
-    }   
+    }
     const loadingController = await this.helperService.createLoadingController("loading");
-    await loadingController.present(); 
-    const dataObject = { ProviderUserName:this.providerName.value,Password:this.password.value };
+    await loadingController.present();
+    const dataObject = { ProviderUserName:this.providerName.value,Password:this.password.value, pushToken: sessionStorage.getItem('PushToken') };
     await  this.registrationServiceService.validateUser('ProviderLogin', dataObject)
-      .subscribe((data: any) => {       
-        sessionStorage.setItem("AuthToken",data.token);    
-        sessionStorage.setItem("providerId", data.providerId);      
+      .subscribe((data: any) => {
+        sessionStorage.setItem("AuthToken",data.token);
+        sessionStorage.setItem("providerId", data.providerId);
       let providerDetails:IProviderDetails
       providerDetails = {
-        name: data.providerName, roleId: data.providerRoleId, 
+        name: data.providerName, roleId: data.providerRoleId,
         providerId: data.providerId,
-        menus: data.menuItems, defaultMenuId: data.defaultMenuId       
-      };    
+        menus: data.menuItems, defaultMenuId: data.defaultMenuId
+      };
        this.helperService.setProfileObs(providerDetails);
        this.presentToast("login success.","success");
        loadingController.dismiss();
       },
-        (error: any) => {         
+        (error: any) => {
             this.presentToast("Invalid User Name or Password.","danger");
             loadingController.dismiss();
         });
-     
+
   }
 
 }

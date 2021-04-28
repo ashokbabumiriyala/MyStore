@@ -45,6 +45,10 @@ const routes: Routes = [
   {
     path: 'admin-service-provider',
     loadChildren: () => import('./admin-service-provider/admin-service-provider.module').then( m => m.AdminServiceProviderPageModule)
+  },
+  {
+    path: 'send-notification',
+    loadChildren: () => import('./send-notification/send-notification.module').then( m => m.SendNotificationPageModule)
   }
 
 
