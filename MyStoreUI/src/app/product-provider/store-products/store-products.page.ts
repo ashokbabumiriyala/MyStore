@@ -77,6 +77,7 @@ constructor(private storeProductService:StoreProductService,
       const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Mode:'Select',StoreId:0};
       this.storeProductService.storeProductList('ProviderStoreProductsSelect', dataObject)
       .subscribe((data: any) => {
+        console.log(data);
         this.stores=data.storeDropdown;
         this.storeProductsData =data.storeProducts;        
       },
@@ -85,14 +86,12 @@ constructor(private storeProductService:StoreProductService,
         await loadingController.dismiss();
     }
 uploadDoc() {
-
   const options: CameraOptions = {
     quality: 100,
     destinationType: this.camera.DestinationType.FILE_URI,
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE
   }
-
 
   this.camera.getPicture(options).then((imageData) => {
     // imageData is either a base64 encoded string or a file URI
@@ -155,16 +154,14 @@ addProduct():void{
   }else{
     this.isFormSubmitted=false;
     const serialNumber:number=this.tempProducts.length+1;
-    const productObject= {slNo:Number(serialNumber), StoreID:this.StoreID.value, Category:this.Category.value, 
+    const productObject= {slNo:Number(serialNumber), StoreID:Number(this.StoreID.value), Category:this.Category.value, 
       ProductName:this.ProductName.value,
       Units:this.Units.value,Quantity:Number(this.Quantity.value),
       DiscountType :this.DiscountType.value, Discount:Number(this.Discount.value),PriceBeforeDiscount:Number(this.PriceBeforeDiscount.value)
        ,PriceAfterDiscount:Number(this.PriceAfterDiscount.value)};
        this.tempProducts.push(productObject);      
        this.showTempList=true;
-       this.storeProductsForm.reset();
-       this.uploadDoc();
-      //  this.presentToast("Store " + this.title+ "  successfully.","success");  
+       this.storeProductsForm.reset();     
   }
 }
 uploadProduct():void{
@@ -186,8 +183,7 @@ uploadProduct():void{
 deleteProduct(rowdata:any){ 
   this.tempProducts.forEach((element,index)=>{   
     if(Number(element.slNo) ==Number(rowdata.slNo)){    
-     this.tempProducts.splice(index,1);
-     
+     this.tempProducts.splice(index,1);     
     }
  });
  if(this.tempProducts.length===0){

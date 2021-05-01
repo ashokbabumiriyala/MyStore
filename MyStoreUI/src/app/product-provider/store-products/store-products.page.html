@@ -1,9 +1,9 @@
 <ion-content class="ion-padding after-login-bg">
-    <h2 class="page-title">Upload Products</h2>
+    <h2 class="page-title">Products</h2>
 	<ion-row *ngIf="!editProduct">
 		 <ion-col size="8"></ion-col>
 		 <ion-col size="4">
-		<ion-button *ngIf="!editMaster" type="button" shape="round" class="ion-button" (click)="editProductInfo()">Add</ion-button>
+		<ion-button *ngIf="!editMaster" type="button" shape="round" class="ion-button" (click)="editProductInfo()">Add Products</ion-button>
 		</ion-col>
 	</ion-row>
 	<ion-row *ngIf="!editProduct">
@@ -18,17 +18,20 @@
 	<ion-grid *ngIf="!editProduct">
             <ion-row>
                 <ion-col size="3">Action</ion-col>
-                <ion-col size="4">Store Name</ion-col>
-                <ion-col size="5">Manager Name</ion-col>
+                <ion-col size="4">Product Name</ion-col>
+                <ion-col size="5">Category</ion-col>
             </ion-row>
-            <ion-row>
+            <ion-row *ngFor="let subStore of storeProductsData;">
                 <ion-col size="3">
                     <ion-icon name="trash" class="table-icons" color="danger"></ion-icon>
                     <ion-icon name="create" class="table-icons" (click)="editProductInfo()"></ion-icon>
                 </ion-col>
-                <ion-col size="4">Store-1</ion-col>
-                <ion-col size="5">Manger-1</ion-col>
+                <ion-col style="font-size: 12px;" >{{ subStore.productName }}</ion-col>
+                <ion-col style="font-size: 12px;">{{ subStore.category}}</ion-col>
             </ion-row>
+
+
+
 			</ion-grid>
             <form [formGroup]="storeProductsForm"  *ngIf="editProduct">
         <ion-item class="ion-ele">
@@ -146,6 +149,8 @@
                 <ion-col style="font-size: 12px;">{{ product.Category}}</ion-col>
             </ion-row>
         </ion-grid>
+
+    
         <ion-row *ngIf="showTempList">
             <ion-col class="ion-text-center ion-margin-top">
                 <ion-button type="submit" (click)="uploadProduct();" shape="round" expand="block" class="ion-margin-bottom ion-button">Upload</ion-button>
