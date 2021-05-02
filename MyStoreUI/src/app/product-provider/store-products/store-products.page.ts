@@ -26,7 +26,6 @@ storeProductsData= [];
 stores=[];
 tempDocs=[];
 selectedDocs=[];
-
 constructor(private storeProductService:StoreProductService,
   private   toastController:ToastController,
   private helperService:HelperService,
@@ -91,28 +90,39 @@ constructor(private storeProductService:StoreProductService,
 
     this.camera.getPicture(options).then((imageData) => {
     // imageData is a file URI
-      this.selectedDocs.push(imageData);
-      this.file.resolveLocalFilesystemUrl(imageData).then((entry: FileEntry) =>
+      console.log(imageData);
+      let imageFileURI = imageData;
+      if (sourceType !== 1) {
+        imageFileURI = "file:\\" + imageFileURI
+      }
+      console.log(imageFileURI);
+      this.file.resolveLocalFilesystemUrl(imageFileURI).then((entry: FileEntry) =>
       {
         entry.file(file => {
           this.readFile(file);
+        }, (err) => {
+          console.log(err);
         });
       });
     }, (err) => {
       // Handle error
+      console.log(err);
     });
   }
   readFile(file) {
     const reader = new FileReader();
+    let blob;
     reader.onload = () => {
-      const blob = new Blob([reader.result], {
+      blob = new Blob([reader.result], {
         type: file.type
       });
+      console.log(blob)
       this.selectedDocs.push(blob);
+    }, (err) => {
+      console.log(err);
     };
     reader.readAsArrayBuffer(file);
   };
-
   async selectImage() {
     const actionSheet = await this.actionSheetController.create({
       header: "Select Image source",
@@ -136,7 +146,6 @@ constructor(private storeProductService:StoreProductService,
     });
     await actionSheet.present();
   }
-
   private createStoreProductForm(){
     this.storeProductsForm = new FormGroup({
       StoreID: new FormControl('', Validators.required),
@@ -193,23 +202,22 @@ constructor(private storeProductService:StoreProductService,
   getFormData(tempProducts:any[]){
     const formData = [];
     for(let i = 0; i < tempProducts.length; i++){
-      const productFormData = new FormData();
+      let productFormData = new FormData();
       for (var key of Object.keys(tempProducts[i])) {
         if (typeof(tempProducts[i][key]) == 'string'){
           productFormData.append(key, tempProducts[i][key]);
         } else if (typeof(tempProducts[i][key]) == 'number'){
           productFormData.append(key, tempProducts[i][key] + "");
+        } else {
+          for (var j = 0; j < tempProducts[i][key].length; j++) {
+            productFormData.append("file[]", tempProducts[i][key][j]);
+          }
         }
-        // else {
-        //   for (var j = 0; j < tempProducts[i][key].length; j++) {
-        //     productFormData.append("file[]", tempProducts[i][key][j]);
-        //   }
-        // }
       }
       formData.push(productFormData);
     }
     console.log(formData);
-  return formData;
+    return formData;
   }
   deleteProduct(rowdata:any){
     this.tempProducts.forEach((element,index)=>{

@@ -18,7 +18,7 @@
 		</ion-select>
 		<ion-icon name="funnel-outline" slot="start"></ion-icon>
   </ion-item>
-  <ion-list class="ion-list-ele" *ngIf="!editProduct">
+  <ion-list class="ion-list-ele" *ngIf="!editProduct && storeProductsData.length > 0">
     <ion-item *ngFor="let product of storeProductsData;">
         <ion-avatar item-start size="2">
           <img src="assets/default-image.jpg">
@@ -130,7 +130,7 @@
           <ion-icon name="images-outline" slot="start"></ion-icon>
           <ion-button shape="round" expand="full" size="default" (click)="selectImage();" class="ion-button">
              Select Image</ion-button>
-             <ion-label class="ion-text-right" *ngIf="selectedDocs.length != 0">Uploaded: {{selectedDocs.length}}</ion-label>
+             <ion-label class="ion-text-right" *ngIf="selectedDocs.length != 0"><ion-icon name="eye-outline"></ion-icon> {{selectedDocs.length}}</ion-label>
         </ion-item>
         <ion-row>
           <ion-col class="ion-text-center ion-margin-top">
