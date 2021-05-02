@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
+   <base-config cleartextTrafficPermitted="true">
+       <trust-anchors>
+           <certificates src="system" />
+       </trust-anchors>
+   </base-config>
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">localhost</domain>
-        <domain includeSubdomains="true">my3api.itprototypes.com</domain>
+        <domain>my3api.itprototypes.com</domain>
     </domain-config>
-    <base-config cleartextTrafficPermitted="false"/>
 </network-security-config>

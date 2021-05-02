@@ -1,11 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.velocious.my3Karrt_admin" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.velocious.my3Karrt_admin" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>My3Karrt Admin</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
     <content src="index.html" />
     <access origin="*" />
-    <allow-navigation href="http://localhost:8080/*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
@@ -21,6 +20,7 @@
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="AndroidXEnabled" value="true" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
+    <preference name="orientation" value="portrait" />
     <platform name="android">
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">
             <application android:usesCleartextTraffic="true" />

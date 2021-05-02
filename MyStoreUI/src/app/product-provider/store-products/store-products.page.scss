@@ -18,12 +18,12 @@
          border-bottom: 1px solid black;
      }
  }
- 
+
  .table-icons {
      font-size: 24px;
  }
  .sub-store{
-	width:100%;
+	 width:100%;
 }
  .ion-ele {
      border-radius: 15px;
@@ -32,4 +32,12 @@
      --background: transparent;
      border: 1px solid;
      margin-bottom: 5px;
+ }
+ .ion-list-ele {
+    border-radius: 15px;
+    --background: transparent !important;
+ }
+ .ion-list-header{
+    border-radius: 15px;
+    --background: transparent !important;
  }

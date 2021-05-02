@@ -9,13 +9,11 @@ export class StoreProductService {
   private apiUrl = environment.storeMasterServiceUrl;
 
 constructor(private commonApiServiceCallsService:CommonApiServiceCallsService) { }
-   storeProductSave(methodName: string, resouce: any): Observable<any> {    
+  storeProductSave(methodName: string, resouce: any): Observable<any> {
     return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
-    }  
-
-
-    storeProductList(methodName: string, resouce: any): Observable<any> {    
-      return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
-      }  
+  }
+  storeProductList(methodName: string, resouce: any): Observable<any> {
+    return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
+  }
 
 }
