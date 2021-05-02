@@ -83,46 +83,27 @@ constructor(private storeProductService:StoreProductService,
     const options: CameraOptions = {
       quality: 100,
       sourceType: sourceType,
-      destinationType: this.camera.DestinationType.FILE_URI,
+      destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
     }
 
     this.camera.getPicture(options).then((imageData) => {
     // imageData is a file URI
-      console.log(imageData);
-      let imageFileURI = imageData;
-      if (sourceType !== 1) {
-        imageFileURI = "file:\\" + imageFileURI
-      }
-      console.log(imageFileURI);
-      this.file.resolveLocalFilesystemUrl(imageFileURI).then((entry: FileEntry) =>
-      {
-        entry.file(file => {
-          this.readFile(file);
-        }, (err) => {
-          console.log(err);
-        });
-      });
+      console.log('base64 data');
+      let base64Img = 'data:image/jpeg;base64,' + imageData;
+      this.getblobObject(base64Img);
     }, (err) => {
       // Handle error
       console.log(err);
     });
   }
-  readFile(file) {
-    const reader = new FileReader();
-    let blob;
-    reader.onload = () => {
-      blob = new Blob([reader.result], {
-        type: file.type
-      });
-      console.log(blob)
-      this.selectedDocs.push(blob);
-    }, (err) => {
-      console.log(err);
-    };
-    reader.readAsArrayBuffer(file);
-  };
+  async getblobObject(base64Data){
+    const base64 = await fetch(base64Data);
+    const blob = await base64.blob();
+    console.log(blob);
+    this.selectedDocs.push(blob);
+  }
   async selectImage() {
     const actionSheet = await this.actionSheetController.create({
       header: "Select Image source",
@@ -188,7 +169,11 @@ constructor(private storeProductService:StoreProductService,
     this.iProductDocUpload={
       tempDocs:[]
     }
-    Object.assign(this.iProductUpload.tempProducts, this.getFormData(this.tempProducts));
+    let formDataList = this.getFormData(this.tempProducts);
+    // formData[0].forEach((value,key) => {
+    //     console.log(key+" "+value)
+    //   });
+    Object.assign(this.iProductUpload.tempProducts, formDataList);
     this.storeProductService.storeProductSave('StoreProductSave', this.iProductUpload)
     .subscribe((data: any) => {
       this.tempProducts=[];
@@ -200,7 +185,7 @@ constructor(private storeProductService:StoreProductService,
       });
   }
   getFormData(tempProducts:any[]){
-    const formData = [];
+    let formData = [];
     for(let i = 0; i < tempProducts.length; i++){
       let productFormData = new FormData();
       for (var key of Object.keys(tempProducts[i])) {
@@ -208,7 +193,8 @@ constructor(private storeProductService:StoreProductService,
           productFormData.append(key, tempProducts[i][key]);
         } else if (typeof(tempProducts[i][key]) == 'number'){
           productFormData.append(key, tempProducts[i][key] + "");
-        } else {
+        }
+        else {
           for (var j = 0; j < tempProducts[i][key].length; j++) {
             productFormData.append("file[]", tempProducts[i][key][j]);
           }
