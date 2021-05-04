@@ -1,13 +1,24 @@
 <ion-app>
-    <ion-split-pane contentId="main-content">
-        <ion-menu contentId="main-content" type="overlay" *ngIf="menuItems.length>0">
+    <ion-header class="header" *ngIf="showHead" id="panel-split">
+        <ion-toolbar>               
+            <ion-buttons style="color: orangered;" slot="start">
+                <ion-menu-button></ion-menu-button>
+              </ion-buttons>
+            <ion-title class="ion-text-center">
+                <ion-img class="app-img" src="../assets/images/logo.png"></ion-img>
+            </ion-title>
+            <ion-buttons style="color: orangered;" slot="end">
+                <ion-icon name="power-outline" style="font-size: 32px;"></ion-icon>
+              </ion-buttons>
+        </ion-toolbar>
+    </ion-header>
+    <ion-split-pane contentId="main-content" style="z-index: 2;">
+        <ion-menu contentId="main-content" type="overlay" *ngIf="menuItems.length>0" (ionWillOpen)="openMenu()" (ionWillClose)="openMenu()">
             <ion-content>
                 <ion-list id="inbox-list">
-
                     <ion-title class="ion-text-center" style="border-bottom:1px solid" >
                         <ion-img class="app-img" src="../assets/images/logo.png"></ion-img>
                     </ion-title>
-
                     <ion-menu-toggle auto-hide="false" *ngFor="let p of menuItems;">
                         <ion-item routerDirection="root" (click)="navigatePage(p.id);" lines="none" detail="false"
                             routerLinkActive="selected">
@@ -18,11 +29,8 @@
                 </ion-list>             
             </ion-content>
         </ion-menu>
-        <ion-header class="header" *ngIf="showHead">
-            <ion-toolbar>
-                <!-- <ion-buttons slot="start">
-                    <ion-back-button defaultHref="login"></ion-back-button>
-                </ion-buttons> -->
+        <!-- <ion-header class="header" *ngIf="showHead">
+            <ion-toolbar>               
                 <ion-buttons style="color: orangered;" slot="start">
                     <ion-menu-button></ion-menu-button>
                   </ion-buttons>
@@ -30,17 +38,27 @@
                     <ion-img class="app-img" src="../assets/images/logo.png"></ion-img>
                 </ion-title>
             </ion-toolbar>
-        </ion-header>
+        </ion-header> -->
         <ion-router-outlet id="main-content" [ngClass]="showHead ? 'main-content' : ''"></ion-router-outlet>
-        <ion-footer class="footer" *ngIf="showHead">
+        <!-- <ion-footer class="footer" *ngIf="showHead">
             <ion-img class="menuIcon" src="../assets/images/footer-icon.png"></ion-img>
             <ion-toolbar class="ion-padding-horizontal">
-                <ion-icon slot="start" name="return-up-back-outline"></ion-icon>
-                <!-- <ion-title class="ion-text-center">
-                    <ion-img class="menuIcon" src="../assets/images/footer-icon.png"></ion-img>
-                </ion-title> -->
+                <ion-icon slot="start" name="return-up-back-outline"></ion-icon>               
                 <ion-icon slot="end" name="return-up-forward-outline"></ion-icon>
             </ion-toolbar>
-        </ion-footer>
+        </ion-footer> -->
     </ion-split-pane>
+    <ion-footer class="footer" *ngIf="showHead">
+        <!-- <ion-img class="menuIcon" src="../assets/images/footer-icon.png"></ion-img> -->
+        <!-- <ion-toolbar class="ion-padding-horizontal"> -->
+            <!-- <ion-img class="menuIcon" src="../assets/images/footer-icon.png"></ion-img> -->
+            <!-- <ion-icon slot="start" name="return-up-back-outline"></ion-icon>               
+            <ion-icon slot="end" name="return-up-forward-outline"></ion-icon>-->
+        <!-- </ion-toolbar>  -->
+            <ion-row no-padding no-margin  class="ion-text-center">
+                <ion-col col-4 no-padding>
+                    <ion-img class="menuIcon" src="../assets/images/footer-icon.png"></ion-img>
+                </ion-col>
+            </ion-row>
+    </ion-footer>
 </ion-app>

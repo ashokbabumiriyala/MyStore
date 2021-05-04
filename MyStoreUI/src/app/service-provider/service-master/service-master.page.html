@@ -1,135 +1,188 @@
 <ion-content class="ion-padding after-login-bg">
-    <h2 class="page-title">Service Master</h2>
-   <ion-row *ngIf="!serviceMasterList">
-		 <ion-col size="8"></ion-col>
-		 <ion-col size="4">
-		<ion-button type="button" shape="round" class="ion-button" *ngIf="showAddButton" (click)="editMasterInfo(null)">Add</ion-button>
-		</ion-col>
-	</ion-row>
-	<ion-grid *ngIf="!serviceMasterList">
-            <ion-row>
-                <ion-col size="3">Action</ion-col>
-                <ion-col size="4">Service  Type</ion-col>
-                <ion-col size="5">Service Master Name</ion-col>
-            </ion-row>
-            <ion-row *ngFor="let serviceMaster of providerServiceMasterList;">
-                <ion-col size="3">
-                    <ion-icon name="trash" class="table-icons" color="danger"></ion-icon>
-                    <ion-icon name="create" class="table-icons" (click)="editMasterInfo(serviceMaster)"></ion-icon>
-                </ion-col>
-                <ion-col>{{ serviceMaster.businessType }}</ion-col>
-                <ion-col>{{ serviceMaster.businessName}}</ion-col>
-            </ion-row>
-        </ion-grid>
-    <form [formGroup]="serviceMasterFormGroup"  *ngIf="serviceMasterList">
-        <ion-item class="ion-ele">
-            <ion-label position="floating">Business Master Type</ion-label>
-            <ion-select formControlName="BusinessType">
-                <ion-select-option  *ngFor="let service of serviceType"  value="{{service.value}}">{{service.text}}</ion-select-option>              
-            </ion-select>
-            <ion-icon name="cog-outline" slot="start"></ion-icon>
+    <h2 class="page-title">
+        <ion-icon name="extension-puzzle-outline"></ion-icon>Service Master</h2>
+    <ion-row *ngIf="!serviceMasterList">
+        <ion-col size="8"></ion-col>
+        <ion-col size="4">
+            <ion-button type="button" shape="round" class="ion-button" *ngIf="showAddButton"
+                (click)="editMasterInfo(null)">Add</ion-button>
+        </ion-col>
+    </ion-row>
+
+    <!-- <ion-grid *ngIf="!serviceMasterList">
+        <ion-row>
+            <ion-col size="3">Action</ion-col>
+            <ion-col size="4">Service Type</ion-col>
+            <ion-col size="5">Service Master Name</ion-col>
+        </ion-row>
+        <ion-row *ngFor="let serviceMaster of providerServiceMasterList;">
+            <ion-col size="3">
+                <ion-icon name="trash" class="table-icons" color="danger"></ion-icon>
+                <ion-icon name="create" class="table-icons" (click)="editMasterInfo(serviceMaster)"></ion-icon>
+            </ion-col>
+            <ion-col size="4">{{ serviceMaster.businessType }}</ion-col>
+            <ion-col size="5">{{ serviceMaster.businessName}}</ion-col>
+        </ion-row>
+    </ion-grid> -->
+
+    <ion-list class="ion-list-ele" *ngIf="!serviceMasterList">
+        <ion-item *ngFor="let serviceMaster of providerServiceMasterList;">
+            <ion-avatar item-start size="3">
+                <img src="assets/default-image.jpg">
+            </ion-avatar>
+            <ion-col size="7">
+                <ion-label>Name: <b>{{ serviceMaster.businessName}}</b></ion-label>
+                <ion-label>Type: <b>{{ serviceMaster.businessType }}</b></ion-label>
+            </ion-col>
+            <ion-col size="3" class="ion-text-right">
+                <ion-icon name="trash-outline" size="large"></ion-icon>
+                <ion-icon name="create-outline" size="large" (click)="editMasterInfo(serviceMaster)"></ion-icon>
+            </ion-col>
         </ion-item>
-        <small  *ngIf="isFormSubmitted &&  BusinessType.errors"><span style="color: red;" >*Business Type Required </span>                 
-        </small>
+    </ion-list>
+    <form [formGroup]="serviceMasterFormGroup" *ngIf="serviceMasterList">
+        <ion-row>
+            <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
+                <ion-item class="ion-ele">
+                    <ion-label position="floating">Business Master Type</ion-label>
+                    <ion-select formControlName="BusinessType">
+                        <ion-select-option *ngFor="let service of serviceType" value="{{service.value}}">
+                            {{service.text}}</ion-select-option>
+                    </ion-select>
+                    <ion-icon name="cog-outline" slot="start"></ion-icon>
+                </ion-item>
+                <small *ngIf="isFormSubmitted &&  BusinessType.errors">
+                    <span style="color: red;">*Business Type Required</span>
+                </small>
+            </ion-col>
 
-        <ion-item class="ion-ele">
-            <ion-label position="floating">Number of Locations</ion-label>
-            <ion-input type="number" formControlName="NumberOfLocations" required></ion-input>
-            <ion-icon name="bag-remove-outline" slot="start"></ion-icon>
-        </ion-item>
-        <small  *ngIf="isFormSubmitted &&  NumberOfLocations.errors"><span style="color: red;" >*Number of Locations Required </span>                 
-        </small>
-        <ion-item class="ion-ele">
-            <ion-label position="floating">Business Master Name</ion-label>
-            <ion-input type="text" formControlName="BusinessName" required></ion-input>
-            <ion-icon name="person-outline" slot="start"></ion-icon>
-        </ion-item>
-        <small  *ngIf="isFormSubmitted &&  BusinessName.errors"><span style="color: red;" >*Business Master Name Required </span>                 
-        </small>
+            <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
+                <ion-item class="ion-ele">
+                    <ion-label position="floating">Number of Locations</ion-label>
+                    <ion-input type="number" formControlName="NumberOfLocations" required></ion-input>
+                    <ion-icon name="bag-remove-outline" slot="start"></ion-icon>
+                </ion-item>
+                <small *ngIf="isFormSubmitted &&  NumberOfLocations.errors">
+                    <span style="color: red;">*Number of Locations Required </span>
+                </small>
+            </ion-col>
 
-        <ion-item class="ion-ele">
-            <ion-label position="floating">Mobile Number</ion-label>
-            <ion-input type="number" formControlName="MobileNumber" required></ion-input>
-            <ion-icon name="phone-portrait-outline" slot="start"></ion-icon>
+            <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
+                <ion-item class="ion-ele">
+                    <ion-label position="floating">Business Master Name</ion-label>
+                    <ion-input type="text" formControlName="BusinessName" required></ion-input>
+                    <ion-icon name="person-outline" slot="start"></ion-icon>
+                </ion-item>
+                <small *ngIf="isFormSubmitted &&  BusinessName.errors">
+                    <span style="color: red;">*Business Master Name Required </span>
+                </small>
+            </ion-col>
 
-        </ion-item>
+            <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
+                <ion-item class="ion-ele">
+                    <ion-label position="floating">Mobile Number</ion-label>
+                    <ion-input type="number" formControlName="MobileNumber" required></ion-input>
+                    <ion-icon name="phone-portrait-outline" slot="start"></ion-icon>
+                </ion-item>
+                <small *ngIf="isFormSubmitted &&  MobileNumber.errors">
+                    <span style="color: red;">*Mobile Number Required</span>
+                </small>
+            </ion-col>
 
-        <small  *ngIf="isFormSubmitted &&  MobileNumber.errors"><span style="color: red;" >*Mobile Number Required </span>                 
-        </small>
+            <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
+                <ion-item class="ion-ele">
+                    <ion-label position="floating">E-mail Id</ion-label>
+                    <ion-input type="text" formControlName="Email" required></ion-input>
+                    <ion-icon name="mail-outline" slot="start"></ion-icon>
+                </ion-item>
+                <small *ngIf="isFormSubmitted &&  Email.errors">
+                    <span style="color: red;">*Email Required </span>
+                </small>
+            </ion-col>
 
-        <ion-item class="ion-ele">
-            <ion-label position="floating">E-mail Id</ion-label>
-            <ion-input type="text" formControlName="Email" required></ion-input>
-            <ion-icon name="mail-outline" slot="start"></ion-icon>
-        </ion-item>
-        <small  *ngIf="isFormSubmitted &&  Email.errors"><span style="color: red;" >*Email Required </span>                 
-        </small>
-        <ion-item class="ion-ele">
-            <ion-label position="floating">TIN/GST Number</ion-label>
-            <ion-input type="number" formControlName="TinorGstNumber" required></ion-input>
-            <ion-icon name="bookmark-outline" slot="start"></ion-icon>
-        </ion-item>
+            <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
+                <ion-item class="ion-ele">
+                    <ion-label position="floating">TIN/GST Number</ion-label>
+                    <ion-input type="number" formControlName="TinorGstNumber" required></ion-input>
+                    <ion-icon name="bookmark-outline" slot="start"></ion-icon>
+                </ion-item>
+                <small *ngIf="isFormSubmitted &&  TinorGstNumber.errors">
+                    <span style="color: red;">*TIN/GST Number Required </span>
+                </small>
+            </ion-col>
 
-        <small  *ngIf="isFormSubmitted &&  TinorGstNumber.errors"><span style="color: red;" >*TIN/GST Number Required </span>                 
-        </small>
+            <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
+                <ion-item class="ion-ele">
+                    <ion-label position="floating">Owner Id Number</ion-label>
+                    <ion-input type="number" formControlName="OwnerID" required></ion-input>
+                    <ion-icon name="checkmark-done-outline" slot="start"></ion-icon>
+                </ion-item>
+                <small *ngIf="isFormSubmitted &&  OwnerID.errors">
+                    <span style="color: red;">*Owner Id Number Required</span>
+                </small>
+            </ion-col>
 
-        <ion-item class="ion-ele">
-            <ion-label position="floating">Owner Id Number</ion-label>
-            <ion-input type="number" formControlName="OwnerID" required></ion-input>
-            <ion-icon name="checkmark-done-outline" slot="start"></ion-icon>
-        </ion-item>
+            <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
+                <ion-item class="ion-ele">
+                    <ion-label position="floating">Bank Name</ion-label>
+                    <ion-input type="text" formControlName="BankName" required></ion-input>
+                    <ion-icon name="cash-outline" slot="start"></ion-icon>
+                </ion-item>
+                <small *ngIf="isFormSubmitted &&  BankName.errors">
+                    <span style="color: red;">*BankName Required </span>
+                </small>
+            </ion-col>
 
-        <small  *ngIf="isFormSubmitted &&  OwnerID.errors"><span style="color: red;" >*Owner Id Number Required </span>                 
-        </small>
+            <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
+                <ion-item class="ion-ele">
+                    <ion-label position="floating">Account Holder Name</ion-label>
+                    <ion-input type="text" formControlName="AccountHolderName" required></ion-input>
+                    <ion-icon name="person-outline" slot="start"></ion-icon>
+                </ion-item>
+                <small *ngIf="isFormSubmitted &&  AccountHolderName.errors">
+                    <span style="color: red;">*Account Holder Name Required </span>
+                </small>
+            </ion-col>
 
-        <ion-item class="ion-ele">
-            <ion-label position="floating">Bank Name</ion-label>
-            <ion-input type="text" formControlName="BankName" required></ion-input>
-            <ion-icon name="cash-outline" slot="start"></ion-icon>
-        </ion-item>
-        <small  *ngIf="isFormSubmitted &&  BankName.errors"><span style="color: red;" >*BankName Required </span>                 
-        </small>
-        <ion-item class="ion-ele">
-            <ion-label position="floating">Account Holder Name</ion-label>
-            <ion-input type="text" formControlName="AccountHolderName" required></ion-input>
-            <ion-icon name="person-outline" slot="start"></ion-icon>
-        </ion-item>
+            <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
+                <ion-item class="ion-ele">
+                    <ion-label position="floating">Account Number</ion-label>
+                    <ion-input type="number" formControlName="AccountNumber" required></ion-input>
+                    <ion-icon name="desktop-outline" slot="start"></ion-icon>
+                </ion-item>
+                <small *ngIf="isFormSubmitted &&  AccountNumber.errors">
+                    <span style="color: red;">*Account Number Required </span>
+                </small>
+            </ion-col>
 
-        <small  *ngIf="isFormSubmitted &&  AccountHolderName.errors"><span style="color: red;" >*Account Holder Name Required </span>                 
-        </small>
+            <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
+                <ion-item class="ion-ele">
+                    <ion-label position="floating">IFSC Code</ion-label>
+                    <ion-input type="text" formControlName="IFSCCode" required></ion-input>
+                    <ion-icon name="create-outline" slot="start"></ion-icon>
+                </ion-item>
+                <small *ngIf="isFormSubmitted &&  IFSCCode.errors">
+                    <span style="color: red;">*IFSCCode Required </span>
+                </small>
+            </ion-col>
 
-        <ion-item class="ion-ele">
-            <ion-label position="floating">Account Number</ion-label>
-            <ion-input type="number" formControlName="AccountNumber" required></ion-input>
-            <ion-icon name="desktop-outline" slot="start"></ion-icon>
-        </ion-item>
-
-        <small  *ngIf="isFormSubmitted &&  AccountNumber.errors"><span style="color: red;" >*Account Number Required </span>                 
-        </small>
-
-
-        <ion-item class="ion-ele">
-            <ion-label position="floating">IFSC Code</ion-label>
-            <ion-input type="text" formControlName="IFSCCode" required></ion-input>
-            <ion-icon name="create-outline" slot="start"></ion-icon>
-        </ion-item>
-        
-        <small  *ngIf="isFormSubmitted &&  IFSCCode.errors"><span style="color: red;" >*IFSCCode Required </span>                 
-        </small>
-
-        <ion-item class="ion-ele">
-            <ion-label position="floating">Branch Name</ion-label>
-            <ion-input type="text" formControlName="BranchName" required></ion-input>
-            <ion-icon name="color-filter-outline" slot="start"></ion-icon>
-        </ion-item>
-
-        
-        <small  *ngIf="isFormSubmitted &&  BranchName.errors"><span style="color: red;" >*Branch Name Required </span>                 
-        </small>
+            <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
+                <ion-item class="ion-ele">
+                    <ion-label position="floating">Branch Name</ion-label>
+                    <ion-input type="text" formControlName="BranchName" required></ion-input>
+                    <ion-icon name="color-filter-outline" slot="start"></ion-icon>
+                </ion-item>
+                <small *ngIf="isFormSubmitted &&  BranchName.errors">
+                    <span style="color: red;">*Branch Name Required</span>
+                </small>
+            </ion-col>
+        </ion-row>
 
         <ion-row>
-            <ion-col class="ion-text-center ion-margin-top">
-                <ion-button type="submit" shape="round" expand="block" (click)="saveServiceMaster();" class="ion-button ion-margin-bottom">{{title}}</ion-button>
+            <ion-col class="ion-text-center ion-margin-top" size-md="6" size-xs="12" size-sm="12" push-md="3"
+                push-lg="4" size-lg="4">
+                <ion-button type="submit" shape="round" expand="block" (click)="saveServiceMaster();"
+                    class="ion-button ion-margin-bottom">{{title}}</ion-button>
             </ion-col>
         </ion-row>
     </form>

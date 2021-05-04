@@ -219,6 +219,10 @@ constructor(private storeProductService:StoreProductService,
   editProductInfo(){
       this.editProduct = true;
   }
+  addNewProduct() {
+    this.editProduct = true;
+    this.editMaster = !this.editMaster;
+  }
   async presentToast(data: string,tostarColor:string) {
     const toast = await this.toastController.create({
       message: data,

@@ -134,4 +134,8 @@ export class AppComponent implements OnInit {
         break;
     }
   }
+  private openMenu() {
+    const ele = document.getElementById("panel-split");
+    ele.style.zIndex == '1' ? ele.style.zIndex = '3' : ele.style.zIndex = '1' ;
+  }
 }
