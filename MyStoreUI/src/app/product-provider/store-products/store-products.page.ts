@@ -163,18 +163,19 @@ constructor(private storeProductService:StoreProductService,
   }
   uploadProduct():void{
     // this.uploadDoc();
-    this.iProductUpload={
-      tempProducts:[]
-    }
-    this.iProductDocUpload={
-      tempDocs:[]
-    }
+    this.addProduct();
+    // this.iProductUpload={
+    //   tempProducts:[]
+    // }
+    // this.iProductDocUpload={
+    //   tempDocs:[]
+    // }
     let formDataList = this.getFormData(this.tempProducts);
     // formData[0].forEach((value,key) => {
     //     console.log(key+" "+value)
     //   });
-    Object.assign(this.iProductUpload.tempProducts, formDataList);
-    this.storeProductService.storeProductSave('StoreProductSave', this.iProductUpload)
+    //Object.assign(this.iProductUpload.tempProducts, formDataList[0]);
+    this.storeProductService.storeProductSave('StoreProductSave', formDataList[0])
     .subscribe((data: any) => {
       this.tempProducts=[];
       this.showTempList=false;
