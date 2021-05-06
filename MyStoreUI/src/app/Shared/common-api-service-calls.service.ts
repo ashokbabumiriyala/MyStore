@@ -44,6 +44,14 @@ export class CommonApiServiceCallsService {
   }
   select(apiUrl: string, resource: any) {
    // this.createHttpHeader();
+  //  let httpOptions = {};
+  // if (apiUrl == 'https://my3api.itprototypes.com/api/Store/StoreProductSave') {
+  //   httpOptions['headers']= new HttpHeaders({
+  //     'Accept': 'application/json',
+  //     'Access-Control-Allow-Origin': '*',
+  //     'Content-Type': 'multipart/form-data'
+  //   })
+  // }
     return this.httpClient
       .post(apiUrl, resource)
       .pipe(catchError(error => this.handleError(error)));

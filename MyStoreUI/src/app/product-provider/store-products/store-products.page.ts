@@ -19,8 +19,6 @@ storeProductsForm:FormGroup;
 isFormSubmitted:boolean;
 showTempList:boolean;
 tempProducts=[];
-iProductUpload: IProductUpload;
-iProductDocUpload: IProductDocUpload;
 title:string;
 storeProductsData= [];
 stores=[];
@@ -70,7 +68,7 @@ constructor(private storeProductService:StoreProductService,
     const selectedStoreId=this.StoreID.value;
     const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Mode:'Select',StoreId:0};
    await this.storeProductService.storeProductList('ProviderStoreProductsSelect', dataObject)
-    .subscribe((data: any) => {     
+    .subscribe((data: any) => {
       this.stores=data.storeDropdown;
       this.storeProductsData = data.storeProducts;
       loadingController.dismiss();
@@ -78,7 +76,7 @@ constructor(private storeProductService:StoreProductService,
     (error: any) => {
       loadingController.dismiss();
     });
-     
+
   }
   pickImage(sourceType) {
     const options: CameraOptions = {
@@ -91,7 +89,6 @@ constructor(private storeProductService:StoreProductService,
 
     this.camera.getPicture(options).then((imageData) => {
     // imageData is a file URI
-      console.log('base64 data');
       let base64Img = 'data:image/jpeg;base64,' + imageData;
       this.getblobObject(base64Img);
     }, (err) => {
@@ -102,7 +99,6 @@ constructor(private storeProductService:StoreProductService,
   async getblobObject(base64Data){
     const base64 = await fetch(base64Data);
     const blob = await base64.blob();
-    console.log(blob);
     this.selectedDocs.push(blob);
   }
   async selectImage() {
@@ -153,36 +149,27 @@ constructor(private storeProductService:StoreProductService,
         Units:this.Units.value,Quantity:Number(this.Quantity.value),
         DiscountType :this.DiscountType.value, Discount:Number(this.Discount.value),PriceBeforeDiscount:Number(this.PriceBeforeDiscount.value)
         ,PriceAfterDiscount:Number(this.PriceAfterDiscount.value), Files: this.selectedDocs};
-        this.tempProducts.push(productObject);        
+        this.tempProducts.push(productObject);
         this.showTempList=true;
         this.storeProductsForm.reset();
         this.selectedDocs = [];
-      //  this.uploadDoc();
-      //  this.presentToast("Store " + this.title+ "  successfully.","success");
     }
   }
-  uploadProduct():void{
-    // this.uploadDoc();
+  async uploadProduct():Promise<void> {
     this.addProduct();
-    // this.iProductUpload={
-    //   tempProducts:[]
-    // }
-    // this.iProductDocUpload={
-    //   tempDocs:[]
-    // }
     let formDataList = this.getFormData(this.tempProducts);
-    // formData[0].forEach((value,key) => {
-    //     console.log(key+" "+value)
-    //   });
-    //Object.assign(this.iProductUpload.tempProducts, formDataList[0]);
-    this.storeProductService.storeProductSave('StoreProductSave', formDataList[0])
+    const loadingController = await this.helperService.createLoadingController("loading");
+    await loadingController.present();
+    await this.storeProductService.storeProductSave('StoreProductSave', formDataList[0])
     .subscribe((data: any) => {
       this.tempProducts=[];
       this.showTempList=false;
       this.editProduct = false;
+      this.presentToast("Product saved Successfully","success");
+      loadingController.dismiss();
     },
       (error: any) => {
-
+        loadingController.dismiss();
       });
   }
   getFormData(tempProducts:any[]){
@@ -197,7 +184,7 @@ constructor(private storeProductService:StoreProductService,
         }
         else {
           for (var j = 0; j < tempProducts[i][key].length; j++) {
-            productFormData.append("file[]", tempProducts[i][key][j]);
+            productFormData.append("files", tempProducts[i][key][j], 'ProductImage' + j + '.jpg');
           }
         }
       }
@@ -234,10 +221,5 @@ constructor(private storeProductService:StoreProductService,
     toast.present();
   }
 }
-interface IProductUpload{
- tempProducts:any;
-}
-interface IProductDocUpload{
-  tempDocs:any;
- }
+
 

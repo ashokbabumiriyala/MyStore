@@ -23,15 +23,8 @@ export class AppComponent implements OnInit {
     }
     initializeApp() {
       this.platform.ready().then(() => {
-        // this.statusBar.styleDefault();
-        // this.splashScreen.hide();
-
-        // subscribe to a topic
-        // this.fcm.subscribeToTopic('Deals');
-
         // get FCM token
         this.fcm.getToken().then(token => {
-          console.log(token);
           sessionStorage.setItem("PushToken",token);
         });
 
@@ -47,13 +40,8 @@ export class AppComponent implements OnInit {
 
         // refresh the FCM token
         this.fcm.onTokenRefresh().subscribe(token => {
-          console.log(token);
           sessionStorage.setItem("PushToken",token);
         });
-
-        // unsubscribe from a topic
-        // this.fcm.unsubscribeFromTopic('offers');
-
       });
     }
   ngOnInit() {
@@ -137,5 +125,11 @@ export class AppComponent implements OnInit {
   private openMenu() {
     const ele = document.getElementById("panel-split");
     ele.style.zIndex == '1' ? ele.style.zIndex = '3' : ele.style.zIndex = '1' ;
+  }
+  logout() {
+    let pushToken = sessionStorage.getItem('PushToken');
+    sessionStorage.clear();
+    sessionStorage.setItem('PushToken',pushToken );
+    this.router.navigate(['login']);
   }
 }

@@ -1,13 +1,13 @@
 <ion-app>
     <ion-header class="header" *ngIf="showHead" id="panel-split">
-        <ion-toolbar>               
+        <ion-toolbar>
             <ion-buttons style="color: orangered;" slot="start">
                 <ion-menu-button></ion-menu-button>
               </ion-buttons>
             <ion-title class="ion-text-center">
                 <ion-img class="app-img" src="../assets/images/logo.png"></ion-img>
             </ion-title>
-            <ion-buttons style="color: orangered;" slot="end">
+            <ion-buttons style="color: orangered;" slot="end" *ngIf="menuItems.length>0" (click)="logout()">
                 <ion-icon name="power-outline" style="font-size: 32px;"></ion-icon>
               </ion-buttons>
         </ion-toolbar>
@@ -26,11 +26,11 @@
                             <ion-label>{{ p.title }}</ion-label>
                         </ion-item>
                     </ion-menu-toggle>
-                </ion-list>             
+                </ion-list>
             </ion-content>
         </ion-menu>
         <!-- <ion-header class="header" *ngIf="showHead">
-            <ion-toolbar>               
+            <ion-toolbar>
                 <ion-buttons style="color: orangered;" slot="start">
                     <ion-menu-button></ion-menu-button>
                   </ion-buttons>
@@ -43,7 +43,7 @@
         <!-- <ion-footer class="footer" *ngIf="showHead">
             <ion-img class="menuIcon" src="../assets/images/footer-icon.png"></ion-img>
             <ion-toolbar class="ion-padding-horizontal">
-                <ion-icon slot="start" name="return-up-back-outline"></ion-icon>               
+                <ion-icon slot="start" name="return-up-back-outline"></ion-icon>
                 <ion-icon slot="end" name="return-up-forward-outline"></ion-icon>
             </ion-toolbar>
         </ion-footer> -->
@@ -52,7 +52,7 @@
         <!-- <ion-img class="menuIcon" src="../assets/images/footer-icon.png"></ion-img> -->
         <!-- <ion-toolbar class="ion-padding-horizontal"> -->
             <!-- <ion-img class="menuIcon" src="../assets/images/footer-icon.png"></ion-img> -->
-            <!-- <ion-icon slot="start" name="return-up-back-outline"></ion-icon>               
+            <!-- <ion-icon slot="start" name="return-up-back-outline"></ion-icon>
             <ion-icon slot="end" name="return-up-forward-outline"></ion-icon>-->
         <!-- </ion-toolbar>  -->
             <ion-row no-padding no-margin  class="ion-text-center">

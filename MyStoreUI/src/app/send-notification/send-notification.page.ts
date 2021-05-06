@@ -12,9 +12,9 @@ import { HelperService } from 'src/app/common/helper.service';
 export class SendNotificationPage implements OnInit {
   sendNotificationGroup:FormGroup;
   isFormSubmitted:boolean;
-  userType=[{id:1, topic:'Service'},
-  {id:2, topic:'Product Owner'},
-  {id:3, topic:'User'}];
+  userType=[{id:1, topic:'Service Provider'},
+  {id:2, topic:'Merchants'},
+  {id:3, topic:'Users'}];
   serviceAccount = {};
   constructor( private sendNotificationService: SendNotificationService, private helperService: HelperService) {
     }
