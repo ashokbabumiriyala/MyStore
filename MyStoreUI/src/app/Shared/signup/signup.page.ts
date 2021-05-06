@@ -82,18 +82,20 @@ async register(): Promise<void>{
       pushToken: sessionStorage.getItem('PushToken')
     };
 
-    this.signUpService.providerSignUp('ProviderSignupSave', this.isignUp)
+    await  this.signUpService.providerSignUp('ProviderSignupSave', this.isignUp)
     .subscribe((data: any) => {
       this.signUpFormGroup.reset();
       this.router.navigate(['login']);
       this.presentToast("Registration successfully.","success");
       const providerIndex = this.providerType.findIndex(this.RoleID.value)
       this.fcm.subscribeToTopic(this.providerType[providerIndex].text);
+      loadingController.dismiss();
     },
       (error: any) => {
+        loadingController.dismiss();
 
       });
-      await loadingController.dismiss();
+      
 }
 async presentToast(data: string,tostarColor:string) {
   const toast = await this.toastController.create({
@@ -107,13 +109,15 @@ async presentToast(data: string,tostarColor:string) {
   async providerTypeDropDown(){
     const loadingController = await this.helperService.createLoadingController("loading");
     await loadingController.present();
-    this.signUpService.providerType('provideTypeDropDown')
+    await this.signUpService.providerType('provideTypeDropDown')
     .subscribe((data: any) => {
      this.providerType=data;
+     loadingController.dismiss();
     },
       (error: any) => {
+        loadingController.dismiss();
       });
-      await loadingController.dismiss();
+      
   }
 }
 interface  IsignUp{

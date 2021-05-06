@@ -31,21 +31,24 @@ async serviceMasterListSelect(){
   const loadingController = await this.helperService.createLoadingController("loading");
   await loadingController.present();  
   const dataObject={Id: Number(sessionStorage.getItem("providerId")),Mode:'Select'};
-  this.serviceMasterService.serviceMasterSelect('serviceProviderMasterListSelect', dataObject)
+  await this.serviceMasterService.serviceMasterSelect('serviceProviderMasterListSelect', dataObject)
   .subscribe((data: any) => {
    this.serviceType= data.provideServiceType;  
     if(data.provideServiceList.length>0){   
       this.providerServiceMasterList=data.provideServiceList;   
       this.showAddButton=false;
+      loadingController.dismiss();
     }else{
       this.showAddButton=true;
-      this.providerServiceMasterList=[];   
+      this.providerServiceMasterList=[];  
+      loadingController.dismiss(); 
     }  
   },
-    (error: any) => {         
+    (error: any) => {  
+      loadingController.dismiss();       
                  
     });
-    await loadingController.dismiss();
+    
 }
 //#region   service save
   get BusinessType() {
@@ -118,39 +121,42 @@ async serviceMasterListSelect(){
       TinorGstNumber:String(this.TinorGstNumber.value), OwnerID:Number(this.OwnerID.value), BankName: this.BankName.value,
       AccountHolderName: this.AccountHolderName.value, AccountNumber: String(this.AccountNumber.value), IFSCCode: this.IFSCCode.value,
       BranchName: this.BranchName.value, RazorPaymentKey:this.RazorPaymentKey.value, Id:this.serviceId,Mode:this.title
-    };
-    console.log(this.iServiceMaster);
-    this.serviceMasterService.serviceMasterSave('ServiceMasterSave', this.iServiceMaster)
+    };  
+    await this.serviceMasterService.serviceMasterSave('ServiceMasterSave', this.iServiceMaster)
     .subscribe((data: any) => {      
       this.presentToast("Store master " + this.title+ "  successfully.","success");
       this.serviceMasterList=false;
-      this.serviceMasterListSelect();    
+      this.serviceMasterListSelect();  
+      loadingController.dismiss();  
     },
       (error: any) => {         
-                   
+        loadingController.dismiss();   
       });
-      await loadingController.dismiss();
+      
   } 
 
   //#endregion
-  editMasterInfo(rowdata:any) {
+  async editMasterInfo(rowdata:any) {
   this.serviceMasterList = true;
   if(rowdata==null){
     this.serviceId=0;
     this.title="Register";
   }else{
+    const loadingController = await this.helperService.createLoadingController("loading");
+    await loadingController.present();  
     this.serviceId=rowdata.id;
     this.title="Update";
     const dataObject={Id: Number(rowdata.id),Mode:'Edit'};
-    this.serviceMasterService.serviceMasterSelect('serviceProviderMasterListSelect', dataObject)
+    await this.serviceMasterService.serviceMasterSelect('serviceProviderMasterListSelect', dataObject)
     .subscribe((data: any) => {
      this.serviceType= data.provideServiceType;  
       if(data.provideServiceList.length>0){   
        this.setForamADetailsToPage(data.provideServiceList[0]); 
+       loadingController.dismiss();  
       }
     },
       (error: any) => {         
-                   
+        loadingController.dismiss();       
       });
     
 

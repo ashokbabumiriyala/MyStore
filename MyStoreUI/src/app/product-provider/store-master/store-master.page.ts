@@ -36,12 +36,13 @@ async storeMasterListSelect(){
   const loadingController = await this.helperService.createLoadingController("loading");
   await loadingController.present();  
   const dataObject={Id: Number(sessionStorage.getItem("providerId")),Mode:'Select'};
-  this.StoreMasterService.storeMasterSelect('ProviderStoreSelect', dataObject)
+  await this.StoreMasterService.storeMasterSelect('ProviderStoreSelect', dataObject)
   .subscribe((data: any) => {
    this.storeType= data.provideStoreType;  
     if(data.provideStoreList.length>0){   
       this.provideStoreList=data.provideStoreList;   
       this.showAddButton=false;
+      loadingController.dismiss();
     }else{
       this.showAddButton=true;
       this.provideStoreList=[];   
@@ -50,7 +51,7 @@ async storeMasterListSelect(){
     (error: any) => {         
                  
     });
-    await loadingController.dismiss();
+    
 }
   //#endregion
 
@@ -132,19 +133,19 @@ async storeMasterListSelect(){
       TinorGstNumber: this.TinorGstNumber.value.toString(), OwnerID:Number(this.OwnerID.value), BankName: this.BankName.value,
       AccountHolderName: this.AccountHolderName.value, AccountNumber: this.AccountNumber.value.toString(), IFSCCode: this.IFSCCode.value,
       BranchName: this.BranchName.value,RazorPaymentKey: this.RazorPaymentKey.value, Id:this.storeId,Mode:this.title
-    };
-    console.log(this.istoreMaster);
-    this.StoreMasterService.storeMasterSave('StoreMasterSave', this.istoreMaster)
+    };   
+    await this.StoreMasterService.storeMasterSave('StoreMasterSave', this.istoreMaster)
     .subscribe((data: any) => {      
       this.presentToast("Store master " + this.title+ "  successfully.","success");
       this.storeMasterList=false;
       this.storeMasterListSelect();  
-      this.storeMasterFormGroup.reset();  
+      this.storeMasterFormGroup.reset();
+      loadingController.dismiss();  
     },
       (error: any) => {         
-                   
+        loadingController.dismiss();        
       });
-      await loadingController.dismiss();
+     
   } 
 //#endregion
 

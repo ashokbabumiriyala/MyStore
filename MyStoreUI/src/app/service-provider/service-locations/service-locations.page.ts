@@ -100,17 +100,18 @@ async serviceLocationListSelect(){
   const loadingController = await this.helperService.createLoadingController("loading");
   await loadingController.present();
   const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Mode:'Select'}; 
-  this.serviceLocationService.locationListSelect('serviceLocationSelect', dataObject)
+  await this.serviceLocationService.locationListSelect('serviceLocationSelect', dataObject)
   .subscribe((data: any) => {  
     this.serviceMaster=data.serviceMaster;
     this.deliveryType=data.deliveryType;
     this.businessType=data.serviceType;
     this.providerLocationList=data.locationList;
+    loadingController.dismiss();
   },
     (error: any) => {         
-                 
+      loadingController.dismiss();    
     });
-    await loadingController.dismiss();
+     
 }
 //#endregion
   async saveLocation():Promise<void>{
@@ -127,20 +128,20 @@ async serviceLocationListSelect(){
         State:this.State.value,PinCode:this.PinCode.value.toString(),LandMark:this.LandMark.value,FromTime:this.FromTime.value,
         ToTime:this.ToTime.value,DeliveryType:Number(this.DeliveryType.value), Id:this.locationId,Mode:this.title };
    
-      this.serviceLocationService.locationSave('ServiceLocationSave', this.iServiceLocations)
+        await  this.serviceLocationService.locationSave('ServiceLocationSave', this.iServiceLocations)
       .subscribe((data: any) => {      
-        this.presentToast("Service Location " + this.title+ "  successfully.","success");  
-      
+        this.presentToast("Service Location " + this.title+ "  successfully.","success");        
         this.serviceLocationForm.reset();
         this.editLocation=false;
         this.serviceLocationListSelect();   
         this.isFormSubmitted=false;
-        
+        loadingController.dismiss();    
       },
-        (error: any) => {        
+        (error: any) => {  
+          loadingController.dismiss();      
                      
         });
-        await loadingController.dismiss();
+      
     }
   }
   async presentToast(data: string,tostarColor:string) {
@@ -152,16 +153,18 @@ async serviceLocationListSelect(){
     });
     toast.present();
   }
-editServiceInfo(rowdata:any) {
+  async editServiceInfo(rowdata:any) {
   this.editLocation = true;
   if(rowdata==null){
     this.locationId=0;
     this.title="Register";
   }else{
+    const loadingController = await this.helperService.createLoadingController("loading");
+    await loadingController.present();  
     this.locationId=rowdata.id;
     this.title="Update";
     const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Id: Number(rowdata.id),Mode:'Edit'};
-    this.serviceLocationService.locationListSelect('serviceLocationSelect', dataObject)
+    await this.serviceLocationService.locationListSelect('serviceLocationSelect', dataObject)
     .subscribe((data: any) => {
       this.serviceMaster=[];
       this.deliveryType=[];
@@ -169,10 +172,11 @@ editServiceInfo(rowdata:any) {
       this.serviceMaster=data.serviceMaster;
       this.deliveryType=data.deliveryType;
       this.businessType=data.serviceType;
-       this.setForamADetailsToPage(data.locationList[0]);     
+       this.setForamADetailsToPage(data.locationList[0]);   
+       loadingController.dismiss();        
     },
       (error: any) => {         
-                   
+        loadingController.dismiss();            
       });
     
 

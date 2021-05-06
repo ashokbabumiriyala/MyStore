@@ -31,24 +31,25 @@ ngOnInit() {
   }
 //#region   sub store list
 async subStoreList(){
-
 const loadingController = await this.helperService.createLoadingController("loading");
   await loadingController.present();  
   const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Mode:'Select'};
-  this.singleStoreService.subStoreListSelect('ProviderSubStoreSelect', dataObject)
+  await this.singleStoreService.subStoreListSelect('ProviderSubStoreSelect', dataObject)
   .subscribe((data: any) => {
    this.masterStore= data.storeMaster;
    this.storeType= data.provideStoreType;
     if(data.provideStoreList.length>0){   
       this.provideSubStoreList=data.provideStoreList;
+      loadingController.dismiss();
     }else{
       this.provideSubStoreList=[];   
+      loadingController.dismiss();
     }  
   },
     (error: any) => {         
-                 
+      loadingController.dismiss();      
     });
-    await loadingController.dismiss();
+   
 }
 //#endregion
 
@@ -127,38 +128,43 @@ async saveStore():Promise<void>{
       ToTime:this.ToTime.value,Id:this.storeId,Mode:this.title
     };
  
-    this.singleStoreService.singleStoreSave('StoreSave', this.iSingleStore)
+    await this.singleStoreService.singleStoreSave('StoreSave', this.iSingleStore)
     .subscribe((data: any) => {      
       this.presentToast("Store " + this.title+ "  successfully.","success");  
       this.editStore=false;
       this.singleStoreFormGroup.reset();
       this.isFormSubmitted=false
-      this.subStoreList();   
+      this.subStoreList(); 
+      loadingController.dismiss();  
     },
       (error: any) => {        
-                   
+        loadingController.dismiss();       
       });
-      await loadingController.dismiss();
+      
   }
 }
 //#endregion
-editStoreInfo(rowdata:any){
+async editStoreInfo(rowdata:any){
   this.editStore = true;
   if(rowdata==null){
     this.storeId=0;
     this.title="Register";
-  }else{   
+  }else{  
+    const loadingController = await this.helperService.createLoadingController("loading");
+    await loadingController.present();     
     const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Id: Number(rowdata.id),Mode:'Edit'};
     this.storeId=Number(rowdata.id);
-    this.singleStoreService.subStoreListSelect('ProviderSubStoreSelect', dataObject)
+    await this.singleStoreService.subStoreListSelect('ProviderSubStoreSelect', dataObject)
     .subscribe((data: any) => { 
       this.masterStore=[];
       this.storeType=[];
       this.masterStore= data.storeMaster;
       this.storeType= data.provideStoreType;    
       this.setForamADetailsToPage(data.provideStoreList[0]);
+      loadingController.dismiss();       
     },
       (error: any) => {  
+        loadingController.dismiss();       
       });
     this.title="Update";    
   }

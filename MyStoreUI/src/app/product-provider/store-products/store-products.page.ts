@@ -69,15 +69,16 @@ constructor(private storeProductService:StoreProductService,
     await loadingController.present();
     const selectedStoreId=this.StoreID.value;
     const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Mode:'Select',StoreId:0};
-    this.storeProductService.storeProductList('ProviderStoreProductsSelect', dataObject)
-    .subscribe((data: any) => {
-      console.log(data);
+   await this.storeProductService.storeProductList('ProviderStoreProductsSelect', dataObject)
+    .subscribe((data: any) => {     
       this.stores=data.storeDropdown;
       this.storeProductsData = data.storeProducts;
+      loadingController.dismiss();
     },
     (error: any) => {
+      loadingController.dismiss();
     });
-    await loadingController.dismiss();
+     
   }
   pickImage(sourceType) {
     const options: CameraOptions = {
@@ -152,8 +153,7 @@ constructor(private storeProductService:StoreProductService,
         Units:this.Units.value,Quantity:Number(this.Quantity.value),
         DiscountType :this.DiscountType.value, Discount:Number(this.Discount.value),PriceBeforeDiscount:Number(this.PriceBeforeDiscount.value)
         ,PriceAfterDiscount:Number(this.PriceAfterDiscount.value), Files: this.selectedDocs};
-        this.tempProducts.push(productObject);
-        console.log(this.tempProducts)
+        this.tempProducts.push(productObject);        
         this.showTempList=true;
         this.storeProductsForm.reset();
         this.selectedDocs = [];
