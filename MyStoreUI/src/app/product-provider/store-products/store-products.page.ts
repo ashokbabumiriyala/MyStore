@@ -181,8 +181,7 @@ constructor(private storeProductService:StoreProductService,
           productFormData.append(key, tempProducts[i][key]);
         } else if (typeof(tempProducts[i][key]) == 'number'){
           productFormData.append(key, tempProducts[i][key] + "");
-        }
-        else {
+        } else {
           for (var j = 0; j < tempProducts[i][key].length; j++) {
             productFormData.append("files", tempProducts[i][key][j], 'ProductImage' + j + '.jpg');
           }
@@ -190,7 +189,6 @@ constructor(private storeProductService:StoreProductService,
       }
       formData.push(productFormData);
     }
-    console.log(formData);
     return formData;
   }
   deleteProduct(rowdata:any){
