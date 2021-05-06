@@ -84,6 +84,10 @@ async serviceMasterListSelect(){
   get OwnerID() {
     return this.serviceMasterFormGroup.get('OwnerID');
   }
+
+  get RazorPaymentKey(){
+    return this.serviceMasterFormGroup.get('RazorPaymentKey');
+  }
   private createServiceMasterForm() { 
     this.serviceMasterFormGroup = new FormGroup({
       BusinessType: new FormControl('', Validators.required),
@@ -97,7 +101,8 @@ async serviceMasterListSelect(){
       AccountHolderName: new FormControl('', Validators.required),
       AccountNumber: new FormControl('', Validators.required) ,   
       IFSCCode: new FormControl('', Validators.required),
-      BranchName: new FormControl('', Validators.required)    
+      BranchName: new FormControl('', Validators.required) ,  
+      RazorPaymentKey : new FormControl('')   
     });
   }
   async saveServiceMaster(): Promise<void>{
@@ -112,7 +117,7 @@ async serviceMasterListSelect(){
       BusinessName: this.BusinessName.value, MobileNumber: this.MobileNumber.value.toString(), Email: this.Email.value,
       TinorGstNumber:String(this.TinorGstNumber.value), OwnerID:Number(this.OwnerID.value), BankName: this.BankName.value,
       AccountHolderName: this.AccountHolderName.value, AccountNumber: String(this.AccountNumber.value), IFSCCode: this.IFSCCode.value,
-      BranchName: this.BranchName.value,Id:this.serviceId,Mode:this.title
+      BranchName: this.BranchName.value, RazorPaymentKey:this.RazorPaymentKey.value, Id:this.serviceId,Mode:this.title
     };
     console.log(this.iServiceMaster);
     this.serviceMasterService.serviceMasterSave('ServiceMasterSave', this.iServiceMaster)
@@ -165,7 +170,8 @@ private setForamADetailsToPage(data: any): void {
   AccountHolderName:data.accountHolderName,
   AccountNumber: data.accountNumber,
   IFSCCode: data.ifscCode,
-  BranchName: data.branchName    
+  BranchName: data.branchName    ,
+  RazorPaymentKey:data.razorPaymentKey
 });
 }
 async presentToast(data: string,tostarColor:string) {
@@ -193,6 +199,7 @@ interface IServiceMaster{
   AccountNumber :string;
   IFSCCode :string;
   BranchName :string;
+  RazorPaymentKey:string;
   Id:number;
   Mode:string;
 }

@@ -97,6 +97,11 @@ async storeMasterListSelect(){
     return this.storeMasterFormGroup.get('OwnerID');
   } 
 
+  get RazorPaymentKey() {
+    return this.storeMasterFormGroup.get('RazorPaymentKey');
+  } 
+  
+
   private createstoreMasterForm() { 
     this.storeMasterFormGroup = new FormGroup({
       StoreType: new FormControl('', Validators.required),
@@ -110,7 +115,8 @@ async storeMasterListSelect(){
       AccountHolderName: new FormControl('', Validators.required),
       AccountNumber: new FormControl('', Validators.required) ,   
       IFSCCode: new FormControl('', Validators.required),
-      BranchName: new FormControl('', Validators.required)    
+      BranchName: new FormControl('', Validators.required)   ,
+      RazorPaymentKey : new FormControl('')   
     });
   }
   async saveStoreMaster(): Promise<void>{
@@ -125,7 +131,7 @@ async storeMasterListSelect(){
       Name: this.Name.value, MobileNumber: this.MobileNumber.value.toString(), Email: this.Email.value,
       TinorGstNumber: this.TinorGstNumber.value.toString(), OwnerID:Number(this.OwnerID.value), BankName: this.BankName.value,
       AccountHolderName: this.AccountHolderName.value, AccountNumber: this.AccountNumber.value.toString(), IFSCCode: this.IFSCCode.value,
-      BranchName: this.BranchName.value,Id:this.storeId,Mode:this.title
+      BranchName: this.BranchName.value,RazorPaymentKey: this.RazorPaymentKey.value, Id:this.storeId,Mode:this.title
     };
     console.log(this.istoreMaster);
     this.StoreMasterService.storeMasterSave('StoreMasterSave', this.istoreMaster)
@@ -176,7 +182,8 @@ editMasterInfo(rowdata:any) {
     AccountHolderName:data.accountHolderName,
     AccountNumber: data.accountNumber,
     IFSCCode: data.ifscCode,
-    BranchName: data.branchName    
+    BranchName: data.branchName   ,
+    RazorPaymentKey:data.razorPaymentKey 
   });
 }
 //#endregion
@@ -205,6 +212,7 @@ interface IStoreMaster{
   AccountNumber :string;
   IFSCCode :string;
   BranchName :string;
+  RazorPaymentKey:string;
   Id:number;
   Mode:string;
 }
