@@ -124,7 +124,7 @@ async serviceMasterListSelect(){
     };  
     await this.serviceMasterService.serviceMasterSave('ServiceMasterSave', this.iServiceMaster)
     .subscribe((data: any) => {      
-      this.presentToast("Store master " + this.title+ "  successfully.","success");
+      this.presentToast("Service master information added successfully!","success");
       this.serviceMasterList=false;
       this.serviceMasterListSelect();  
       loadingController.dismiss();  

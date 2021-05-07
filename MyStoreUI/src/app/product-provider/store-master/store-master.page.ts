@@ -136,7 +136,7 @@ async storeMasterListSelect(){
     };   
     await this.StoreMasterService.storeMasterSave('StoreMasterSave', this.istoreMaster)
     .subscribe((data: any) => {      
-      this.presentToast("Store master " + this.title+ "  successfully.","success");
+      this.presentToast("Merchant master information added successfully!.","success");
       this.storeMasterList=false;
       this.storeMasterListSelect();  
       this.storeMasterFormGroup.reset();

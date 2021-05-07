@@ -86,7 +86,7 @@ async register(): Promise<void>{
     .subscribe((data: any) => {
       this.signUpFormGroup.reset();
       this.router.navigate(['login']);
-      this.presentToast("Registration successfully.","success");
+      this.presentToast("Registration is successfully.","success");
       const providerIndex = this.providerType.findIndex(this.RoleID.value)
       this.fcm.subscribeToTopic(this.providerType[providerIndex].text);
       loadingController.dismiss();

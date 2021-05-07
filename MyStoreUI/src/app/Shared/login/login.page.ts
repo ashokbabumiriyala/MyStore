@@ -62,7 +62,7 @@ export class LoginPage implements OnInit {
         menus: data.menuItems, defaultMenuId: data.defaultMenuId
       };
        this.helperService.setProfileObs(providerDetails);
-       this.presentToast("login success.","success");
+       this.presentToast("Logged in successfully!.","success");
        loadingController.dismiss();
       },
         (error: any) => {
