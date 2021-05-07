@@ -137,14 +137,15 @@ constructor(private storeProductService:StoreProductService,
       PriceAfterDiscount: new FormControl('', Validators.required)
     });
   }
-  addProduct():void{
+
+  async uploadProduct():Promise<void> {
     this.isFormSubmitted=true;
     if (this.storeProductsForm.invalid) {
       return;
     }else{
       this.isFormSubmitted=false;
       const serialNumber:number=this.tempProducts.length+1;
-      const productObject= {slNo:Number(serialNumber), StoreID:this.StoreID.value, Category:this.Category.value,
+      const productObject= {StoreID:this.StoreID.value, Category:this.Category.value,
         ProductName:this.ProductName.value,
         Units:this.Units.value,Quantity:Number(this.Quantity.value),
         DiscountType :this.DiscountType.value, Discount:Number(this.Discount.value),PriceBeforeDiscount:Number(this.PriceBeforeDiscount.value)
@@ -153,24 +154,23 @@ constructor(private storeProductService:StoreProductService,
         this.showTempList=true;
         this.storeProductsForm.reset();
         this.selectedDocs = [];
+        let formDataList = this.getFormData(this.tempProducts);
+        const loadingController = await this.helperService.createLoadingController("loading");
+        await loadingController.present();
+        await this.storeProductService.storeProductSave('StoreProductSave', formDataList[0])
+        .subscribe((data: any) => {
+          this.tempProducts=[];
+          this.showTempList=false;
+          this.editProduct = false;
+          this.presentToast("Product saved Successfully","success");
+          loadingController.dismiss();
+        },
+          (error: any) => {
+            loadingController.dismiss();
+          });
     }
-  }
-  async uploadProduct():Promise<void> {
-    this.addProduct();
-    let formDataList = this.getFormData(this.tempProducts);
-    const loadingController = await this.helperService.createLoadingController("loading");
-    await loadingController.present();
-    await this.storeProductService.storeProductSave('StoreProductSave', formDataList[0])
-    .subscribe((data: any) => {
-      this.tempProducts=[];
-      this.showTempList=false;
-      this.editProduct = false;
-      this.presentToast("Product saved Successfully","success");
-      loadingController.dismiss();
-    },
-      (error: any) => {
-        loadingController.dismiss();
-      });
+
+
   }
   getFormData(tempProducts:any[]){
     let formData = [];

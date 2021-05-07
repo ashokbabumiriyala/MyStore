@@ -55,86 +55,111 @@
     </ion-list>
 
 
-    <form *ngIf="editService">
+    <form  [formGroup]="serviceProductsForm" *ngIf="editService">
         <ion-row>
             <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
                 <ion-item class="ion-ele">
                     <ion-label position="floating">Select Business</ion-label>
-                    <ion-select>
+                    <ion-select formControlName="ServiceLocationID">
                         <ion-select-option value="alllocations">All Locations</ion-select-option>
                         <ion-select-option value="addlocations">Add Locations</ion-select-option>
                     </ion-select>
                     <ion-icon name="cog-outline" slot="start"></ion-icon>
                 </ion-item>
+                <small *ngIf="isFormSubmitted &&  ServiceLocationID.errors"><span style="color: red;">*Business Required </span>
+                </small>
             </ion-col>
 
             <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
                 <ion-item class="ion-ele">
                     <ion-label position="floating">Category</ion-label>
-                    <ion-input type="text" required></ion-input>
+                    <ion-input type="text" formControlName="Category" required></ion-input>
                     <ion-icon name="aperture-outline" slot="start"></ion-icon>
                 </ion-item>
+                <small *ngIf="isFormSubmitted &&  Category.errors"><span style="color: red;">*Category Required </span>
+                </small>
             </ion-col>
 
             <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
                 <ion-item class="ion-ele">
                     <ion-label position="floating">Service Name</ion-label>
-                    <ion-input type="text" required></ion-input>
+                    <ion-input  formControlName="ServiceName" type="text" for required></ion-input>
                     <ion-icon name="apps-outline" slot="start"></ion-icon>
                 </ion-item>
+
+                <small *ngIf="isFormSubmitted &&  ServiceName.errors"><span style="color: red;">*Service Name Required </span>
+                </small>
             </ion-col>
 
             <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
                 <ion-item class="ion-ele">
                     <ion-label position="floating">Select Discount</ion-label>
-                    <ion-select>
+                    <ion-select  formControlName="DiscountType">
                         <ion-select-option value="percentage">Percentage</ion-select-option>
                         <ion-select-option value="rupees">Rupees</ion-select-option>
                     </ion-select>
                     <ion-icon name="code-outline" slot="start"></ion-icon>
                 </ion-item>
+
+                <small *ngIf="isFormSubmitted &&  DiscountType.errors"><span style="color: red;">*Discount Type Required </span>
+                </small>
             </ion-col>
 
             <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
                 <ion-item class="ion-ele">
                     <ion-label position="floating">Discount</ion-label>
-                    <ion-input type="text" required></ion-input>
+                    <ion-input type="text"  formControlName="Discount" required></ion-input>
                     <ion-icon name="pricetag-outline" slot="start"></ion-icon>
                 </ion-item>
+                <small *ngIf="isFormSubmitted &&  Discount.errors"><span style="color: red;">*Discount Required </span>
+                </small>
             </ion-col>
 
             <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
                 <ion-item class="ion-ele">
                     <ion-label position="floating">Price Before Discount</ion-label>
-                    <ion-input type="text" required></ion-input>
+                    <ion-input type="text" formControlName="PriceBeforeDiscount" required></ion-input>
                     <ion-icon name="print-outline" slot="start"></ion-icon>
                 </ion-item>
+
+                <small *ngIf="isFormSubmitted &&  PriceBeforeDiscount.errors"><span style="color: red;">*PriceBeforeDiscount Required </span>
+                </small>
+
             </ion-col>
 
             <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
                 <ion-item class="ion-ele">
                     <ion-label position="floating">Price After Discount</ion-label>
-                    <ion-input type="text" required></ion-input>
+                    <ion-input type="text" formControlName="PriceAfterDiscount" required></ion-input>
                     <ion-icon name="pricetags-outline" slot="start"></ion-icon>
                 </ion-item>
+
+                <small *ngIf="isFormSubmitted &&  PriceAfterDiscount.errors">
+                    <span style="color: red;">*PriceAfterDiscount Required </span>
+                </small>
+
             </ion-col>
+
+         
 
             <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
                 <ion-item class="ion-ele">
-                    <ion-label position="fixed">Upload Images</ion-label>
-                    <ion-input type="file" multiple></ion-input>
-                    <ion-icon name="images-outline" slot="start"></ion-icon>
+                  <ion-icon name="images-outline" slot="start"></ion-icon>
+                  <ion-button shape="round" expand="full" size="default" (click)="selectImage();" class="ion-button">
+                    Select Image</ion-button>
+                  <ion-label class="ion-text-right" *ngIf="selectedDocs.length != 0"><ion-icon name="eye-outline"></ion-icon> {{selectedDocs.length}}
+                  </ion-label>
                 </ion-item>
-            </ion-col>
+              </ion-col>
         </ion-row>
-        <ion-row>
+        <!-- <ion-row>
             <ion-col class="ion-text-center ion-margin-top" size-md="6" size-xs="12" size-sm="12" push-md="3"
                 push-lg="4" size-lg="4">
                 <ion-button type="submit" shape="round" expand="block" class="ion-margin-bottom">Add</ion-button>
             </ion-col>
-        </ion-row>
+        </ion-row> -->
 
-        <ion-grid>
+        <!-- <ion-grid>
             <ion-row>
                 <ion-col size="3">Action</ion-col>
                 <ion-col size="5">Service Name</ion-col>
@@ -148,11 +173,11 @@
                 <ion-col size="5"> </ion-col>
                 <ion-col size="4"></ion-col>
             </ion-row>
-        </ion-grid>
+        </ion-grid> -->
         <ion-row>
             <ion-col class="ion-text-center ion-margin-top" size-md="6" size-xs="12" size-sm="12" push-md="3"
                 push-lg="4" size-lg="4">
-                <ion-button type="submit" shape="round" expand="block" class="ion-button ion-margin-bottom">Upload
+                <ion-button type="submit" shape="round" expand="block" (click)="uploadService();" class="ion-button ion-margin-bottom">Upload
                 </ion-button>
             </ion-col>
         </ion-row>
