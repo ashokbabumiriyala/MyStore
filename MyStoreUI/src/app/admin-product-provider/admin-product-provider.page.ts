@@ -27,17 +27,18 @@ export class AdminProductProviderPage implements OnInit {
     this.adminStoreMasterList();
   }
 async adminStoreMasterList(){
-
   const loadingController = await this.helperService.createLoadingController("loading");
     await loadingController.present(); 
-    this.adminProductProviderService.adminStoreMasterSelect('AdminStoreMasters')
+    await this.adminProductProviderService.adminStoreMasterSelect('AdminStoreMasters')
     .subscribe((data: any) => {
      this.items= data;
      Object.assign(this.masterData,this.items);
+     loadingController.dismiss();
     },
       (error: any) => {    
+        loadingController.dismiss();
       });
-      await loadingController.dismiss();
+       
   }
   filterItems() {
     this.masterData = this.items.filter(item => {
@@ -61,16 +62,19 @@ async adminStoreMasterList(){
     }
   }
 
-  public getStoresByStoreMaster(storeId:number)
+  async getStoresByStoreMaster(storeId:number)
   {
+    const loadingController = await this.helperService.createLoadingController("loading");
+    await loadingController.present(); 
     const dataObject={Id: storeId};
-          this.adminProductProviderService.StoresUnderStoreMasterSelect('StoresUnderStoreMaster',dataObject)
+    await  this.adminProductProviderService.StoresUnderStoreMasterSelect('StoresUnderStoreMaster',dataObject)
           .subscribe((data: any) => {
            this.stores=data;
            this.showStores=true;  
+           loadingController.dismiss();
           },
-            (error: any) => {         
-                         
+            (error: any) => {   
+              loadingController.dismiss();
             });
   }
 }

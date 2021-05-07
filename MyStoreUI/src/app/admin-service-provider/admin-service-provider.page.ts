@@ -31,14 +31,16 @@ export class AdminServiceProviderPage implements OnInit {
     this.locations=[];
     const loadingController = await this.helperService.createLoadingController("loading");
       await loadingController.present(); 
-      this.adminServiceProviderService.adminServiceMasterSelect('AdminServiceMasters')
+      await this.adminServiceProviderService.adminServiceMasterSelect('AdminServiceMasters')
       .subscribe((data: any) => {
        this.items= data;      
        Object.assign(this.serviceData,this.items);
+       loadingController.dismiss();
       },
         (error: any) => {    
+          loadingController.dismiss();
         });
-        await loadingController.dismiss();
+     
     }
   filterItems() {
     this.serviceData = this.items.filter(item => {
