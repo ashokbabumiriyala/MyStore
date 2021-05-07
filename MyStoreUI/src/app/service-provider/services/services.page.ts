@@ -6,6 +6,7 @@ import {File, FileEntry} from '@ionic-native/file/ngx';
 import { NavController, ToastController } from '@ionic/angular';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {ServiceUploadService} from 'src/app/service-provider/services/service-upload.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 @Component({
   selector: 'app-services',
   templateUrl: './services.page.html',
@@ -18,6 +19,7 @@ serviceProductsForm:FormGroup;
 isFormSubmitted:boolean;
 selectedDocs=[];
 tempProducts=[];
+services=[];
   constructor(private   toastController:ToastController,
     private helperService:HelperService,
     private serviceUploadService:ServiceUploadService,
@@ -26,10 +28,28 @@ tempProducts=[];
 
 ngOnInit() {
   this.createServiceProductForm();
+  this.serviceProductsList();
 }
   editServiceInfo(){
 	  this.editService = true;
   }
+
+  async serviceProductsList(){
+    const loadingController = await this.helperService.createLoadingController("loading");
+    await loadingController.present();  
+    const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Mode:'Select',StoreId:0};
+   await this.serviceUploadService.serviceProductList('serviceListSelect', dataObject)
+    .subscribe((data: any) => {
+      this.services=data.serviceDropdown;
+      // this.storeProductsData = data.storeProducts;
+      loadingController.dismiss();
+    },
+    (error: any) => {
+      loadingController.dismiss();
+    });
+
+  }
+
   get ServiceLocationID(){
     return this.serviceProductsForm.get('ServiceLocationID');
   }
@@ -110,8 +130,7 @@ ngOnInit() {
     const blob = await base64.blob();
     this.selectedDocs.push(blob);
   }
-  async uploadService():Promise<void> {
-   
+  async uploadService():Promise<void> {   
     this.isFormSubmitted=true;
     if (this.serviceProductsForm.invalid) {
       return;

@@ -6,10 +6,13 @@ import { CommonApiServiceCallsService} from '../../Shared/common-api-service-cal
   providedIn: 'root'
 })
 export class ServiceUploadService {
-  private apiUrl = environment.storeMasterServiceUrl;
+  private apiUrl = environment.serviceMasterServiceUrl;
 
   constructor(private commonApiServiceCallsService:CommonApiServiceCallsService) { }
   uploadServiceDocument(methodName: string, resouce: any): Observable<any> {
+    return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
+  }
+  serviceProductList(methodName: string, resouce: any): Observable<any> {
     return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
   }
 

@@ -61,11 +61,13 @@
                 <ion-item class="ion-ele">
                     <ion-label position="floating">Select Business</ion-label>
                     <ion-select formControlName="ServiceLocationID">
-                        <ion-select-option value="alllocations">All Locations</ion-select-option>
-                        <ion-select-option value="addlocations">Add Locations</ion-select-option>
+                      <ion-select-option *ngFor="let serviceItem of services" value="{{serviceItem.value}}">{{serviceItem.text}}
+                      </ion-select-option>
                     </ion-select>
                     <ion-icon name="cog-outline" slot="start"></ion-icon>
-                </ion-item>
+                  </ion-item>
+
+
                 <small *ngIf="isFormSubmitted &&  ServiceLocationID.errors"><span style="color: red;">*Business Required </span>
                 </small>
             </ion-col>
@@ -108,7 +110,7 @@
             <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
                 <ion-item class="ion-ele">
                     <ion-label position="floating">Discount</ion-label>
-                    <ion-input type="text"  formControlName="Discount" required></ion-input>
+                    <ion-input type="number"  formControlName="Discount" required></ion-input>
                     <ion-icon name="pricetag-outline" slot="start"></ion-icon>
                 </ion-item>
                 <small *ngIf="isFormSubmitted &&  Discount.errors"><span style="color: red;">*Discount Required </span>
@@ -118,7 +120,7 @@
             <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
                 <ion-item class="ion-ele">
                     <ion-label position="floating">Price Before Discount</ion-label>
-                    <ion-input type="text" formControlName="PriceBeforeDiscount" required></ion-input>
+                    <ion-input type="number" formControlName="PriceBeforeDiscount" required></ion-input>
                     <ion-icon name="print-outline" slot="start"></ion-icon>
                 </ion-item>
 
@@ -130,7 +132,7 @@
             <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
                 <ion-item class="ion-ele">
                     <ion-label position="floating">Price After Discount</ion-label>
-                    <ion-input type="text" formControlName="PriceAfterDiscount" required></ion-input>
+                    <ion-input type="number" formControlName="PriceAfterDiscount" required></ion-input>
                     <ion-icon name="pricetags-outline" slot="start"></ion-icon>
                 </ion-item>
 
