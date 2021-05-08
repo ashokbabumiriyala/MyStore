@@ -218,6 +218,11 @@ constructor(private storeProductService:StoreProductService,
     });
     toast.present();
   }
+  ionViewDidLeave() {
+    this.editProduct = false;
+    this.storeProductsForm.reset();
+    this.selectedDocs = [];
+  }
 }
 
 

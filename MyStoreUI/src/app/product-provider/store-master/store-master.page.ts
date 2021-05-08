@@ -14,7 +14,6 @@ storeMasterList:boolean;
 istoreMaster:IStoreMaster;
 storeMasterFormGroup:FormGroup;
 isFormSubmitted:boolean;
-showAddButton:boolean;
 provideStoreList= [];
 storeType=[];
 storeId:number;
@@ -25,37 +24,35 @@ title:string;
     private router: Router,
     private helperService:HelperService,
     private toastController:ToastController) { }
-  ngOnInit() {   
+  ngOnInit() {
     this.createstoreMasterForm();
     this.storeMasterListSelect();
     this.title="Register";
   }
 
   //#region list
-async storeMasterListSelect(){  
+async storeMasterListSelect(){
   const loadingController = await this.helperService.createLoadingController("loading");
-  await loadingController.present();  
+  await loadingController.present();
   const dataObject={Id: Number(sessionStorage.getItem("providerId")),Mode:'Select'};
   await this.StoreMasterService.storeMasterSelect('ProviderStoreSelect', dataObject)
   .subscribe((data: any) => {
-   this.storeType= data.provideStoreType;  
-    if(data.provideStoreList.length>0){   
-      this.provideStoreList=data.provideStoreList;   
-      this.showAddButton=false;
-      loadingController.dismiss();
+   this.storeType= data.provideStoreType;
+    if(data.provideStoreList.length>0){
+      this.provideStoreList=data.provideStoreList;
     }else{
-      this.showAddButton=true;
-      this.provideStoreList=[];   
-    }  
+      this.provideStoreList=[];
+    }
+    loadingController.dismiss();
   },
-    (error: any) => {         
-                 
+    (error: any) => {
+      loadingController.dismiss();
     });
-    
+
 }
   //#endregion
 
-//#region store master save  [raba(0,205,30,0.1)] 
+//#region store master save  [raba(0,205,30,0.1)]
   get StoreType() {
     return this.storeMasterFormGroup.get('StoreType');
   }
@@ -96,62 +93,62 @@ async storeMasterListSelect(){
 
   get OwnerID() {
     return this.storeMasterFormGroup.get('OwnerID');
-  } 
+  }
 
   get RazorPaymentKey() {
     return this.storeMasterFormGroup.get('RazorPaymentKey');
-  } 
-  
+  }
 
-  private createstoreMasterForm() { 
+
+  private createstoreMasterForm() {
     this.storeMasterFormGroup = new FormGroup({
       StoreType: new FormControl('', Validators.required),
-      NumberOfStores: new FormControl('', [Validators.required,Validators.maxLength(4)])  ,   
+      NumberOfStores: new FormControl('', [Validators.required,Validators.maxLength(4)])  ,
       Name: new FormControl('', Validators.required),
-      MobileNumber: new FormControl('', Validators.required)  ,  
+      MobileNumber: new FormControl('', Validators.required)  ,
       Email: new FormControl('', Validators.required),
-      TinorGstNumber: new FormControl('', Validators.required) ,   
+      TinorGstNumber: new FormControl('', Validators.required) ,
       OwnerID: new FormControl('', Validators.required),
-      BankName: new FormControl('', Validators.required)  ,  
+      BankName: new FormControl('', Validators.required)  ,
       AccountHolderName: new FormControl('', Validators.required),
-      AccountNumber: new FormControl('', Validators.required) ,   
+      AccountNumber: new FormControl('', Validators.required) ,
       IFSCCode: new FormControl('', Validators.required),
       BranchName: new FormControl('', Validators.required)   ,
-      RazorPaymentKey : new FormControl('')   
+      RazorPaymentKey : new FormControl('')
     });
   }
   async saveStoreMaster(): Promise<void>{
     this.isFormSubmitted = true;
     if (this.storeMasterFormGroup.invalid) {
       return;
-    }   
+    }
     const loadingController = await this.helperService.createLoadingController("loading");
-    await loadingController.present();  
+    await loadingController.present();
     this.istoreMaster = {
       StoreType:Number(this.StoreType.value), ProviderID:  Number(sessionStorage.getItem("providerId")), NumberOfStores:Number(this.NumberOfStores.value),
       Name: this.Name.value, MobileNumber: this.MobileNumber.value.toString(), Email: this.Email.value,
       TinorGstNumber: this.TinorGstNumber.value.toString(), OwnerID:Number(this.OwnerID.value), BankName: this.BankName.value,
       AccountHolderName: this.AccountHolderName.value, AccountNumber: this.AccountNumber.value.toString(), IFSCCode: this.IFSCCode.value,
       BranchName: this.BranchName.value,RazorPaymentKey: this.RazorPaymentKey.value, Id:this.storeId,Mode:this.title
-    };   
+    };
     await this.StoreMasterService.storeMasterSave('StoreMasterSave', this.istoreMaster)
-    .subscribe((data: any) => {      
+    .subscribe((data: any) => {
       this.presentToast("Merchant master information added successfully!.","success");
       this.storeMasterList=false;
-      this.storeMasterListSelect();  
+      this.storeMasterListSelect();
       this.storeMasterFormGroup.reset();
-      loadingController.dismiss();  
+      loadingController.dismiss();
     },
-      (error: any) => {         
-        loadingController.dismiss();        
+      (error: any) => {
+        loadingController.dismiss();
       });
-     
-  } 
+
+  }
 //#endregion
 
 // this.caseCategoryData = this.helperService.prepareDropDownData(dropdownData.caseCategoryDetails);
 //#region edit store master
-editMasterInfo(rowdata:any) {   
+editMasterInfo(rowdata:any) {
   if(rowdata==null){
     this.storeId=0;
     this.title="Register";
@@ -159,18 +156,18 @@ editMasterInfo(rowdata:any) {
     const dataObject={Id: Number(rowdata.id),Mode:'Edit'};
     this.storeId=Number(rowdata.id);
     this.StoreMasterService.storeMasterSelect('ProviderStoreSelect', dataObject)
-    .subscribe((data: any) => { 
+    .subscribe((data: any) => {
       this.storeType=[];
       this.storeType= data.provideStoreType;
       this.setForamADetailsToPage(data.provideStoreList[0]);
     },
-      (error: any) => {  
+      (error: any) => {
       });
-    this.title="Update";    
+    this.title="Update";
   }
 	this.storeMasterList = true;
  }
- private setForamADetailsToPage(data: any): void {  
+  private setForamADetailsToPage(data: any): void {
     this.storeMasterFormGroup.patchValue({
     StoreType:String(data.storeTypeId),
     NumberOfStores:Number(data.numberOfStores),
@@ -184,20 +181,24 @@ editMasterInfo(rowdata:any) {
     AccountNumber: data.accountNumber,
     IFSCCode: data.ifscCode,
     BranchName: data.branchName   ,
-    RazorPaymentKey:data.razorPaymentKey 
-  });
-}
-//#endregion
+    RazorPaymentKey:data.razorPaymentKey
+    });
+  }
+  //#endregion
 
- async presentToast(data: string,tostarColor:string) {
-  const toast = await this.toastController.create({
-    message: data,
-    duration: 2000,
-    position: 'bottom',      
-    color: tostarColor
-  });
-  toast.present();
-}
+  async presentToast(data: string,tostarColor:string) {
+    const toast = await this.toastController.create({
+      message: data,
+      duration: 2000,
+      position: 'bottom',
+      color: tostarColor
+    });
+    toast.present();
+  }
+  ionViewDidLeave() {
+    this.storeMasterList = false;
+    this.storeMasterFormGroup.reset();
+  }
 }
 interface IStoreMaster{
   StoreType :number;

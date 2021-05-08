@@ -1,45 +1,18 @@
 <ion-content class="ion-padding after-login-bg">
-    <!-- <h2 class="page-title">
-        <ion-icon name="extension-puzzle-outline"></ion-icon>Store Master</h2>
-    <ion-row *ngIf="!storeMasterList">
-        <ion-col size="8"></ion-col>
-        <ion-col size="4">
-            <ion-button type="button" shape="round" class="ion-button" *ngIf="showAddButton"
-                (click)="editMasterInfo(null)">Add Master Info</ion-button>
-        </ion-col>
-    </ion-row> -->
     <ion-item lines="none" class="ion-list-header">
-      <ion-col size="1">
-        <ion-icon name="list" size="large"></ion-icon>
+      <ion-col size="1" >
+        <ion-icon name="list" size="large" class="text-align-left" *ngIf="!storeMasterList"></ion-icon>
+        <ion-icon name="arrow-back-outline" size="large"  class="ion-text-left" *ngIf="storeMasterList" (click)="ionViewDidLeave()"></ion-icon>
       </ion-col>
       <ion-col size="7">
-        <ion-title class="ion-text-right list-title">Store Master</ion-title>
+        <ion-title class="ion-text-center list-title">Store Master</ion-title>
       </ion-col>
       <ion-col size="4" *ngIf="!storeMasterList">
-          <ion-label *ngIf="showAddButton" class="ion-text-right list-button" (click)="editMasterInfo(null)">
-            <ion-icon name="add-circle-outline" slot="start" >
-
-            </ion-icon >Add Master</ion-label>
+          <ion-label *ngIf="provideStoreList.length == 0" class="ion-text-right list-button" (click)="editMasterInfo(null)">
+            <ion-icon name="add-circle-outline" slot="start" ></ion-icon >Add Master</ion-label>
       </ion-col>
     </ion-item>
-    <!-- <ion-grid *ngIf="!storeMasterList">
-        <ion-row>
-            <ion-col size="3">Action</ion-col>
-            <ion-col size="4">Store Type</ion-col>
-            <ion-col size="5">Store Name</ion-col>
-        </ion-row>
-
-        <ion-row *ngFor="let storeMaster of provideStoreList;">
-            <ion-col size="3">
-                <ion-icon name="trash" class="table-icons" color="danger"></ion-icon>
-                <ion-icon name="create" class="table-icons" (click)="editMasterInfo(storeMaster)"></ion-icon>
-            </ion-col>
-            <ion-col size="4">{{ storeMaster.storeType }}</ion-col>
-            <ion-col size="5">{{ storeMaster.name}}</ion-col>
-        </ion-row>
-    </ion-grid> -->
-
-    <ion-list class="ion-list-ele" *ngIf="!storeMasterList">
+    <ion-list class="ion-list-ele" *ngIf="!storeMasterList && provideStoreList.length !== 0">
         <ion-item *ngFor="let storeMaster of provideStoreList;">
           <ion-avatar item-start size="3">
             <img src="assets/default-image.jpg">

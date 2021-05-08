@@ -19,11 +19,19 @@ export class AppComponent implements OnInit {
   constructor(private helperService:HelperService,private router: Router,
     private platform: Platform, private fcm: FCM
     ) {
+     console.log(this.platform.platforms());
       this.initializeApp();
     }
     initializeApp() {
       this.platform.ready().then(() => {
         // get FCM token
+        if (this.platform.is('android') || this.platform.is('ios')) {
+          console.log("running on mobile device!");
+          sessionStorage.setItem('mobile', 'true');
+        } else {
+          sessionStorage.setItem('mobile', 'false');
+        }
+           
         this.fcm.getToken().then(token => {
           sessionStorage.setItem("PushToken",token);
         });

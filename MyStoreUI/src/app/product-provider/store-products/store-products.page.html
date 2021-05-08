@@ -1,10 +1,11 @@
 <ion-content class="after-login-bg ion-padding">
   <ion-item lines="none" class="ion-list-header">
-    <ion-col size="1">
-      <ion-icon name="list" size="large"></ion-icon>
+    <ion-col size="2" >
+      <ion-icon name="list" size="large"  class="ion-text-left" *ngIf="!editProduct"></ion-icon>
+      <ion-icon name="arrow-back-outline" size="large"  class="ion-text-left" *ngIf="editProduct" (click)="ionViewDidLeave()"></ion-icon>
     </ion-col>
-    <ion-col size="7">
-      <ion-title class="ion-text-right list-title" *ngIf="!editMaster">Products</ion-title>
+    <ion-col size="6">
+      <ion-title class="ion-text-center list-title" *ngIf="!editMaster">Products</ion-title>
     </ion-col>
     <ion-col size="4" *ngIf="!editProduct">
         <ion-label class="ion-text-right list-button" (click)="editProductInfo()">

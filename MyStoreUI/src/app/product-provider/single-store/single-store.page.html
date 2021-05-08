@@ -1,6 +1,6 @@
 <ion-content class="ion-padding after-login-bg">
 
-    <ion-row *ngIf="!editStore">
+    <ion-row>
         <ion-col size-md="6" size-xs="12" size-sm="12" push-md="3" push-lg="3" size-lg="6">
             <h2 class="page-title">
                 <ion-icon name="extension-puzzle-outline"></ion-icon>Store Information
@@ -8,7 +8,7 @@
         </ion-col>
         <ion-col class="ion-text-right ion-text-sm-right ion-text-md-left" size-md="6" size-xs="12" size-sm="12"
             push-md="3" push-lg="3" size-lg="6">
-            <ion-button *ngIf="!editMaster" type="button" shape="round" class="ion-button"
+            <ion-button *ngIf="!editStore" type="button" shape="round" class="ion-button"
                 (click)="editStoreInfo(null)">Add New Store Location</ion-button>
         </ion-col>
     </ion-row>
@@ -28,7 +28,7 @@
         </ion-row>
     </ion-grid> -->
 
-    <ion-list class="ion-list-ele" *ngIf="!editStore">
+    <ion-list class="ion-list-ele" *ngIf="!editStore && provideSubStoreList.length !== 0">
         <ion-item *ngFor="let subStore of provideSubStoreList;">
             <ion-avatar item-start size="3">
                 <img src="assets/default-image.jpg">
