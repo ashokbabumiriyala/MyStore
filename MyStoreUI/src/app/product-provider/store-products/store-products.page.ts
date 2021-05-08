@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { StoreProductService } from '../store-products/store-product.service'
 import { NavController, ToastController } from '@ionic/angular';
@@ -13,6 +13,7 @@ import {File, FileEntry} from '@ionic-native/file/ngx';
   styleUrls: ['./store-products.page.scss'],
 })
 export class StoreProductsPage implements OnInit {
+  @ViewChild('selectedWebDocs') selectedWebDocs;
 editProduct:boolean;
 editMaster:boolean;
 storeProductsForm:FormGroup;
@@ -24,6 +25,7 @@ storeProductsData= [];
 stores=[];
 tempDocs=[];
 selectedDocs=[];
+mobileApp:boolean;
 constructor(private storeProductService:StoreProductService,
   private   toastController:ToastController,
   private helperService:HelperService,
@@ -31,6 +33,11 @@ constructor(private storeProductService:StoreProductService,
   private actionSheetController: ActionSheetController, private file: File) { }
 
   ngOnInit() {
+    if (sessionStorage.getItem('mobile') == 'true') {
+      this.mobileApp = true;
+    } else {
+      this.mobileApp = false;
+    }
     this.createStoreProductForm();
     this.title="Register";
     this.storeProductsList();
@@ -140,7 +147,7 @@ constructor(private storeProductService:StoreProductService,
 
   async uploadProduct():Promise<void> {
     this.isFormSubmitted=true;
-    if (this.storeProductsForm.invalid) {
+    if (this.storeProductsForm.invalid || this.selectedDocs.length == 0) {
       return;
     }else{
       this.isFormSubmitted=false;
@@ -154,6 +161,7 @@ constructor(private storeProductService:StoreProductService,
         this.showTempList=true;
         this.storeProductsForm.reset();
         this.selectedDocs = [];
+        this.selectedWebDocs.nativeElement.value = "";
         let formDataList = this.getFormData(this.tempProducts);
         const loadingController = await this.helperService.createLoadingController("loading");
         await loadingController.present();
@@ -218,10 +226,27 @@ constructor(private storeProductService:StoreProductService,
     });
     toast.present();
   }
+  selectedImgWeb(data){
+    console.log(data);
+    var files = data.target.files;
+    for(let i = 0 ; i <files.length; i++) {
+      if (files[i]) {
+        var reader = new FileReader();
+        reader.onload =this._handleReaderLoaded.bind(this);
+        reader.readAsBinaryString(files[i]);
+      }
+    }
+  }
+ async _handleReaderLoaded(readerEvt) {
+    var binaryString = readerEvt.target.result;
+    let base64textString= btoa(binaryString);
+    await this.getblobObject('data:image/jpeg;base64,' + base64textString)
+   }
   ionViewDidLeave() {
     this.editProduct = false;
     this.storeProductsForm.reset();
     this.selectedDocs = [];
+    this.selectedWebDocs.nativeElement.value = "";
   }
 }
 

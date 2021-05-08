@@ -138,6 +138,7 @@ export class AppComponent implements OnInit {
     let pushToken = sessionStorage.getItem('PushToken');
     sessionStorage.clear();
     sessionStorage.setItem('PushToken',pushToken );
+    this.menuItems = [];
     this.router.navigate(['login']);
   }
 }

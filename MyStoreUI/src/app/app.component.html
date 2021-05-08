@@ -1,7 +1,7 @@
 <ion-app>
     <ion-header class="header" *ngIf="showHead" id="panel-split">
         <ion-toolbar>
-            <ion-buttons style="color: orangered;" slot="start">
+            <ion-buttons style="color: orangered;" slot="start" *ngIf="menuItems.length>0" >
                 <ion-menu-button></ion-menu-button>
               </ion-buttons>
             <ion-title class="ion-text-center">

@@ -1,5 +1,5 @@
 <ion-content class="after-login-bg ion-padding">
-  <ion-item lines="none" class="ion-list-header">
+  <ion-item lines="none" class="ion-list-header ion-no-padding" style="padding:0px !important; margin-left: 0px !important;">
     <ion-col size="2" >
       <ion-icon name="list" size="large"  class="ion-text-left" *ngIf="!editProduct"></ion-icon>
       <ion-icon name="arrow-back-outline" size="large"  class="ion-text-left" *ngIf="editProduct" (click)="ionViewDidLeave()"></ion-icon>
@@ -138,7 +138,7 @@
             Required </span>
         </small>
       </ion-col>
-      <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
+      <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3" *ngIf="mobileApp">
         <ion-item class="ion-ele">
           <ion-icon name="images-outline" slot="start"></ion-icon>
           <ion-button shape="round" expand="full" size="default" (click)="selectImage();" class="ion-button">
@@ -146,6 +146,17 @@
           <ion-label class="ion-text-right" *ngIf="selectedDocs.length != 0"><ion-icon name="eye-outline"></ion-icon> {{selectedDocs.length}}
           </ion-label>
         </ion-item>
+        <small *ngIf="isFormSubmitted && selectedDocs.length == 0"><span style="color: red;">*Atleast One Image Required </span>
+      </small>
+      </ion-col>
+      <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3" *ngIf="!mobileApp">
+        <ion-item class="ion-ele">
+          <ion-label>Image</ion-label>
+          <input type="file" #selectedWebDocs multiple (change)="selectedImgWeb($event)" />
+          <ion-icon name="images-outline" slot="start"></ion-icon>
+        </ion-item>
+        <small *ngIf="isFormSubmitted && selectedDocs.length == 0"><span style="color: red;">*Atleast One Image Required </span>
+        </small>
       </ion-col>
     </ion-row>
 
