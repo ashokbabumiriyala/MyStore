@@ -12,15 +12,15 @@
         </ion-col>
     </ion-row>
 
-    <ion-row *ngIf="!editService">
-        <ion-item class="ion-ele sub-store">
-            <ion-label position="floating">Select Service Name</ion-label>
-            <ion-select>
-                <ion-select-option value="1">Service-1</ion-select-option>
-                <ion-select-option value="2">Service-2</ion-select-option>
+    <ion-row [formGroup]="serviceLocationForm" *ngIf="!editService">
+        <ion-item class="ion-ele">
+            <ion-label position="floating">Select Business</ion-label>
+            <ion-select formControlName="LocationID">
+              <ion-select-option *ngFor="let serviceItem of services" value="{{serviceItem.value}}">{{serviceItem.text}}
+              </ion-select-option>
             </ion-select>
             <ion-icon name="cog-outline" slot="start"></ion-icon>
-        </ion-item>
+          </ion-item>
     </ion-row>
     <!-- <ion-grid *ngIf="!editService">
         <ion-row>
@@ -37,22 +37,23 @@
             <ion-col size="5">Manger-1</ion-col>
         </ion-row>
     </ion-grid> -->
-
-    <ion-list class="ion-list-ele" *ngIf="!editService">
-        <ion-item>
-            <ion-avatar item-start size="3">
-                <img src="assets/default-image.jpg">
-            </ion-avatar>
-            <ion-col size="7">
-                <ion-label>Business: <b>Service-1</b></ion-label>
-                <ion-label>Manager: <b>Manger-1</b></ion-label>
-            </ion-col>
-            <ion-col size="3" class="ion-text-right">
-                <ion-icon name="trash-outline" class="table-icons" color="danger"></ion-icon>
-                <ion-icon name="create-outline" class="table-icons" (click)="editServiceInfo()"></ion-icon>
-            </ion-col>
+    <ion-list class="ion-list-ele" *ngIf="!editService && serviceProductList.length > 0">
+        <ion-item *ngFor="let product of serviceProductList;">
+          <ion-avatar item-start size="3">
+            <img src="assets/default-image.jpg">
+          </ion-avatar>
+          <ion-col size="7">
+            <ion-label>Name: <b>{{ product.serviceName }}</b></ion-label>
+            <ion-label>Category: <b>{{product.category}}</b></ion-label>
+          </ion-col>
+          <ion-col size="2" class="ion-text-right">
+            <ion-icon name="trash-outline" size="large"></ion-icon>
+          </ion-col>
+          <ion-col size="1">
+            <ion-icon name="create-outline" size="large" (click)="editServiceInfo()"></ion-icon>
+          </ion-col>
         </ion-item>
-    </ion-list>
+      </ion-list>
 
 
     <form  [formGroup]="serviceProductsForm" *ngIf="editService">

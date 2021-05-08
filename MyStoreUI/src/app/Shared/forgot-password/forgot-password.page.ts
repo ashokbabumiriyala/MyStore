@@ -61,7 +61,7 @@ export class ForgotPasswordPage implements OnInit {
         await this.forgotPasswordService.forGotDetails(this.methodName,dataObject)
         .subscribe((data: any) => {  
           if(data.provideDetails.length>0){
-            this.presentToast("Information sent to register mobileno","success");
+            this.presentToast("Information has been sent to registered mobile number","success");
           } else{
             this.presentToast("Invalid credentials","warning");
           } 

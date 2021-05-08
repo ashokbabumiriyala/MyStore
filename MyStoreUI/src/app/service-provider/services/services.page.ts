@@ -16,10 +16,12 @@ export class ServicesPage implements OnInit {
 editService:boolean = false;
 editMaster:boolean;
 serviceProductsForm:FormGroup;
+serviceLocationForm:FormGroup;
 isFormSubmitted:boolean;
 selectedDocs=[];
 tempProducts=[];
 services=[];
+serviceProductList=[];
   constructor(private   toastController:ToastController,
     private helperService:HelperService,
     private serviceUploadService:ServiceUploadService,
@@ -28,6 +30,7 @@ services=[];
 
 ngOnInit() {
   this.createServiceProductForm();
+  this.createServiceLocationForm();
   this.serviceProductsList();
 }
   editServiceInfo(){
@@ -36,12 +39,12 @@ ngOnInit() {
 
   async serviceProductsList(){
     const loadingController = await this.helperService.createLoadingController("loading");
-    await loadingController.present();  
-    const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Mode:'Select',StoreId:0};
+    await loadingController.present();
+   const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Mode:'Select',LocationId:this.LocationID.value};
    await this.serviceUploadService.serviceProductList('serviceListSelect', dataObject)
     .subscribe((data: any) => {
       this.services=data.serviceDropdown;
-      // this.storeProductsData = data.storeProducts;
+      this.serviceProductList = data.servicesProducts;
       loadingController.dismiss();
     },
     (error: any) => {
@@ -71,6 +74,19 @@ ngOnInit() {
   get PriceAfterDiscount(){
     return this.serviceProductsForm.get('PriceAfterDiscount');
   }
+
+
+  get LocationID(){
+    return this.serviceLocationForm.get('LocationID');
+  }
+
+  private createServiceLocationForm(){
+    this.serviceLocationForm = new FormGroup({
+      LocationID: new FormControl('')      
+    });
+  }
+
+
   private createServiceProductForm(){
     this.serviceProductsForm = new FormGroup({
       ServiceLocationID: new FormControl('', Validators.required),
@@ -135,8 +151,7 @@ ngOnInit() {
     if (this.serviceProductsForm.invalid) {
       return;
     }else{
-      this.isFormSubmitted=false;
-     
+      this.isFormSubmitted=false;     
       const productObject= {ServiceLocationID: Number(this.ServiceLocationID.value), Category:this.Category.value,
         ServiceName:this.ServiceName.value,       
         DiscountType :this.DiscountType.value, Discount:Number(this.Discount.value),
