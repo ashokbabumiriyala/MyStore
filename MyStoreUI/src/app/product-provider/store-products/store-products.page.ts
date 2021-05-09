@@ -6,6 +6,7 @@ import {HelperService} from '../../common/helper.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ActionSheetController } from '@ionic/angular';
 import {File, FileEntry} from '@ionic-native/file/ngx';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-store-products',
@@ -175,6 +176,8 @@ constructor(private storeProductService:StoreProductService,
           this.editProduct = false;
           this.presentToast("Product saved Successfully","success");
           loadingController.dismiss();
+
+          this.storeProductsList();
         },
           (error: any) => {
             loadingController.dismiss();
