@@ -138,14 +138,16 @@ constructor(private storeProductService:StoreProductService,
       ProductName: new FormControl('', Validators.required)  ,
       Units: new FormControl('', Validators.required),
       Quantity: new FormControl('', Validators.required)  ,
-      DiscountType: new FormControl('', Validators.required),
-      Discount: new FormControl('', Validators.required) ,
-      PriceBeforeDiscount: new FormControl('', Validators.required) ,
+      DiscountType: new FormControl(''),
+      Discount: new FormControl('') ,
+      PriceBeforeDiscount: new FormControl('') ,
       PriceAfterDiscount: new FormControl('', Validators.required)
     });
   }
 
-  async uploadProduct():Promise<void> {
+  async uploadProduct():Promise<void> {  
+    this.Discount.setErrors(null);
+    this.PriceBeforeDiscount.setErrors(null);
     this.isFormSubmitted=true;
     if (this.storeProductsForm.invalid || this.selectedDocs.length == 0) {
       return;
@@ -155,8 +157,9 @@ constructor(private storeProductService:StoreProductService,
       const productObject= {StoreID:this.StoreID.value, Category:this.Category.value,
         ProductName:this.ProductName.value,
         Units:this.Units.value,Quantity:Number(this.Quantity.value),
-        DiscountType :this.DiscountType.value, Discount:Number(this.Discount.value),PriceBeforeDiscount:Number(this.PriceBeforeDiscount.value)
-        ,PriceAfterDiscount:Number(this.PriceAfterDiscount.value), Files: this.selectedDocs};
+        DiscountType :this.DiscountType.value, Discount:Number(this.Discount.value),
+        PriceBeforeDiscount:Number(this.PriceBeforeDiscount.value)
+        ,PriceAfterDiscount:Number(this.PriceAfterDiscount.value), Files: this.selectedDocs};       
         this.tempProducts.push(productObject);
         this.showTempList=true;
         this.storeProductsForm.reset();

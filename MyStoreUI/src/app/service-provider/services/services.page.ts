@@ -36,11 +36,11 @@ ngOnInit() {
   editServiceInfo(){
 	  this.editService = true;
   }
-
   async serviceProductsList(){
     const loadingController = await this.helperService.createLoadingController("loading");
     await loadingController.present();
-   const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Mode:'Select',LocationId:this.LocationID.value};
+   const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),
+   Mode:'Select',LocationId: Number(this.LocationID.value)};
    await this.serviceUploadService.serviceProductList('serviceListSelect', dataObject)
     .subscribe((data: any) => {
       this.services=data.serviceDropdown;
@@ -82,19 +82,17 @@ ngOnInit() {
 
   private createServiceLocationForm(){
     this.serviceLocationForm = new FormGroup({
-      LocationID: new FormControl('')      
+      LocationID: new FormControl('0')      
     });
   }
-
-
   private createServiceProductForm(){
     this.serviceProductsForm = new FormGroup({
       ServiceLocationID: new FormControl('', Validators.required),
       Category: new FormControl('', Validators.required)  ,
       ServiceName: new FormControl('', Validators.required)  ,
-      DiscountType: new FormControl('', Validators.required),
-      Discount: new FormControl('', Validators.required)  ,
-      PriceBeforeDiscount: new FormControl('', Validators.required),
+      DiscountType: new FormControl(''),
+      Discount: new FormControl('')  ,
+      PriceBeforeDiscount: new FormControl(''),
       PriceAfterDiscount: new FormControl('', Validators.required)       
     });
   }
@@ -176,6 +174,10 @@ ngOnInit() {
           });
 
     }
+  }
+
+  changeBusiness(){  
+  this.serviceProductsList();
   }
 
   getFormData(tempProducts:any[]){

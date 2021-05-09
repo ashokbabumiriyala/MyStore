@@ -78,7 +78,8 @@
         <ion-item class="ion-ele">
           <ion-label position="floating">Units</ion-label>
           <ion-select formControlName="Units">
-            <ion-select-option value="kgs">Kgs</ion-select-option>
+            <ion-select-option value="kilograms">kilograms</ion-select-option>
+            <ion-select-option value="grams">grams</ion-select-option>
             <ion-select-option value="litres">Litres</ion-select-option>
             <ion-select-option value="items">Items</ion-select-option>
             <ion-select-option value="ml">ml</ion-select-option>
@@ -106,8 +107,8 @@
           </ion-select>
           <ion-icon name="code-outline" slot="start"></ion-icon>
         </ion-item>
-        <small *ngIf="isFormSubmitted &&  DiscountType.errors"><span style="color: red;">*Discount Type Required </span>
-        </small>
+        <!-- <small *ngIf="isFormSubmitted &&  DiscountType.errors"><span style="color: red;">*Discount Type Required </span>
+        </small> -->
       </ion-col>
       <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
         <ion-item class="ion-ele">
@@ -115,8 +116,8 @@
           <ion-input type="number" formControlName="Discount" required></ion-input>
           <ion-icon name="pricetag-outline" slot="start"></ion-icon>
         </ion-item>
-        <small *ngIf="isFormSubmitted &&  Discount.errors"><span style="color: red;">*Discount Required </span>
-        </small>
+        <!-- <small *ngIf="isFormSubmitted &&  Discount.errors"><span style="color: red;">*Discount Required </span>
+        </small> -->
       </ion-col>
       <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
         <ion-item class="ion-ele">
@@ -124,9 +125,9 @@
           <ion-input type="number" formControlName="PriceBeforeDiscount" required></ion-input>
           <ion-icon name="print-outline" slot="start"></ion-icon>
         </ion-item>
-        <small *ngIf="isFormSubmitted &&  PriceBeforeDiscount.errors"><span style="color: red;">*Price Before Discount
+        <!-- <small *ngIf="isFormSubmitted &&  PriceBeforeDiscount.errors"><span style="color: red;">*Price Before Discount
             Required </span>
-        </small>
+        </small> -->
       </ion-col>
       <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
         <ion-item class="ion-ele">
