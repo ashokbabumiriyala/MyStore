@@ -13,14 +13,16 @@
     </ion-col>
   </ion-item>
 
+  <form [formGroup]="storeForm" >
   <ion-item class="ion-ele sub-store" *ngIf="!editProduct">
     <ion-label position="floating">Select Store</ion-label>
-    <ion-select>
+    <ion-select  formControlName="SearchStoreId" (ionChange)="changeStore()">
       <ion-select-option *ngFor="let storeItem of stores" value="{{storeItem.value}}">{{storeItem.text}}
       </ion-select-option>
     </ion-select>
     <ion-icon name="funnel-outline" slot="start"></ion-icon>
   </ion-item>
+</form>
   <ion-list class="ion-list-ele" *ngIf="!editProduct && storeProductsData.length > 0">
     <ion-item *ngFor="let product of storeProductsData;">
       <ion-avatar item-start size="3">

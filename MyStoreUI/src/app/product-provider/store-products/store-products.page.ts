@@ -18,6 +18,7 @@ export class StoreProductsPage implements OnInit {
 editProduct:boolean;
 editMaster:boolean;
 storeProductsForm:FormGroup;
+storeForm:FormGroup;
 isFormSubmitted:boolean;
 showTempList:boolean;
 tempProducts=[];
@@ -40,6 +41,7 @@ constructor(private storeProductService:StoreProductService,
       this.mobileApp = false;
     }
     this.createStoreProductForm();
+    this.createStoreForm();
     this.title="Register";
     this.storeProductsList();
   }
@@ -70,11 +72,14 @@ constructor(private storeProductService:StoreProductService,
   get PriceAfterDiscount(){
     return this.storeProductsForm.get('PriceAfterDiscount');
   }
+  get SearchStoreId(){
+    return this.storeForm.get('SearchStoreId');
+  }
   async storeProductsList(){
     const loadingController = await this.helperService.createLoadingController("loading");
     await loadingController.present();
     const selectedStoreId=this.StoreID.value;
-    const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Mode:'Select',StoreId:0};
+    const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Mode:'Select',StoreId:Number(this.SearchStoreId.value)};
    await this.storeProductService.storeProductList('ProviderStoreProductsSelect', dataObject)
     .subscribe((data: any) => {
       this.stores=data.storeDropdown;
@@ -253,6 +258,15 @@ constructor(private storeProductService:StoreProductService,
     this.storeProductsForm.reset();
     this.selectedDocs = [];
     this.selectedWebDocs.nativeElement.value = "";
+  }
+  private createStoreForm(){
+    this.storeForm = new FormGroup({
+      SearchStoreId: new FormControl('0')      
+    });
+  }
+
+  changeStore(){
+    this.storeProductsList();
   }
 }
 
