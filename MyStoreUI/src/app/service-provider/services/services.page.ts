@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { HelperService } from '../../common/helper.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ActionSheetController } from '@ionic/angular';
@@ -22,6 +22,8 @@ selectedDocs=[];
 tempProducts=[];
 services=[];
 serviceProductList=[];
+@ViewChild('selectedWebDocs') selectedWebDocs;
+mobileApp:boolean;
   constructor(private   toastController:ToastController,
     private helperService:HelperService,
     private serviceUploadService:ServiceUploadService,
@@ -29,6 +31,11 @@ serviceProductList=[];
     private actionSheetController: ActionSheetController, private file: File) { }
 
 ngOnInit() {
+  if (sessionStorage.getItem('mobile') == 'true') {
+    this.mobileApp = true;
+  } else {
+    this.mobileApp = false;
+  }
   this.createServiceProductForm();
   this.createServiceLocationForm();
   this.serviceProductsList();
@@ -158,7 +165,8 @@ ngOnInit() {
         this.tempProducts.push(productObject);       
         this.serviceProductsForm.reset();
         this.selectedDocs = [];
-        this.isFormSubmitted=true;
+        this.selectedWebDocs.nativeElement.value = "";
+        
 
         let formDataList = this.getFormData(this.tempProducts);
         const loadingController = await this.helperService.createLoadingController("loading");
@@ -168,6 +176,7 @@ ngOnInit() {
           this.tempProducts=[];    
           this.presentToast("Service saved Successfully","success");
           loadingController.dismiss();
+          this.isFormSubmitted=true;
         },
           (error: any) => {
             loadingController.dismiss();
@@ -208,4 +217,20 @@ ngOnInit() {
     });
     toast.present();
   }
+
+  selectedImgWeb(data){   
+    var files = data.target.files;
+    for(let i = 0 ; i <files.length; i++) {
+      if (files[i]) {
+        var reader = new FileReader();
+        reader.onload =this._handleReaderLoaded.bind(this);
+        reader.readAsBinaryString(files[i]);
+      }
+    }
+  }
+  async _handleReaderLoaded(readerEvt) {
+    var binaryString = readerEvt.target.result;
+    let base64textString= btoa(binaryString);
+    await this.getblobObject('data:image/jpeg;base64,' + base64textString)
+   }
 }

@@ -142,10 +142,7 @@
                 </small>
 
             </ion-col>
-
-         
-
-            <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
+              <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3" *ngIf="mobileApp">
                 <ion-item class="ion-ele">
                   <ion-icon name="images-outline" slot="start"></ion-icon>
                   <ion-button shape="round" expand="full" size="default" (click)="selectImage();" class="ion-button">
@@ -153,7 +150,19 @@
                   <ion-label class="ion-text-right" *ngIf="selectedDocs.length != 0"><ion-icon name="eye-outline"></ion-icon> {{selectedDocs.length}}
                   </ion-label>
                 </ion-item>
+                <small *ngIf="isFormSubmitted && selectedDocs.length == 0"><span style="color: red;">*Atleast One Image Required </span>
+              </small>
               </ion-col>
+              <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3" *ngIf="!mobileApp">
+                <ion-item class="ion-ele">
+                  <ion-label>Image</ion-label>
+                  <input type="file" #selectedWebDocs multiple (change)="selectedImgWeb($event)" />
+                  <ion-icon name="images-outline" slot="start"></ion-icon>
+                </ion-item>
+                <small *ngIf="isFormSubmitted && selectedDocs.length == 0"><span style="color: red;">*Atleast One Image Required </span>
+                </small>
+              </ion-col>
+
         </ion-row>
         <!-- <ion-row>
             <ion-col class="ion-text-center ion-margin-top" size-md="6" size-xs="12" size-sm="12" push-md="3"
