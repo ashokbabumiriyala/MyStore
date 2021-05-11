@@ -13,7 +13,8 @@
         </ion-toolbar>
     </ion-header>
     <ion-split-pane contentId="main-content" style="z-index: 2;">
-        <ion-menu contentId="main-content" type="overlay" *ngIf="menuItems.length>0" (ionWillOpen)="openMenu()" (ionWillClose)="openMenu()">
+        <ion-menu contentId="main-content" type="overlay" *ngIf="menuItems.length>0" 
+            (ionWillOpen)="openMenu()" (ionWillClose)="openMenu()">
             <ion-content>
                 <ion-list id="inbox-list">
                     <ion-title class="ion-text-center" style="border-bottom:1px solid" >

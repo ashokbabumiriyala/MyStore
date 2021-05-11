@@ -24,17 +24,17 @@ export class AppComponent implements OnInit {
     }
     initializeApp() {
       this.platform.ready().then(() => {
-        // get FCM token
         if (this.platform.is('android') || this.platform.is('ios')) {
           console.log("running on mobile device!");
           sessionStorage.setItem('mobile', 'true');
         } else {
           sessionStorage.setItem('mobile', 'false');
         }
-           
+        if (sessionStorage.getItem('mobile') == 'true') {  
         this.fcm.getToken().then(token => {
           sessionStorage.setItem("PushToken",token);
         });
+  
 
         // ionic push notification example
         this.fcm.onNotification().subscribe(data => {
@@ -50,7 +50,8 @@ export class AppComponent implements OnInit {
         this.fcm.onTokenRefresh().subscribe(token => {
           sessionStorage.setItem("PushToken",token);
         });
-      });
+      }
+      });    
     }
   ngOnInit() {
     this.router.events.forEach((event) => {
@@ -130,7 +131,7 @@ export class AppComponent implements OnInit {
         break;
     }
   }
-  private openMenu() {
+  openMenu() {
     const ele = document.getElementById("panel-split");
     ele.style.zIndex == '1' ? ele.style.zIndex = '3' : ele.style.zIndex = '1' ;
   }

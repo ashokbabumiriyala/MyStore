@@ -81,15 +81,16 @@ async register(): Promise<void>{
       Password:this.Password.value,
       pushToken: sessionStorage.getItem('PushToken')
     };
-
     await  this.signUpService.providerSignUp('ProviderSignupSave', this.isignUp)
-    .subscribe((data: any) => {
+    .subscribe((data: any) => {      
+      this.presentToast("Registration is successful.","success");
+      const index =this.providerType.findIndex(x => x.value === Number(this.RoleID.value));     
+      if (sessionStorage.getItem('mobile') == 'true') {
+        this.fcm.subscribeToTopic(this.providerType[index].text);
+      }
       this.signUpFormGroup.reset();
-      this.router.navigate(['login']);
-      this.presentToast("Registration is successfully.","success");
-      const providerIndex = this.providerType.findIndex(this.RoleID.value)
-      this.fcm.subscribeToTopic(this.providerType[providerIndex].text);
       loadingController.dismiss();
+      this.router.navigate(['login']);
     },
       (error: any) => {
         loadingController.dismiss();
