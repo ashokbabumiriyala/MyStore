@@ -161,23 +161,21 @@ ngOnInit() {
         DiscountType :this.DiscountType.value, Discount:Number(this.Discount.value),
         PriceBeforeDiscount:Number(this.PriceBeforeDiscount.value)
         ,PriceAfterDiscount:Number(this.PriceAfterDiscount.value), Files: this.selectedDocs};
-        this.tempProducts.push(productObject);       
-        this.serviceProductsForm.reset();
-        this.selectedDocs = [];
-        this.selectedWebDocs.nativeElement.value = "";
-        
-
+        this.tempProducts.push(productObject); 
         let formDataList = this.getFormData(this.tempProducts);
         const loadingController = await this.helperService.createLoadingController("loading");
         await loadingController.present();
         await this.serviceUploadService.uploadServiceDocument('ServiceAndDocumentsSave', formDataList[0])
         .subscribe((data: any) => {
-          this.tempProducts=[];    
-          this.presentToast("Service saved Successfully","success");
+          this.tempProducts=[]; 
+          this.serviceProductsForm.reset();
+          this.selectedDocs = [];
+          this.selectedWebDocs.nativeElement.value = "";   
           this.editService=false;
           loadingController.dismiss();
           this.serviceProductsList();
           this.isFormSubmitted=false;
+          this.presentToast("Service saved Successfully","success");
         },
           (error: any) => {
             loadingController.dismiss();
@@ -198,10 +196,13 @@ ngOnInit() {
           productFormData.append(key, tempProducts[i][key]);
         } else if (typeof(tempProducts[i][key]) == 'number'){
           productFormData.append(key, tempProducts[i][key] + "");
-        } else {
+        }  else if (key == 'Files') {          
           for (var j = 0; j < tempProducts[i][key].length; j++) {
             productFormData.append("files", tempProducts[i][key][j], 'ServiceImage' + j + '.jpg');
           }
+        }
+        else {
+          productFormData.append(key, tempProducts[i][key]);
         }
       }
       formData.push(productFormData);

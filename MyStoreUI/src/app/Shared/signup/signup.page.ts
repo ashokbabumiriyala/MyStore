@@ -6,6 +6,7 @@ import { NavController, ToastController } from '@ionic/angular';
 import { Router, NavigationStart } from '@angular/router';
 import { ConfirmPasswordValidation } from 'src/app/common/must-match.validator';
 import { FCM } from "cordova-plugin-fcm-with-dependecy-updated/ionic/ngx";
+import { IfStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-signup',
@@ -82,15 +83,21 @@ async register(): Promise<void>{
       pushToken: sessionStorage.getItem('PushToken')
     };
     await  this.signUpService.providerSignUp('ProviderSignupSave', this.isignUp)
-    .subscribe((data: any) => {      
-      this.presentToast("Registration is successful.","success");
-      const index =this.providerType.findIndex(x => x.value === Number(this.RoleID.value));     
-      if (sessionStorage.getItem('mobile') == 'true') {
-        this.fcm.subscribeToTopic(this.providerType[index].text);
-      }
-      this.signUpFormGroup.reset();
-      loadingController.dismiss();
-      this.router.navigate(['login']);
+    .subscribe((data: any) => {   
+      debugger;
+      if(data.operationStatusDTO.transactionStatus==10){
+        loadingController.dismiss();
+        this.presentToast("This username or mobile number already exists.","danger");
+      }else{
+        this.presentToast("Registration is successful.","success");
+        const index =this.providerType.findIndex(x => x.value === Number(this.RoleID.value));     
+        if (sessionStorage.getItem('mobile') == 'true') {
+          this.fcm.subscribeToTopic(this.providerType[index].text);
+        }
+        this.signUpFormGroup.reset();
+        loadingController.dismiss();
+        this.router.navigate(['login']);
+      }     
     },
       (error: any) => {
         loadingController.dismiss();

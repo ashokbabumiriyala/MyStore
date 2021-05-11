@@ -62,6 +62,10 @@
                     <ion-input type="text" formControlName="Name" required></ion-input>
                     <ion-icon name="person-outline" slot="start"></ion-icon>
                 </ion-item>
+
+                <small *ngIf="isFormSubmitted &&  Name.errors"><span style="color: red;">*Store Master Name
+                    Required </span>
+            </small>
             </ion-col>
             <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
                 <ion-item class="ion-ele">

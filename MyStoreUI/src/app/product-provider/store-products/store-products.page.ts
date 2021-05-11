@@ -7,6 +7,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ActionSheetController } from '@ionic/angular';
 import {File, FileEntry} from '@ionic-native/file/ngx';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Console } from 'console';
 
 @Component({
   selector: 'app-store-products',
@@ -157,26 +158,28 @@ constructor(private storeProductService:StoreProductService,
     if (this.storeProductsForm.invalid || this.selectedDocs.length == 0) {
       return;
     }else{
+      debugger;
       this.isFormSubmitted=false;     
       const productObject= {StoreID:this.StoreID.value, Category:this.Category.value,
         ProductName:this.ProductName.value,
         Units:this.Units.value,Quantity:Number(this.Quantity.value),
         DiscountType :this.DiscountType.value, Discount:Number(this.Discount.value),
         PriceBeforeDiscount:Number(this.PriceBeforeDiscount.value)
-        ,PriceAfterDiscount:Number(this.PriceAfterDiscount.value), Files: this.selectedDocs};       
+        ,PriceAfterDiscount:Number(this.PriceAfterDiscount.value), Files: this.selectedDocs};
         this.tempProducts.push(productObject);
-        this.showTempList=true;
-        this.storeProductsForm.reset();
-        this.selectedDocs = [];
-        this.selectedWebDocs.nativeElement.value = "";
+        this.showTempList=true;       
+        
         let formDataList = this.getFormData(this.tempProducts);
         const loadingController = await this.helperService.createLoadingController("loading");
         await loadingController.present();
         await this.storeProductService.storeProductSave('StoreProductSave', formDataList[0])
         .subscribe((data: any) => {
+          this.storeProductsForm.reset();
+          this.selectedDocs = [];
           this.tempProducts=[];
           this.showTempList=false;
           this.editProduct = false;
+          this.selectedWebDocs.nativeElement.value = "";
           this.presentToast("Product saved Successfully","success");
           loadingController.dismiss();
 
@@ -198,10 +201,12 @@ constructor(private storeProductService:StoreProductService,
           productFormData.append(key, tempProducts[i][key]);
         } else if (typeof(tempProducts[i][key]) == 'number'){
           productFormData.append(key, tempProducts[i][key] + "");
-        } else {
+        } else if (key == 'Files') {
           for (var j = 0; j < tempProducts[i][key].length; j++) {
             productFormData.append("files", tempProducts[i][key][j], 'ProductImage' + j + '.jpg');
           }
+        } else {
+          productFormData.append(key, tempProducts[i][key]);
         }
       }
       formData.push(productFormData);
@@ -255,7 +260,7 @@ constructor(private storeProductService:StoreProductService,
     this.editProduct = false;
     this.storeProductsForm.reset();
     this.selectedDocs = [];
-    this.selectedWebDocs.nativeElement.value = "";
+    // this.selectedWebDocs.nativeElement.value = "";
   }
   private createStoreForm(){
     this.storeForm = new FormGroup({
