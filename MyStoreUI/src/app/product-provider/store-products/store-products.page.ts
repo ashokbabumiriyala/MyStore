@@ -77,8 +77,7 @@ constructor(private storeProductService:StoreProductService,
   }
   async storeProductsList(){
     const loadingController = await this.helperService.createLoadingController("loading");
-    await loadingController.present();
-    const selectedStoreId=this.StoreID.value;
+    await loadingController.present();   
     const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Mode:'Select',StoreId:Number(this.SearchStoreId.value)};
    await this.storeProductService.storeProductList('ProviderStoreProductsSelect', dataObject)
     .subscribe((data: any) => {
@@ -158,8 +157,7 @@ constructor(private storeProductService:StoreProductService,
     if (this.storeProductsForm.invalid || this.selectedDocs.length == 0) {
       return;
     }else{
-      this.isFormSubmitted=false;
-      const serialNumber:number=this.tempProducts.length+1;
+      this.isFormSubmitted=false;     
       const productObject= {StoreID:this.StoreID.value, Category:this.Category.value,
         ProductName:this.ProductName.value,
         Units:this.Units.value,Quantity:Number(this.Quantity.value),

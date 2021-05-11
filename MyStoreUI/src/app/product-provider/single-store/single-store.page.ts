@@ -1,10 +1,14 @@
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoadingController } from '@ionic/angular';
 import { NavController, ToastController } from '@ionic/angular';
 import {HelperService} from '../../common/helper.service';
 import {SingleStoreService} from '../single-store/single-store.service';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { ActionSheetController } from '@ionic/angular';
+import {File, FileEntry} from '@ionic-native/file/ngx';
+
  @Component({
   selector: 'app-single-store',
   templateUrl: './single-store.page.html',
@@ -12,7 +16,7 @@ import {SingleStoreService} from '../single-store/single-store.service';
 })
 export class SingleStorePage implements OnInit {
 editStore:boolean;
-iSingleStore:ISingleStore;
+// iSingleStore:ISingleStore;
 isFormSubmitted:boolean;
 singleStoreFormGroup:FormGroup;
 title:string;
@@ -20,10 +24,23 @@ masterStore=[];
 storeType=[];
 provideSubStoreList= [];
 storeId:number;
+mobileApp:boolean;
+selectedDocs=[];
+tempStore=[];
+@ViewChild('selectedWebDocs') selectedWebDocs;
   constructor(private   toastController:ToastController,private helperService:HelperService,
-    private singleStoreService:SingleStoreService) { }
+    private singleStoreService:SingleStoreService,
+    private actionSheetController:ActionSheetController,
+    private camera: Camera,
+    ) { }
 
 ngOnInit() {
+  debugger;
+  if (sessionStorage.getItem('mobile') == 'true') {
+    this.mobileApp = true;
+  } else {
+    this.mobileApp = false;
+  }
     this.createSingleStoreForm();
     this.subStoreList();
     this.title="Register";
@@ -119,15 +136,19 @@ async saveStore():Promise<void>{
   else{
     const loadingController = await this.helperService.createLoadingController("loading");
     await loadingController.present();
-    this.iSingleStore = {
+    const storeObject = {
       StoreMasterID:Number(this.StoreMasterID.value), StoreType:Number(this.StoreType.value),
       Name: this.Name.value, ManagerName: this.ManagerName.value.toString(), ManagerID: Number(this.ManagerID.value),
       MobileNmuber: this.MobileNmuber.value.toString(), Address:this.Address.value,City:this.City.value,
       State:this.State.value,PinCode:this.PinCode.value.toString(),LandMark:this.LandMark.value,FromTime:this.FromTime.value,
-      ToTime:this.ToTime.value,Id:this.storeId,Mode:this.title
+      ToTime:this.ToTime.value,Id:this.storeId,Mode:this.title, Files: this.selectedDocs
     };
 
-    await this.singleStoreService.singleStoreSave('StoreSave', this.iSingleStore)
+    this.tempStore.push(storeObject);
+    this.selectedDocs = [];
+    this.selectedWebDocs.nativeElement.value = "";
+    let formDataList = this.getFormData(this.tempStore);
+    await this.singleStoreService.singleStoreSave('StoreSave',formDataList[0])
     .subscribe((data: any) => {
       this.presentToast("Store " + this.title+ "  successfully.","success");
       this.editStore=false;
@@ -139,9 +160,29 @@ async saveStore():Promise<void>{
       (error: any) => {
         loadingController.dismiss();
       });
-
   }
 }
+
+getFormData(tempProducts:any[]){
+  let formData = [];
+  for(let i = 0; i < tempProducts.length; i++){
+    let productFormData = new FormData();
+    for (var key of Object.keys(tempProducts[i])) {
+      if (typeof(tempProducts[i][key]) == 'string'){
+        productFormData.append(key, tempProducts[i][key]);
+      } else if (typeof(tempProducts[i][key]) == 'number'){
+        productFormData.append(key, tempProducts[i][key] + "");
+      } else {
+        for (var j = 0; j < tempProducts[i][key].length; j++) {
+          productFormData.append("files", tempProducts[i][key][j], 'StoreLogoImage' + j + '.jpg');
+        }
+      }
+    }
+    formData.push(productFormData);
+  }
+  return formData;
+}
+
 //#endregion
 async editStoreInfo(rowdata:any){
   this.editStore = true;
@@ -200,24 +241,81 @@ ionViewDidLeave() {
   this.editStore = false;
   this.singleStoreFormGroup.reset();
 }
+
+async selectImage() {
+  const actionSheet = await this.actionSheetController.create({
+    header: "Select Image source",
+    buttons: [{
+      text: 'Load from Library',
+      handler: () => {
+        this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY);
+      }
+    },
+    {
+      text: 'Use Camera',
+      handler: () => {
+        this.pickImage(this.camera.PictureSourceType.CAMERA);
+      }
+    },
+    {
+      text: 'Cancel',
+      role: 'cancel'
+    }
+    ]
+  });
+  await actionSheet.present();
+}
+
+pickImage(sourceType) {
+  const options: CameraOptions = {
+    quality: 100,
+    sourceType: sourceType,
+    destinationType: this.camera.DestinationType.DATA_URL,
+    encodingType: this.camera.EncodingType.JPEG,
+    mediaType: this.camera.MediaType.PICTURE,
+  }
+
+}
+selectedImgWeb(data){
+  console.log(data);
+  var files = data.target.files;
+  for(let i = 0 ; i <files.length; i++) {
+    if (files[i]) {
+      var reader = new FileReader();
+      reader.onload =this._handleReaderLoaded.bind(this);
+      reader.readAsBinaryString(files[i]);
+    }
+  }
+}
+async _handleReaderLoaded(readerEvt) {
+  var binaryString = readerEvt.target.result;
+  let base64textString= btoa(binaryString);
+  await this.getblobObject('data:image/jpeg;base64,' + base64textString)
+ }
+
+ async getblobObject(base64Data){
+  const base64 = await fetch(base64Data);
+  const blob = await base64.blob();
+  this.selectedDocs.push(blob);
+}
 }
 
 
-interface ISingleStore{
- StoreMasterID :number;
- StoreType :number;
- Name:string;
- ManagerName :string;
- ManagerID :number;
- MobileNmuber :string;
- Address :string;
- City :string;
- State:string;
- PinCode :string;
- LandMark :string;
- FromTime :string;
- ToTime :string;
- Id:number;
- Mode:string;
+// interface ISingleStore{
+//  StoreMasterID :number;
+//  StoreType :number;
+//  Name:string;
+//  ManagerName :string;
+//  ManagerID :number;
+//  MobileNmuber :string;
+//  Address :string;
+//  City :string;
+//  State:string;
+//  PinCode :string;
+//  LandMark :string;
+//  FromTime :string;
+//  ToTime :string;
+//  Id:number;
+//  Mode:string;
 
-}
+// }

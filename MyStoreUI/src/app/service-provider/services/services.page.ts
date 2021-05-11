@@ -155,8 +155,7 @@ ngOnInit() {
     this.isFormSubmitted=true;
     if (this.serviceProductsForm.invalid) {
       return;
-    }else{
-      this.isFormSubmitted=false;     
+    }else{      
       const productObject= {ServiceLocationID: Number(this.ServiceLocationID.value), Category:this.Category.value,
         ServiceName:this.ServiceName.value,       
         DiscountType :this.DiscountType.value, Discount:Number(this.Discount.value),
@@ -175,13 +174,14 @@ ngOnInit() {
         .subscribe((data: any) => {
           this.tempProducts=[];    
           this.presentToast("Service saved Successfully","success");
+          this.editService=false;
           loadingController.dismiss();
-          this.isFormSubmitted=true;
+          this.serviceProductsList();
+          this.isFormSubmitted=false;
         },
           (error: any) => {
             loadingController.dismiss();
           });
-
     }
   }
 

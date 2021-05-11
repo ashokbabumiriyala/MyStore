@@ -1,17 +1,5 @@
 <ion-content class="ion-padding after-login-bg">
 
-    <!-- <ion-row>
-        <ion-col size-md="6" size-xs="12" size-sm="12" push-md="3" push-lg="3" size-lg="6">
-            <h2 class="page-title">
-                <ion-icon name="extension-puzzle-outline"></ion-icon>Store Information
-            </h2>
-        </ion-col>
-        <ion-col class="ion-text-right ion-text-sm-right ion-text-md-left" size-md="6" size-xs="12" size-sm="12"
-            push-md="3" push-lg="3" size-lg="6">
-            <ion-button *ngIf="!editStore" type="button" shape="round" class="ion-button"
-                (click)="editStoreInfo(null)">Add New Store Location</ion-button>
-        </ion-col>
-    </ion-row> -->
     <ion-item lines="none" class="ion-list-header ion-no-padding" style="padding:0px !important; margin-left: 0px !important;">
       <ion-col size="1" >
         <ion-icon name="list" size="large" class="text-align-left" *ngIf="!editStore"></ion-icon>
@@ -180,6 +168,28 @@
                 <small *ngIf="isFormSubmitted &&  ToTime.errors"><span style="color: red;">*To Time Required </span>
                 </small>
             </ion-col>
+
+
+            <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3" *ngIf="mobileApp">
+                <ion-item class="ion-ele">
+                  <ion-icon name="images-outline" slot="start"></ion-icon>
+                  <ion-button shape="round" expand="full" size="default" (click)="selectImage();" class="ion-button">
+                    Select Image</ion-button>
+                  <ion-label class="ion-text-right" *ngIf="selectedDocs.length != 0"><ion-icon name="eye-outline"></ion-icon> {{selectedDocs.length}}
+                  </ion-label>
+                </ion-item>
+                <small *ngIf="isFormSubmitted && selectedDocs.length == 0"><span style="color: red;">*Atleast One Image Required </span>
+              </small>
+              </ion-col>
+              <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3" *ngIf="!mobileApp">
+                <ion-item class="ion-ele">
+                  <ion-label>Image</ion-label>
+                  <input type="file" #selectedWebDocs multiple (change)="selectedImgWeb($event)" />
+                  <ion-icon name="images-outline" slot="start"></ion-icon>
+                </ion-item>
+                <small *ngIf="isFormSubmitted && selectedDocs.length == 0"><span style="color: red;">*Atleast One Image Required </span>
+                </small>
+              </ion-col>
         </ion-row>
         <ion-row>
             <ion-col class="ion-text-center ion-margin-top" size-md="6" size-xs="12" size-sm="12" push-md="3"
