@@ -156,7 +156,7 @@ constructor(private storeProductService:StoreProductService,
     this.Discount.setErrors(null);
     this.PriceBeforeDiscount.setErrors(null);
     this.isFormSubmitted=true;
-    if (this.storeProductsForm.invalid || this.selectedDocs.length == 0) {
+    if (this.storeProductsForm.invalid) {
       return;
     }else{
       debugger;

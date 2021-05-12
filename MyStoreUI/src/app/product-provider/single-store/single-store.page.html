@@ -25,12 +25,12 @@
                 <ion-label>Store: <b>{{ subStore.storeName }}</b></ion-label>
                 <ion-label>Manager: <b>{{ subStore.managerName}}</b></ion-label>
             </ion-col>
-            <ion-col size="2" class="ion-text-right">
+            <!-- <ion-col size="2" class="ion-text-right">
                 <ion-icon name="trash-outline" size="large" (click)="presentAlertConfirm()"></ion-icon>
             </ion-col>
             <ion-col size="1">
                 <ion-icon name="create-outline" size="large" (click)="editStoreInfo(subStore)"></ion-icon>
-            </ion-col>
+            </ion-col> -->
         </ion-item>
     </ion-list>
 
@@ -182,9 +182,9 @@
                         <ion-icon name="eye-outline"></ion-icon> {{selectedDocs.length}}
                     </ion-label>
                 </ion-item>
-                <small *ngIf="isFormSubmitted && selectedDocs.length == 0"><span style="color: red;">*Atleast One Image
-                        Required </span>
-                </small>
+                <!-- <small *ngIf="isFormSubmitted && selectedDocs.length == 0"><span style="color: red;">*Atleast One Image
+                        Required </span> 
+                </small>-->
             </ion-col>
             <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3" *ngIf="!mobileApp">
                 <ion-item class="ion-ele">
@@ -192,9 +192,9 @@
                     <input type="file" #selectedWebDocs multiple (change)="selectedImgWeb($event)" />
                     <ion-icon name="images-outline" slot="start"></ion-icon>
                 </ion-item>
-                <small *ngIf="isFormSubmitted && selectedDocs.length == 0"><span style="color: red;">*Atleast One Image
+                <!-- <small *ngIf="isFormSubmitted && selectedDocs.length == 0"><span style="color: red;">*Atleast One Image
                         Required </span>
-                </small>
+                </small> -->
             </ion-col>
         </ion-row>
         <ion-row>
