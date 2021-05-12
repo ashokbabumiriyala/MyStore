@@ -149,6 +149,7 @@ export class ServiceLocationsPage implements OnInit {
       await this.serviceLocationService.locationSave('ServiceLocationSave', formDataList[0])
         .subscribe((data: any) => {
           this.presentToast("Service Location " + this.title + "  successfully.", "success");
+          this.tempServiceLocation=[];
           this.serviceLocationForm.reset();
           this.editLocation = false;
           this.serviceLocationListSelect();

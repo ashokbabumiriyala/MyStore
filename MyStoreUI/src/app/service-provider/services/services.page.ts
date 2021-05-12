@@ -160,7 +160,7 @@ ngOnInit() {
     if (this.serviceProductsForm.invalid) {
       return;
     }else{      
-      const productObject= {ServiceLocationID: Number(this.ServiceLocationID.value), Category:this.Category.value,
+      const productObject= {ProviderId: Number(sessionStorage.getItem("providerId")),ServiceLocationID: Number(this.ServiceLocationID.value), Category:this.Category.value,
         ServiceName:this.ServiceName.value,       
         DiscountType :this.DiscountType.value, Discount:Number(this.Discount.value),
         PriceBeforeDiscount:Number(this.PriceBeforeDiscount.value)

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-
+import { AuthGuardService } from '../app/common/auth-guard.service';
 const routes: Routes = [
   {
     path: '',
@@ -25,30 +25,38 @@ const routes: Routes = [
   }, 
   {
     path: 'welcome-slides',
-    loadChildren: () => import('./welcome-slides/welcome-slides.module').then( m => m.WelcomeSlidesPageModule)
+    loadChildren: () => import('./welcome-slides/welcome-slides.module').then( m => m.WelcomeSlidesPageModule),
+    canActivate: [AuthGuardService]
   },
   {
     path: 'service-provider',
-    loadChildren: () => import('./service-provider/service-provider.module').then( m => m.ServiceProviderPageModule)
+    loadChildren: () => import('./service-provider/service-provider.module').then( m => m.ServiceProviderPageModule),
+    canActivate: [AuthGuardService]
   },
   {
     path: 'product-provider',
-    loadChildren: () => import('./product-provider/product-provider.module').then( m => m.ProductProviderPageModule)
+    loadChildren: () => import('./product-provider/product-provider.module').then( m => m.ProductProviderPageModule),
+    canActivate: [AuthGuardService]
   },
   {
     path: 'introduction',
-    loadChildren: () => import('./Shared/introduction/introduction.module').then( m => m.IntroductionPageModule)
-  },  {
+    loadChildren: () => import('./Shared/introduction/introduction.module').then( m => m.IntroductionPageModule),
+    canActivate: [AuthGuardService]
+  },
+  {
     path: 'admin-product-provider',
-    loadChildren: () => import('./admin-product-provider/admin-product-provider.module').then( m => m.AdminProductProviderPageModule)
+    loadChildren: () => import('./admin-product-provider/admin-product-provider.module').then( m => m.AdminProductProviderPageModule),
+    canActivate: [AuthGuardService]
   },
   {
     path: 'admin-service-provider',
-    loadChildren: () => import('./admin-service-provider/admin-service-provider.module').then( m => m.AdminServiceProviderPageModule)
+    loadChildren: () => import('./admin-service-provider/admin-service-provider.module').then( m => m.AdminServiceProviderPageModule),
+    canActivate: [AuthGuardService]
   },
   {
     path: 'send-notification',
-    loadChildren: () => import('./send-notification/send-notification.module').then( m => m.SendNotificationPageModule)
+    loadChildren: () => import('./send-notification/send-notification.module').then( m => m.SendNotificationPageModule),
+    canActivate: [AuthGuardService]
   }
 
 

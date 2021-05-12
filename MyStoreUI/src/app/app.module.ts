@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { Camera } from '@ionic-native/camera/ngx';
 import { FCM } from "cordova-plugin-fcm-with-dependecy-updated/ionic/ngx";
 import { File } from '@ionic-native/file/ngx';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -15,7 +16,8 @@ import { File } from '@ionic-native/file/ngx';
   providers: [ Camera,
     FCM,
     File,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+    {provide: LocationStrategy, useClass: HashLocationStrategy}]
+  ,
   bootstrap: [AppComponent],
 })
 export class AppModule {}

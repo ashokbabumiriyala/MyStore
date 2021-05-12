@@ -161,7 +161,7 @@ constructor(private storeProductService:StoreProductService,
     }else{
       debugger;
       this.isFormSubmitted=false;     
-      const productObject= {StoreID:this.StoreID.value, Category:this.Category.value,
+      const productObject= {ProviderId: Number(sessionStorage.getItem("providerId")),StoreID:this.StoreID.value, Category:this.Category.value,
         ProductName:this.ProductName.value,
         Units:this.Units.value,Quantity:Number(this.Quantity.value),
         DiscountType :this.DiscountType.value, Discount:Number(this.Discount.value),
@@ -194,6 +194,7 @@ constructor(private storeProductService:StoreProductService,
 
   }
   getFormData(tempProducts:any[]){
+    debugger;
     let formData = [];
     for(let i = 0; i < tempProducts.length; i++){
       let productFormData = new FormData();

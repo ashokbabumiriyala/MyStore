@@ -5,6 +5,7 @@ import { ToastController } from '@ionic/angular';
 import { IProviderDetails } from 'src/app/common/provider-details';
 import { HelperService } from 'src/app/common/helper.service';
 import { LoadingController } from '@ionic/angular';
+import {AuthenticationService} from '../../common/authentication.service'
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -12,6 +13,7 @@ import { LoadingController } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
   constructor(private registrationServiceService:RegistrationServiceService,
+    private authenticationService:AuthenticationService,
     private toastController:ToastController,
     private helperService:HelperService,
     private loadingController: LoadingController
@@ -53,6 +55,7 @@ export class LoginPage implements OnInit {
     const dataObject = { ProviderUserName:this.providerName.value,Password:this.password.value, pushToken: sessionStorage.getItem('PushToken') };
     await  this.registrationServiceService.validateUser('ProviderLogin', dataObject)
       .subscribe((data: any) => {
+        this.authenticationService.isAuthenticated = true;
         sessionStorage.setItem("AuthToken",data.token);
         sessionStorage.setItem("providerId", data.providerId);
       let providerDetails:IProviderDetails
@@ -66,6 +69,7 @@ export class LoginPage implements OnInit {
        loadingController.dismiss();
       },
         (error: any) => {
+          this.authenticationService.isAuthenticated = false;
             this.presentToast("Invalid User Name or Password.","danger");
             loadingController.dismiss();
         });

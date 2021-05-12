@@ -143,16 +143,16 @@ async saveStore():Promise<void>{
       State:this.State.value,PinCode:this.PinCode.value.toString(),LandMark:this.LandMark.value,FromTime:this.FromTime.value,
       ToTime:this.ToTime.value,Id:this.storeId,Mode:this.title, Files: this.selectedDocs
     };
-
     this.tempStore.push(storeObject);
     this.selectedDocs = [];
     this.selectedWebDocs.nativeElement.value = "";
     let formDataList = this.getFormData(this.tempStore);
+    this.singleStoreFormGroup.reset();
     await this.singleStoreService.singleStoreSave('StoreSave',formDataList[0])
     .subscribe((data: any) => {
       this.presentToast("Store " + this.title+ "  successfully.","success");
       this.editStore=false;
-      this.singleStoreFormGroup.reset();
+      this.tempStore=[];
       this.isFormSubmitted=false
       this.subStoreList();
       loadingController.dismiss();
@@ -188,6 +188,7 @@ async editStoreInfo(rowdata:any){
   this.editStore = true;
   if(rowdata==null){
     this.storeId=0;
+    this.singleStoreFormGroup.reset();  
     this.title="Register";
   }else{
     const loadingController = await this.helperService.createLoadingController("loading");
