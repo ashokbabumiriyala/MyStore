@@ -7,6 +7,8 @@ import { NavController, ToastController } from '@ionic/angular';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {ServiceUploadService} from 'src/app/service-provider/services/service-upload.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { AlertController } from '@ionic/angular';
+
 @Component({
   selector: 'app-services',
   templateUrl: './services.page.html',
@@ -28,8 +30,8 @@ mobileApp:boolean;
     private helperService:HelperService,
     private serviceUploadService:ServiceUploadService,
     private camera: Camera,
-    private actionSheetController: ActionSheetController, private file: File) { }
-
+    private actionSheetController: ActionSheetController, private file: File,
+    public alertController: AlertController) { }
 ngOnInit() {
   if (sessionStorage.getItem('mobile') == 'true') {
     this.mobileApp = true;
@@ -236,4 +238,32 @@ ngOnInit() {
     let base64textString= btoa(binaryString);
     await this.getblobObject('data:image/jpeg;base64,' + base64textString)
    }
+   ionViewDidLeave() {
+    this.editService = false;
+    this.serviceLocationForm.reset();
+  }
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Do you want to delete ?',
+      message: 'Message <strong>text</strong>!!!',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
 }

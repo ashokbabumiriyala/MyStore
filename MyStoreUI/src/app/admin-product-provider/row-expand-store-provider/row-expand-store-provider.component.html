@@ -27,8 +27,8 @@
             <ion-label>Name: <b>{{item.name}}</b></ion-label>
         </ion-col>
         <ion-col size="3" class="ion-text-right">
-          <ion-icon name="alert-circle" (click)="changeStatus(item)" *ngIf="!item.status"></ion-icon>
-          <ion-icon name="checkbox" (click)="changeStatus(item)" *ngIf="item.status"></ion-icon>
+          <ion-icon name="alert-circle" class="status" (click)="changeStatus(item)" *ngIf="!item.status"></ion-icon>
+          <ion-icon name="checkbox" class="status" (click)="changeStatus(item)" *ngIf="item.status"></ion-icon>
         </ion-col>
     </ion-item>
 </ion-list>

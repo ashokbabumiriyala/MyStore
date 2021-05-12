@@ -1,7 +1,7 @@
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { NavController, ToastController } from '@ionic/angular';
 import {HelperService} from '../../common/helper.service';
 import {SingleStoreService} from '../single-store/single-store.service';
@@ -31,7 +31,7 @@ tempStore=[];
   constructor(private   toastController:ToastController,private helperService:HelperService,
     private singleStoreService:SingleStoreService,
     private actionSheetController:ActionSheetController,
-    private camera: Camera,
+    private camera: Camera,private alertController:AlertController
     ) { }
 
 ngOnInit() {
@@ -241,7 +241,30 @@ ionViewDidLeave() {
   this.editStore = false;
   this.singleStoreFormGroup.reset();
 }
+async presentAlertConfirm() {
+  const alert = await this.alertController.create({
+    cssClass: 'my-custom-class',
+    header: 'Do you want to delete ?',
+    message: 'Message <strong>text</strong>!!!',
+    buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: (blah) => {
+          console.log('Confirm Cancel: blah');
+        }
+      }, {
+        text: 'Yes',
+        handler: () => {
+          console.log('Confirm Okay');
+        }
+      }
+    ]
+  });
 
+  await alert.present();
+}
 async selectImage() {
   const actionSheet = await this.actionSheetController.create({
     header: "Select Image source",

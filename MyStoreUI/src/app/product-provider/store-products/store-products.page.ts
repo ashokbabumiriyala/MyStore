@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { StoreProductService } from '../store-products/store-product.service'
-import { NavController, ToastController } from '@ionic/angular';
+import { AlertController, NavController, ToastController } from '@ionic/angular';
 import {HelperService} from '../../common/helper.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ActionSheetController } from '@ionic/angular';
@@ -33,7 +33,8 @@ constructor(private storeProductService:StoreProductService,
   private   toastController:ToastController,
   private helperService:HelperService,
   private camera: Camera,
-  private actionSheetController: ActionSheetController, private file: File) { }
+  private actionSheetController: ActionSheetController, private file: File,
+  private alertController:AlertController) { }
 
   ngOnInit() {
     if (sessionStorage.getItem('mobile') == 'true') {
@@ -270,6 +271,30 @@ constructor(private storeProductService:StoreProductService,
 
   changeStore(){
     this.storeProductsList();
+  }
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Do you want to delete ?',
+      message: 'Message <strong>text</strong>!!!',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Yes',
+          handler: () => {
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+  
+    await alert.present();
   }
 }
 

@@ -4,6 +4,8 @@ import {HelperService} from '../../common/helper.service';
 import {StoreMasterService} from '../store-master/store-master.service';
 import { NavController, ToastController } from '@ionic/angular';
 import { Router, NavigationStart } from '@angular/router';
+import { AlertController } from '@ionic/angular';
+
 @Component({
   selector: 'app-store-master',
   templateUrl: './store-master.page.html',
@@ -23,7 +25,8 @@ title:string;
     private navCtrl: NavController,
     private router: Router,
     private helperService:HelperService,
-    private toastController:ToastController) { }
+    private toastController:ToastController,
+    private alertController:AlertController) { }
   ngOnInit() {
     this.createstoreMasterForm();
     this.storeMasterListSelect();
@@ -198,6 +201,30 @@ editMasterInfo(rowdata:any) {
   ionViewDidLeave() {
     this.storeMasterList = false;
     this.storeMasterFormGroup.reset();
+  }
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Do you want to delete ?',
+      message: 'Message <strong>text</strong>!!!',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Yes',
+          handler: () => {
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }
 interface IStoreMaster{

@@ -76,3 +76,8 @@ ion-button {
   font-size: smaller !important;
 }
 
+.my-custom-class .alert-wrapper{
+  button{
+        color: var(--iconcolor);
+    }
+}
