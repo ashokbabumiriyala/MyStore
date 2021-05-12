@@ -151,7 +151,9 @@ ngOnInit() {
     const blob = await base64.blob();
     this.selectedDocs.push(blob);
   }
-  async uploadService():Promise<void> {   
+  async uploadService():Promise<void> {  
+    this.Discount.setErrors(null);
+    this.PriceBeforeDiscount.setErrors(null);
     this.isFormSubmitted=true;
     if (this.serviceProductsForm.invalid) {
       return;
