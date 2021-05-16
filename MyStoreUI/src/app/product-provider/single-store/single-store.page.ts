@@ -246,21 +246,22 @@ ionViewDidLeave() {
 async presentAlertConfirm(rowData:any) {
   const alert = await this.alertController.create({
     cssClass: 'my-custom-class',
-    header: 'Do you want to delete ?',
-    message: rowData.storeMasterName,
+    header: 'Do you want to delete',
+    message: rowData.storeMasterName + ' ?',
     buttons: [
+      {
+        text: 'Confirm',
+        handler: () => {
+          console.log(rowData);
+          this.deleteStore(rowData.id);
+        }
+      },
       {
         text: 'Cancel',
         role: 'cancel',
         cssClass: 'secondary',
         handler: (blah) => {
           console.log('Confirm Cancel: blah');
-        }
-      }, {
-        text: 'Yes',
-        handler: () => {
-          console.log(rowData);
-          this.deleteStore(rowData.id);
         }
       }
     ]
@@ -337,8 +338,6 @@ async _handleReaderLoaded(readerEvt) {
   this.selectedDocs.push(blob);
 }
 }
-
-
 // interface ISingleStore{
 //  StoreMasterID :number;
 //  StoreType :number;

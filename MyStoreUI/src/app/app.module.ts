@@ -9,6 +9,7 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { FCM } from "cordova-plugin-fcm-with-dependecy-updated/ionic/ngx";
 import { File } from '@ionic-native/file/ngx';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],

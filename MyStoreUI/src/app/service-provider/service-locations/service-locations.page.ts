@@ -307,20 +307,21 @@ export class ServiceLocationsPage implements OnInit {
   async presentAlertConfirm(rowdata:any) {    
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Do you want to delete ?',
-      message: rowdata.businessName,
+      header: 'Do you want to delete',
+      message: rowdata.businessName +' ?',
       buttons: [
-        {
+       {
+          text: 'Confirm',
+          handler: () => {
+           this.deleteLocation(rowdata.Id);
+          }
+        }
+        , {
           text: 'Cancel',
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
-          }
-        }, {
-          text: 'Okay',
-          handler: () => {
-           this.deleteLocation(rowdata.Id);
           }
         }
       ]

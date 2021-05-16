@@ -57,7 +57,17 @@ const routes: Routes = [
     path: 'send-notification',
     loadChildren: () => import('./send-notification/send-notification.module').then( m => m.SendNotificationPageModule),
     canActivate: [AuthGuardService]
+  },
+ 
+  {
+    path: 'store-orders',
+    loadChildren: () => import('./store-orders/store-orders.module').then( m => m.StoreOrdersPageModule)
+  },  {
+    path: 'service-orders',
+    loadChildren: () => import('./service-orders/service-orders.module').then( m => m.ServiceOrdersPageModule)
   }
+
+
 
 
 
