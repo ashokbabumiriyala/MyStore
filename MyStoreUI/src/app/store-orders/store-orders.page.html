@@ -1,9 +1,28 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>store-orders</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-
+<ion-content class="login-form ion-padding after-login-bg">
+  <h2 class="page-title">
+    <ion-icon name="aperture-outline" slot="start"></ion-icon>Product Orders
+  </h2>
+  <ion-list class="ion-list-ele">
+    <ion-row (click)="expandItem($event,item)" class="order-status" *ngFor="let item of orderedItems">
+      <ion-col size="6">
+        <ion-label>Store Name: <b>{{item.name}}</b></ion-label>
+      </ion-col>
+      <ion-col size="6">
+        <ion-label>Ordered Date: <b>{{item.date}}</b></ion-label>
+      </ion-col>
+      <ion-col size="6">
+        <ion-label>Order Id: <b>{{item.orderId}}</b></ion-label>
+      </ion-col>
+      <ion-col size="6">
+        <ion-label>Delivery Status: <b>{{item.status}}</b></ion-label>
+      </ion-col>
+      <ion-col size="6">
+        <ion-label>Order Id: <b>{{item.orderId}}</b></ion-label>
+      </ion-col>
+      <ion-col size="6">
+        <ion-label>Delivery Status: <b>{{item.status}}</b></ion-label>
+      </ion-col>
+      <app-store-order-items [items]="stores" [expanded]="item.expand"></app-store-order-items>
+    </ion-row>
+  </ion-list>
 </ion-content>
