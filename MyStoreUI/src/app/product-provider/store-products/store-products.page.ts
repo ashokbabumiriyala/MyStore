@@ -273,11 +273,11 @@ constructor(private storeProductService:StoreProductService,
   changeStore(){
     this.storeProductsList();
   }
-  async presentAlertConfirm() {
-    const alert = await this.alertController.create({
+  async presentAlertConfirm(rowdata:any) {
+      const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Do you want to delete ?',
-      message: 'Message <strong>text</strong>!!!',
+      message:rowdata.productName,
       buttons: [
         {
           text: 'Cancel',
@@ -289,14 +289,25 @@ constructor(private storeProductService:StoreProductService,
         }, {
           text: 'Yes',
           handler: () => {
-            console.log('Confirm Okay');
+           this.deleteStoreProduct(rowdata.id)
           }
         }
       ]
-    });
-  
+    });  
     await alert.present();
   }
+  async deleteStoreProduct(storeProductId:number){
+    const loadingController = await this.helperService.createLoadingController("loading");
+      await loadingController.present();
+      const dataObject={StoreProductId: storeProductId};  
+      await this.storeProductService.deleteStoreProduct('storeProductDelete', dataObject)
+      .subscribe((data: any) => {     
+        this.storeProductsList();
+        loadingController.dismiss();
+      },
+        (error: any) => {
+          loadingController.dismiss();
+        });
+  }
 }
-
 

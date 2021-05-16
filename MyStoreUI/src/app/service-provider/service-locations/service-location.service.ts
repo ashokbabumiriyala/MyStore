@@ -17,4 +17,7 @@ export class ServiceLocationService {
     locationListSelect(methodName: string, resouce: any): Observable<any> {
     return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
     }
+    locationDelete(methodName: string, resouce: any): Observable<any> {
+       return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
+    }
 }

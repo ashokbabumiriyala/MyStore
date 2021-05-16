@@ -16,4 +16,8 @@ export class ServiceUploadService {
     return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
   }
 
+  serviceDelete(methodName: string, resouce: any): Observable<any> {
+    return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
+  }
+
 }

@@ -16,4 +16,8 @@ constructor(private commonApiServiceCallsService:CommonApiServiceCallsService) {
     return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
   }
 
+  deleteStoreProduct(methodName: string, resouce: any): Observable<any> {
+    return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
+  }
+
 }

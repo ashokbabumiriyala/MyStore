@@ -101,13 +101,12 @@ export class ServiceLocationsPage implements OnInit {
       FromTime: new FormControl('', Validators.required),
       ToTime: new FormControl('', Validators.required),
       DeliveryType: new FormControl('', Validators.required)
-
     });
   }
 
-
   //#region   list
   async serviceLocationListSelect() {
+    debugger;
     const loadingController = await this.helperService.createLoadingController("loading");
     await loadingController.present();
     const dataObject = { ProviderId: Number(sessionStorage.getItem("providerId")), Mode: 'Select' };
@@ -122,7 +121,6 @@ export class ServiceLocationsPage implements OnInit {
         (error: any) => {
           loadingController.dismiss();
         });
-
   }
   //#endregion
   async saveLocation(): Promise<void> {
@@ -132,7 +130,6 @@ export class ServiceLocationsPage implements OnInit {
     } else {
       const loadingController = await this.helperService.createLoadingController("loading");
       await loadingController.present();
-
       const serviceLocationObject = {
         ServiceMasterID: Number(this.ServiceMasterID.value), BusinessType: Number(this.BusinessType.value),
         BusinessName: this.BusinessName.value, BusinessManagerName: this.BusinessManagerName.value.toString(), ManagerID: Number(this.ManagerID.value),
@@ -197,8 +194,6 @@ export class ServiceLocationsPage implements OnInit {
           (error: any) => {
             loadingController.dismiss();
           });
-
-
     }
   }
 
@@ -252,8 +247,7 @@ export class ServiceLocationsPage implements OnInit {
   }
 
   private setForamADetailsToPage(data: any): void {
-    console.log(data);
-    this.serviceLocationForm.patchValue({
+      this.serviceLocationForm.patchValue({
       ServiceMasterID: String(data.serviceMasterID),
       BusinessType: String(data.storeTypeId),
       BusinessName: data.businessName,
@@ -310,11 +304,11 @@ export class ServiceLocationsPage implements OnInit {
     this.editLocation = false;
     this.serviceLocationForm.reset();
   }
-  async presentAlertConfirm() {
+  async presentAlertConfirm(rowdata:any) {    
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Do you want to delete ?',
-      message: 'Message <strong>text</strong>!!!',
+      message: rowdata.businessName,
       buttons: [
         {
           text: 'Cancel',
@@ -326,14 +320,27 @@ export class ServiceLocationsPage implements OnInit {
         }, {
           text: 'Okay',
           handler: () => {
-            console.log('Confirm Okay');
+           this.deleteLocation(rowdata.Id);
           }
         }
       ]
     });
-
     await alert.present();
   }
+
+  async deleteLocation(locationId:number){
+    const loadingController = await this.helperService.createLoadingController("loading");
+      await loadingController.present();
+      const dataObject={ServiceLocationId: locationId};  
+      await this.serviceLocationService.locationDelete('serviceLocationDelete', dataObject)
+      .subscribe((data: any) => {     
+        this.serviceLocationListSelect();
+        loadingController.dismiss();
+      },
+        (error: any) => {
+          loadingController.dismiss();
+        });
+     }
 }
 
 

@@ -8,6 +8,7 @@ import {SingleStoreService} from '../single-store/single-store.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ActionSheetController } from '@ionic/angular';
 import {File, FileEntry} from '@ionic-native/file/ngx';
+import { Alert } from 'ionic-angular';
 
  @Component({
   selector: 'app-single-store',
@@ -242,11 +243,11 @@ ionViewDidLeave() {
   this.editStore = false;
   this.singleStoreFormGroup.reset();
 }
-async presentAlertConfirm() {
+async presentAlertConfirm(rowData:any) {
   const alert = await this.alertController.create({
     cssClass: 'my-custom-class',
     header: 'Do you want to delete ?',
-    message: 'Message <strong>text</strong>!!!',
+    message: rowData.storeMasterName,
     buttons: [
       {
         text: 'Cancel',
@@ -258,13 +259,26 @@ async presentAlertConfirm() {
       }, {
         text: 'Yes',
         handler: () => {
-          console.log('Confirm Okay');
+          console.log(rowData);
+          this.deleteStore(rowData.id);
         }
       }
     ]
   });
-
   await alert.present();
+}
+async deleteStore(storeId:number){
+  const loadingController = await this.helperService.createLoadingController("loading");
+    await loadingController.present();
+    const dataObject={StoreId: storeId};  
+    await this.singleStoreService.deleteStore('storeDelete', dataObject)
+    .subscribe((data: any) => {     
+      this.subStoreList();
+      loadingController.dismiss();
+    },
+      (error: any) => {
+        loadingController.dismiss();
+      });
 }
 async selectImage() {
   const actionSheet = await this.actionSheetController.create({

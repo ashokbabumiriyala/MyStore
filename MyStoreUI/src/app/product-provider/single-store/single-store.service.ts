@@ -15,4 +15,9 @@ export class SingleStoreService {
      subStoreListSelect(methodName: string, resouce: any): Observable<any> {
       return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
       }
+
+
+      deleteStore(methodName: string, resouce: any): Observable<any> {
+        return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
+        }
 }

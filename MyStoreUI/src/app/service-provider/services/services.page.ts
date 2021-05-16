@@ -242,11 +242,11 @@ ngOnInit() {
     this.editService = false;
     this.serviceLocationForm.reset();
   }
-  async presentAlertConfirm() {
+  async presentAlertConfirm(rowdata:any) {    
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Do you want to delete ?',
-      message: 'Message <strong>text</strong>!!!',
+      message: rowdata.serviceName,
       buttons: [
         {
           text: 'Cancel',
@@ -258,7 +258,7 @@ ngOnInit() {
         }, {
           text: 'Okay',
           handler: () => {
-            console.log('Confirm Okay');
+           this.deleteService(rowdata.serviceID);
           }
         }
       ]
@@ -266,4 +266,19 @@ ngOnInit() {
 
     await alert.present();
   }
+
+
+  async deleteService(serviceID:number){
+    const loadingController = await this.helperService.createLoadingController("loading");
+      await loadingController.present();
+      const dataObject={ServiceLocationServiceId: serviceID};  
+      await this.serviceUploadService.serviceDelete('serviceLocationServiceDelete', dataObject)
+      .subscribe((data: any) => {     
+        this.serviceProductsList();
+        loadingController.dismiss();
+      },
+        (error: any) => {
+          loadingController.dismiss();
+        });
+     }
 }
