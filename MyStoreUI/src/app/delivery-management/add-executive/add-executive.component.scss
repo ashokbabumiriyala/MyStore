@@ -1,0 +1,19 @@
+.executive-form {
+    a.small-text {
+        text-decoration: none;
+    }
+}
+
+.ion-ele {
+    border-radius: 15px;
+    border: 1px solid;
+    border-width: thin;
+    --background: transparent;
+    margin-bottom: 5px;
+}
+.executive-members ion-col{
+    border: 1px solid;
+    border-collapse: collapse;
+    min-width: 170px;
+    white-space: break-spaces;
+}

@@ -65,6 +65,10 @@ const routes: Routes = [
   },  {
     path: 'service-orders',
     loadChildren: () => import('./service-orders/service-orders.module').then( m => m.ServiceOrdersPageModule)
+  },
+  {
+    path: 'delivery-management',
+    loadChildren: () => import('./delivery-management/delivery-management.module').then( m => m.DeliveryManagementPageModule)
   }
 
 

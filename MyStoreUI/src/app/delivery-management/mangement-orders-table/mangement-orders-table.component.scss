@@ -1,0 +1,28 @@
+.wide-as-needed {
+    overflow: scroll;
+    white-space: nowrap;
+    height:395px;
+    .col-width {
+      min-width: 200px !important;
+      ion-item {
+        --background:transparent;
+      }
+    }
+    .header ion-col, .body ion-col {
+        border: 1px solid;
+        border-collapse: collapse;
+        min-width: 170px;
+        white-space: break-spaces;               
+    }    
+  }
+  .content-section {
+    height: auto;
+    max-height: 495px;
+    overflow-y: auto;
+  }
+  .order-details {
+    min-width: 100%;
+    width: -webkit-fill-available;
+    max-height: 180px;
+    overflow: auto;
+  }

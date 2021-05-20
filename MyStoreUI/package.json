@@ -30,6 +30,7 @@
         "cordova-common": "^4.0.2",
         "human-signals": "^2.1.0",
         "ionic-angular": "^3.9.10",
+        "ionic-selectable": "^4.8.0",
         "ionic-stepper": "^1.1.0",
         "osenv": "^0.1.5",
         "properties-parser": "^0.3.1",
