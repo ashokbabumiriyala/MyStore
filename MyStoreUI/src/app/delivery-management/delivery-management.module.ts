@@ -12,6 +12,7 @@ import { AddExecutiveComponent } from './add-executive/add-executive.component';
 import { MangementOrdersTableComponent } from './mangement-orders-table/mangement-orders-table.component';
 import { DeliveryFeeComponent } from './delivery-fee/delivery-fee.component';
 import { IonicSelectableModule } from 'ionic-selectable';
+import { ExcutiveOrdersTableComponent } from './excutive-orders-table/excutive-orders-table.component';
 
 
 @NgModule({
@@ -23,6 +24,6 @@ import { IonicSelectableModule } from 'ionic-selectable';
     IonicSelectableModule
   ],
   declarations: [DeliveryManagementPage, AddExecutiveComponent, 
-    MangementOrdersTableComponent, DeliveryFeeComponent]
+    MangementOrdersTableComponent, DeliveryFeeComponent, ExcutiveOrdersTableComponent]
 })
 export class DeliveryManagementPageModule {}

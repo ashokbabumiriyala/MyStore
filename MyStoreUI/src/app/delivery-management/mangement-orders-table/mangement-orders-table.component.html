@@ -1,12 +1,12 @@
 <ion-content class="ion-padding after-login-bg">
   <h2 class="page-title">
-    <ion-icon name="archive-outline"></ion-icon>Orders Table
+    <ion-icon name="archive-outline"></ion-icon>Management Orders Table
   </h2>
   <ion-searchbar placeholder="Search for Order"></ion-searchbar>
   <div class="content-section">
     <div direction="x" class="wide-as-needed">
       <ion-grid>
-        <div class="header" style="display: flex;">
+        <div class="header">
           <ion-col class="col-width">Assigned Status</ion-col>
           <ion-col>Order Status</ion-col>
           <ion-col>Order Id</ion-col>
@@ -17,60 +17,62 @@
           <ion-col>Store Name</ion-col>
           <ion-col>Store Address</ion-col>
           <ion-col>Store manager Mobile number</ion-col>
-
           <ion-col>Total Amount</ion-col>
         </div>
-        <div style="max-height: 330px;overflow: auto;">
-        <div *ngFor="let order of orderDataArray">
-          <div class="body" style="display: flex;">
-            <ion-col class="col-width">
-              <ion-item class="ion-ele">
-                <ion-label position="floating">Assign To</ion-label>
-                <ion-select>
-                  <ion-select-option value="abc">abc</ion-select-option>
-                  <ion-select-option value="xyz">xyz</ion-select-option>
-                </ion-select>
-                <ion-icon name="cog-outline" slot="start"></ion-icon>
-              </ion-item>
-              Assigned To: <b>{{order.assignto}}</b>
-            </ion-col>
-            <ion-col (click)="toggle(order)">{{order.status}}</ion-col>
-            <ion-col (click)="toggle(order)">{{order.orderId}}</ion-col>
-            <ion-col (click)="toggle(order)">{{order.date}}</ion-col>
-            <ion-col (click)="toggle(order)">{{order.name}}</ion-col>
-            <ion-col (click)="toggle(order)">{{order.phone}}</ion-col>
-            <ion-col (click)="toggle(order)">{{order.address}}</ion-col>
-            <ion-col (click)="toggle(order)">{{order.storeName}}</ion-col>
-            <ion-col (click)="toggle(order)">{{order.storeAddress}}</ion-col>
-            <ion-col (click)="toggle(order)">{{order.storeManagerMobile}}</ion-col>
-            <ion-col (click)="toggle(order)">{{order.price| currency:'INR'}}</ion-col>
+        <div style="max-height: 330px;overflow: auto;display: inline-block;">
+          <div *ngFor="let order of orderDataArray">
+            <div class="body" style="display: flex;">
+              <ion-col class="col-width">
+                <ion-item class="ion-ele">
+                  <ion-label position="fixed">Assign To</ion-label>
+                  <ion-select class="assign-orders">
+                    <ion-select-option value="abc">abc</ion-select-option>
+                    <ion-select-option value="xyz">xyz</ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <!-- Assigned To: <b>{{order.assignto}}</b> -->
+              </ion-col>
+              <ion-col (click)="toggle(order)">{{order.status}}</ion-col>
+              <ion-col (click)="toggle(order)">{{order.orderId}}</ion-col>
+              <ion-col (click)="toggle(order)">{{order.date}}</ion-col>
+              <ion-col (click)="toggle(order)">{{order.name}}</ion-col>
+              <ion-col (click)="toggle(order)">{{order.phone}}</ion-col>
+              <ion-col (click)="toggle(order)">{{order.address}}</ion-col>
+              <ion-col (click)="toggle(order)">{{order.storeName}}</ion-col>
+              <ion-col (click)="toggle(order)">{{order.storeAddress}}</ion-col>
+              <ion-col (click)="toggle(order)">{{order.storeManagerMobile}}</ion-col>
+              <ion-col (click)="toggle(order)">{{order.price| currency:'INR'}}</ion-col>
+            </div>
+            <div class="order-details" *ngIf="order.expand">
+              <ion-list class="ion-list-ele">
+                <ion-row>
+                  <ion-col size="6" *ngFor="let itm of orderItems">
+                    <ion-item>
+                      <ion-avatar slot="start">
+                        <img src="./assets/images/category.png">
+                      </ion-avatar>
+                      <ion-label>
+                        <ion-row>
+                          <ion-col size="3">
+                            <h3>Name:{{itm.name}}</h3>
+                          </ion-col>
+                          <ion-col size="3">
+                            <h3>Count:{{itm.count}}</h3>
+                          </ion-col>
+                          <ion-col size="3">
+                            <h3>Price:{{itm.price | currency:'INR'}}</h3>
+                          </ion-col>
+                          <ion-col size="3">
+                            <h3>Units:{{itm.units}}</h3>
+                          </ion-col>
+                        </ion-row>
+                      </ion-label>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-list>
+            </div>
           </div>
-          <div class="order-details" *ngIf="order.expand">
-            <ion-list class="ion-list-ele">
-              <ion-item *ngFor="let itm of orderItems">
-                <ion-avatar slot="start">
-                  <img src="./assets/images/category.png">
-                </ion-avatar>
-                <ion-label>
-                  <ion-row>
-                    <ion-col size="3">
-                      <h3>Name:{{itm.name}}</h3>
-                    </ion-col>
-                    <ion-col size="3">
-                      <h3>Count:{{itm.count}}</h3>
-                    </ion-col>
-                    <ion-col size="3">
-                      <h3>Price:{{itm.price | currency:'INR'}}</h3>
-                    </ion-col>
-                    <ion-col size="3">
-                      <h3>Units:{{itm.units}}</h3>
-                    </ion-col>
-                  </ion-row>
-                </ion-label>
-              </ion-item>
-            </ion-list>
-          </div>
-        </div>
         </div>
       </ion-grid>
     </div>

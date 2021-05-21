@@ -26,3 +26,11 @@
     max-height: 180px;
     overflow: auto;
   }
+  .header {
+    display: flex;
+    text-align: center;
+    font-weight: bold;
+    ion-col {
+      padding-top: 15px !important;
+    }
+  }

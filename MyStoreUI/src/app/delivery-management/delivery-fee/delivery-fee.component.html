@@ -5,7 +5,7 @@
   <form class="fee-section ion-margin-bottom">
     <h3 class="ion-text-left">Price per KM</h3>
     <ion-row *ngIf="editPrice">
-      <ion-col size-md="6" size-xs="12" size-lg="6" size-xl="3">
+      <ion-col size-md="6" size-xs="12" size-lg="6" size-xl="6">
         <ion-item class="ion-ele">
           <ion-label position="floating">Price per KM</ion-label>
           <ion-input type="number"></ion-input>
@@ -15,7 +15,7 @@
       </ion-col>
     </ion-row>
     <ion-row *ngIf="!editPrice">
-      <ion-col size-md="6" size-xs="12" size-lg="6" size-xl="3">
+      <ion-col size-md="6" size-xs="12" size-lg="6" size-xl="6">
         <ion-item class="ion-ele">
           <ion-label position="fixed">Price per KM</ion-label>
           <ion-text>15</ion-text>
@@ -28,7 +28,7 @@
   <h3 class="ion-text-left">Price per KM per Store Master</h3>
   <form class="fee-section ion-margin-top">
     <ion-row *ngIf="editGroupPrice">
-      <ion-col size-md="6" size-xs="12" size-lg="6" size-xl="3">
+      <ion-col size-md="6" size-xs="12" size-lg="6" size-xl="6">
         <ion-item class="ion-ele">
           <ion-label>Store Master</ion-label>
           <ionic-selectable searchPlaceholder="Enter Master name" item-content name="storeMaster" [(ngModel)]="port"
@@ -37,7 +37,7 @@
           </ionic-selectable>
         </ion-item>
       </ion-col>
-      <ion-col size-md="6" size-xs="12" size-lg="6" size-xl="3">
+      <ion-col size-md="6" size-xs="12" size-lg="6" size-xl="6">
         <ion-item class="ion-ele">
           <ion-label position="floating">Price per KM</ion-label>
           <ion-input type="number"></ion-input>
@@ -48,7 +48,7 @@
     </ion-row>
 
     <ion-row *ngIf="!editGroupPrice">
-      <ion-col size-md="6" size-xs="12" size-lg="6" size-xl="3">
+      <ion-col size-md="6" size-xs="12" size-lg="6" size-xl="6">
         <ion-item class="ion-ele">
           <ion-label>Store Master</ion-label>
           <ionic-selectable class="readOnlyData" searchPlaceholder="Enter Master name" item-content name="storeMaster"
@@ -57,7 +57,7 @@
           </ionic-selectable>
         </ion-item>
       </ion-col>
-      <ion-col size-md="6" size-xs="12" size-lg="6" size-xl="3">
+      <ion-col size-md="6" size-xs="12" size-lg="6" size-xl="6">
         <ion-item class="ion-ele">
           <ion-label position="fixed">Price per KM</ion-label>
           <ion-text>18</ion-text>

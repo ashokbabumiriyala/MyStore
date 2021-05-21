@@ -6,6 +6,7 @@ import { DeliveryManagementPage } from './delivery-management.page';
 import { AddExecutiveComponent } from './add-executive/add-executive.component';
 import { MangementOrdersTableComponent } from './mangement-orders-table/mangement-orders-table.component';
 import { DeliveryFeeComponent } from './delivery-fee/delivery-fee.component';
+import { ExcutiveOrdersTableComponent } from './excutive-orders-table/excutive-orders-table.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path:'delivery-fee',
     component:DeliveryFeeComponent
+  },
+  {
+    path:'executive-orders',
+    component:ExcutiveOrdersTableComponent
   }
 ];
 
