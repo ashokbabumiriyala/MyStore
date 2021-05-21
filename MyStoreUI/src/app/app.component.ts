@@ -101,7 +101,7 @@ export class AppComponent implements OnInit {
         this.router.navigate(['product-provider/store-products']);
         break;
       case AppConstants.menuNavigation.StoreOrders:
-        this.router.navigate(['animals']);
+        this.router.navigate(['store-orders']);
         break;
       case AppConstants.menuNavigation.StoreDelivery:
         this.router.navigate(['animals']);
@@ -129,6 +129,12 @@ export class AppComponent implements OnInit {
         case AppConstants.menuNavigation.AdminServices:
         this.router.navigate(['admin-service-provider']);
         break;
+
+        case AppConstants.menuNavigation.ServiceOrders:
+          this.router.navigate(['service-orders']);
+          break;
+
+        
     }
   }
   openMenu() {

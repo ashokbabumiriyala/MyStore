@@ -61,14 +61,18 @@ const routes: Routes = [
  
   {
     path: 'store-orders',
-    loadChildren: () => import('./store-orders/store-orders.module').then( m => m.StoreOrdersPageModule)
-  },  {
+    loadChildren: () => import('./store-orders/store-orders.module').then( m => m.StoreOrdersPageModule),
+    canActivate: [AuthGuardService]
+  },
+  {
     path: 'service-orders',
-    loadChildren: () => import('./service-orders/service-orders.module').then( m => m.ServiceOrdersPageModule)
+    loadChildren: () => import('./service-orders/service-orders.module').then( m => m.ServiceOrdersPageModule),
+    canActivate: [AuthGuardService]
   },
   {
     path: 'delivery-management',
-    loadChildren: () => import('./delivery-management/delivery-management.module').then( m => m.DeliveryManagementPageModule)
+    loadChildren: () => import('./delivery-management/delivery-management.module').then( m => m.DeliveryManagementPageModule),
+    canActivate: [AuthGuardService]
   }
 
 
