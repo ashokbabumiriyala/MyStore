@@ -9,7 +9,7 @@ export class AddExecutiveComponent implements OnInit {
   editExecutive: boolean = false;
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
   addExecutive() {
     console.log("Form Submitted !!")
   }
@@ -17,6 +17,12 @@ export class AddExecutiveComponent implements OnInit {
     this.editExecutive = false;
   }
   add() {
+    this.editExecutive = true;
+  }
+  deleteExecutive() {
+    alert('executive deleted');
+  }
+  editExecutiveData() {
     this.editExecutive = true;
   }
 }

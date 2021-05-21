@@ -16,3 +16,14 @@ ion-icon[slot="start"] {
 .readOnlyData {
     pointer-events: none;
 }
+.store-list-fee {
+ion-col{
+    border: 1px solid;
+    border-collapse: collapse;
+    min-width: 100px;
+    white-space: break-spaces;
+}
+.header {
+    font-weight: bold;
+}
+}

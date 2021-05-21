@@ -92,17 +92,23 @@
       </ion-col>
     </ion-row>   
   </form>
-
+  <div direction="x" class="wide-as-needed">
   <ion-grid class="executive-members" *ngIf="!editExecutive">
-  <ion-row class="ion-text-center">
-    <ion-col><b>Name</b></ion-col>
-    <ion-col><b>ID Number</b></ion-col>
-    <ion-col><b>Phone Number</b></ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>Ashok</ion-col>
-    <ion-col>484561</ion-col>
-    <ion-col>9848756895</ion-col>
-  </ion-row>
+  <div class="ion-text-center header">
+    <ion-col size="3"><b>Name</b></ion-col>
+    <ion-col size="3"><b>ID Number</b></ion-col>
+    <ion-col size="3"><b>Phone Number</b></ion-col>
+    <ion-col size="3"><b>Action</b></ion-col>
+  </div>
+  <div class="body">
+    <ion-col size="3">Ashok</ion-col>
+    <ion-col size="3">484561</ion-col>
+    <ion-col size="3">9848756895</ion-col>
+    <ion-col size="3" class="ion-text-center">
+        <ion-icon name="trash-outline" size="large" (click)="deleteExecutive()"></ion-icon>
+        <ion-icon name="create-outline" size="large" (click)="editExecutiveData()"></ion-icon>
+    </ion-col>
+  </div>
 </ion-grid>
+</div>
 </ion-content>

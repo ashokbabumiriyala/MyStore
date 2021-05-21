@@ -71,8 +71,8 @@ const routes: Routes = [
   },
   {
     path: 'delivery-management',
-    loadChildren: () => import('./delivery-management/delivery-management.module').then( m => m.DeliveryManagementPageModule),
-    canActivate: [AuthGuardService]
+    loadChildren: () => import('./delivery-management/delivery-management.module').then( m => m.DeliveryManagementPageModule)
+    // canActivate: [AuthGuardService]
   }
 
 

@@ -5,6 +5,7 @@ import { IonicSelectableComponent } from 'ionic-selectable';
 class Port {
   public id: number;
   public name: string;
+  public edit: boolean;
 }
 
 @Component({
@@ -17,19 +18,21 @@ export class DeliveryFeeComponent implements OnInit {
   ports: Port[];
   port: Port;
   editGroupPrice: boolean = false;
+  selectedStores: any = [];
   constructor() { }
 
   ngOnInit() {
     this.ports = [
-      { id: 1, name: 'Tokai' },
-      { id: 2, name: 'Vladivostok' },
-      { id: 3, name: 'Navlakhi' }
+      { id: 1, name: 'Tokai',edit:false},
+      { id: 2, name: 'Vladivostok',edit:false},
+      { id: 3, name: 'Navlakhi',edit:false}
     ];
   }
   portChange(event: {
     component: IonicSelectableComponent,
     value: any
   }) {
+    this.selectedStores = event.value;
     console.log('port:', event.value);
   }
   editFee() {
@@ -43,5 +46,14 @@ export class DeliveryFeeComponent implements OnInit {
   }
   saveFee() {
     this.editPrice = false;
+  }
+  storeFeeEdit(store) {
+    store.edit = true; 
+  }
+  storeFeeSave(store) {
+    store.edit = false; 
+  }
+  storeFeeDelete(store) {
+    console.log(store);
   }
 }

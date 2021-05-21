@@ -36,35 +36,57 @@
             (onChange)="portChange($event)">
           </ionic-selectable>
         </ion-item>
+        <!-- <ion-button (click)="saveGroupFee()">Save Fee</ion-button> -->
       </ion-col>
-      <ion-col size-md="6" size-xs="12" size-lg="6" size-xl="6">
+      <!-- <ion-col size-md="6" size-xs="12" size-lg="6" size-xl="6">
         <ion-item class="ion-ele">
           <ion-label position="floating">Price per KM</ion-label>
           <ion-input type="number"></ion-input>
           <ion-icon name="cog-outline" slot="start"></ion-icon>
         </ion-item>
         <ion-button (click)="saveGroupFee()">Save Fee</ion-button>
-      </ion-col>
+      </ion-col> -->
     </ion-row>
 
     <ion-row *ngIf="!editGroupPrice">
       <ion-col size-md="6" size-xs="12" size-lg="6" size-xl="6">
         <ion-item class="ion-ele">
           <ion-label>Store Master</ion-label>
-          <ionic-selectable class="readOnlyData" searchPlaceholder="Enter Master name" item-content name="storeMaster"
+          <ionic-selectable  searchPlaceholder="Enter Master name" item-content name="storeMaster"
             [(ngModel)]="port" [isMultiple]="true" [items]="ports" itemValueField="id" itemTextField="name"
             [canSearch]="true" (onChange)="portChange($event)">
           </ionic-selectable>
+          <!-- <ion-icon name="create-outline" slot="end" (click)="editGroupFee()"></ion-icon> -->
         </ion-item>
       </ion-col>
-      <ion-col size-md="6" size-xs="12" size-lg="6" size-xl="6">
+      <!-- <ion-col size-md="6" size-xs="12" size-lg="6" size-xl="6">
         <ion-item class="ion-ele">
           <ion-label position="fixed">Price per KM</ion-label>
           <ion-text>18</ion-text>
           <ion-icon name="cog-outline" slot="start"></ion-icon>
           <ion-icon name="create-outline" slot="end" (click)="editGroupFee()"></ion-icon>
         </ion-item>
-      </ion-col>
+      </ion-col> -->
     </ion-row>
+    
+    <ion-grid *ngIf="selectedStores.length>0" class="store-list-fee">
+      <ion-row class="ion-text-center header">
+        <ion-col size="4">Store Name</ion-col>
+        <ion-col size="4">Fee</ion-col>
+        <ion-col size="4">Action</ion-col>
+      </ion-row>
+      <ion-row *ngFor="let store of selectedStores">
+        <ion-col size="4">{{store.name}}</ion-col>
+        <ion-col size="4">
+          <ion-input type="text" placeholder="Enter Fee" *ngIf="store.edit"></ion-input>
+          <ion-text *ngIf="!store.edit">13</ion-text>
+        </ion-col>
+        <ion-col size="4">
+          <ion-icon name="create-outline" size="large" (click)="storeFeeEdit(store)" *ngIf="!store.edit"></ion-icon>
+          <ion-icon name="checkmark-outline" size="large" (click)="storeFeeSave(store)" *ngIf="store.edit"></ion-icon>
+        <ion-icon name="trash-outline" size="large" (click)="storeFeeDelete(store)"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </form>
 </ion-content>
