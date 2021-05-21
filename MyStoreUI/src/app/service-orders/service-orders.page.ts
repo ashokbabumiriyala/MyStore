@@ -34,6 +34,7 @@ export class ServiceOrdersPage implements OnInit {
     }
 
   expandItem(event, ele): void {  
+  
     event.currentTarget.classList.toggle('order-status');
     event.currentTarget.classList.toggle('row-icon');
     if (ele.expand) {
