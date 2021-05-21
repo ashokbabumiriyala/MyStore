@@ -33,19 +33,21 @@
     .order-status::before{
         content: '>';
         position: absolute;
-        font-size: 7vw;
+        font-size: 3vw;
         left: 3px;
         color: darkorange;
+        top:23px;
     }
     .row-icon::before {
         content: '<';
         position: absolute;
-        font-size: 7vw;
+        font-size: 3vw;
         left: 3px;
         color: darkorange;
+        top:23px;
     }
     background: transparent;   
     ion-col {
-        font-size: 3vw;
+        font-size: 2vw;
     }
 }

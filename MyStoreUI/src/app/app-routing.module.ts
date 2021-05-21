@@ -45,28 +45,33 @@ const routes: Routes = [
   },
   {
     path: 'admin-product-provider',
-    loadChildren: () => import('./admin-product-provider/admin-product-provider.module').then( m => m.AdminProductProviderPageModule),
-    canActivate: [AuthGuardService]
+    loadChildren: () => import('./admin-product-provider/admin-product-provider.module').then( m => m.AdminProductProviderPageModule)
+    // ,
+    // canActivate: [AuthGuardService]
   },
   {
     path: 'admin-service-provider',
-    loadChildren: () => import('./admin-service-provider/admin-service-provider.module').then( m => m.AdminServiceProviderPageModule),
-    canActivate: [AuthGuardService]
+    loadChildren: () => import('./admin-service-provider/admin-service-provider.module').then( m => m.AdminServiceProviderPageModule)
+    // ,
+    // canActivate: [AuthGuardService]
   },
   {
     path: 'send-notification',
-    loadChildren: () => import('./send-notification/send-notification.module').then( m => m.SendNotificationPageModule),
-    canActivate: [AuthGuardService]
+    loadChildren: () => import('./send-notification/send-notification.module').then( m => m.SendNotificationPageModule)
+    // ,
+    // canActivate: [AuthGuardService]
   },
  
   {
     path: 'store-orders',
-    loadChildren: () => import('./store-orders/store-orders.module').then( m => m.StoreOrdersPageModule),
+    loadChildren: () => import('./store-orders/store-orders.module').then( m => m.StoreOrdersPageModule)
+    ,
     canActivate: [AuthGuardService]
   },
   {
     path: 'service-orders',
-    loadChildren: () => import('./service-orders/service-orders.module').then( m => m.ServiceOrdersPageModule),
+    loadChildren: () => import('./service-orders/service-orders.module').then( m => m.ServiceOrdersPageModule)
+    ,
     canActivate: [AuthGuardService]
   },
   {

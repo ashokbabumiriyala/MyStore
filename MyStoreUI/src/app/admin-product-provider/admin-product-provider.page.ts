@@ -13,15 +13,7 @@ export class AdminProductProviderPage implements OnInit {
   stores : any = [];
   showStores:boolean;
   constructor(private adminProductProviderService:AdminProductProviderService,
-    private helperService:HelperService) {
-    // this.items = [
-    //   {name:'A', expanded: false },
-    //   {name:'B', expanded: false },
-    //   {name:'C', expanded: false },
-    //   {name:'D', expanded: false },
-    //   {name:'E', expanded: false }
-    // ];
-    // Object.assign(this.masterData,this.items);
+    private helperService:HelperService) {   
   }
   ngOnInit() {    
     this.adminStoreMasterList();

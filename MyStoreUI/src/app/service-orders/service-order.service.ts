@@ -6,16 +6,13 @@ import { CommonApiServiceCallsService} from '../Shared/common-api-service-calls.
 @Injectable({
   providedIn: 'root'
 })
-export class StoreOrderService {
+export class ServiceOrderService {
 
-  private apiUrl = environment.storeMasterServiceUrl;
+  private apiUrl = environment.serviceMasterServiceUrl;
   constructor(private commonApiServiceCallsService:CommonApiServiceCallsService) { }
   
-    storeOrderSelect(methodName: string, resouce: any): Observable<any> {
+    serviceOrdersSelect(methodName: string, resouce: any): Observable<any> {
     return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
     }
+  }
 
-    storeOrderItemsSelect(methodName: string, resouce: any): Observable<any> {
-      return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
-      }
-}

@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { ServiceOrdersPageRoutingModule } from './service-orders-routing.module';
-
+import {ServiceOrderItemsComponent}  from '../service-orders/service-order-items/service-order-items.component';
 import { ServiceOrdersPage } from './service-orders.page';
 
 @NgModule({
@@ -15,6 +15,6 @@ import { ServiceOrdersPage } from './service-orders.page';
     IonicModule,
     ServiceOrdersPageRoutingModule
   ],
-  declarations: [ServiceOrdersPage]
+  declarations: [ServiceOrdersPage,ServiceOrderItemsComponent]
 })
 export class ServiceOrdersPageModule {}

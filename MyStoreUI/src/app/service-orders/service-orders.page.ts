@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {HelperService} from '../common/helper.service';
-import {StoreOrderService} from '../store-orders/store-order.service';
+import {ServiceOrderService} from '../service-orders/service-order.service';
 
 @Component({
   selector: 'app-service-orders',
@@ -9,29 +9,21 @@ import {StoreOrderService} from '../store-orders/store-order.service';
   styleUrls: ['./service-orders.page.scss'],
 })
 export class ServiceOrdersPage implements OnInit {
-
-  storeName:any = "Big Basket";
-  orderedDate:any = new Date();
-  orderId:any = 12345;
-  deliveryStatus:any = 'On the way';
   orderedItems:any = [];
-  stores:any;
+  services:any;
   expand:boolean = false;
-  constructor( private router: Router,private helperService:HelperService, private storeOrderService:StoreOrderService) { }
+  constructor( private router: Router,private helperService:HelperService, private serviceOrderService:ServiceOrderService) { }
 
   ngOnInit() {
-  this.subStoreList();
+  this.serviceOrderList();
   }
-
-
-
-  async subStoreList(){
+  async serviceOrderList(){
     const loadingController = await this.helperService.createLoadingController("loading");
       await loadingController.present();
       const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Mode:'Select'};
-      await this.storeOrderService.storeOrderSelect('StoreOrdersList', dataObject)
+      await this.serviceOrderService.serviceOrdersSelect('ServiceOrdersList', dataObject)
       .subscribe((data: any) => {
-       this.orderedItems= data.storeOrderList;
+       this.orderedItems= data.servicesOrders;
        console.log(this.orderedItems);
           loadingController.dismiss();
       },
