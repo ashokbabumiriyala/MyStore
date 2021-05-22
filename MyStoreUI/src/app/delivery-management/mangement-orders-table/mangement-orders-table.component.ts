@@ -1,35 +1,57 @@
 import { Component, OnInit } from '@angular/core';
-
+import {DeliveryManagmentService}  from '../delivery-managment.service'
+import {HelperService}  from '../../common/helper.service';
 @Component({
   selector: 'app-mangement-orders-table',
   templateUrl: './mangement-orders-table.component.html',
   styleUrls: ['./mangement-orders-table.component.scss'],
 })
 export class MangementOrdersTableComponent implements OnInit {
-  orderDetails: boolean = false;
+  orderDetails: boolean;
   orderItems:any;
   orderDataArray: any;
-  constructor() { }
+  OrderList= [];
+  executives= [];
+  constructor(private deliveryManagmentService:DeliveryManagmentService,
+    private helperService:HelperService) { }
 
   ngOnInit() {
-    this.orderItems = [
-      { name: 'Santoor', price: 30, count: 1, thumb: 'merchantProduct-1.jpeg',units: 'item'},
-      { name: 'Lays', price: 50, count: 5, thumb: 'merchantProduct-2.jpeg',units: 'item' },
-      { name: 'Biscuits', price: 50, count: 10, thumb: 'merchantProduct-3.jpeg',units: 'item' },
-      { name: 'Ground Nuts', price: 100, count: 1, thumb: 'merchantProduct-4.jpeg',units: 'Kg' },
-      { name: 'Oil', price: 150, count: 1, thumb: 'merchantProduct-5.jpeg',units: 'Ltrs' }
-    ];
-    this.orderDataArray = [
-      { assignto: 'xyz', orderId: 25678, date: '11/05/2021 11:12 AM', name: 'Ashok',phone: 9878485868,
-      address:'Hyderabad', price:5000,expand:false,status:'pending',storeName:'IKEA',storeAddress:'Hyderabad',
-      storeManagerMobile:9787675747 },
-      { assignto: 'abc', orderId: 45789, date: '15/05/2021 10:25 AM', name: 'satish',phone: 9878485868,
-      address:'Vijayawada', price:2500,expand:false,status:'pending',storeName:'IKEA',storeAddress:'Vijayawada',
-      storeManagerMobile:6797874757 },
+    this.deliveryOrdersList();
 
-    ]
+  }
+  async deliveryOrdersList(){
+    const loadingController = await this.helperService.createLoadingController("loading");
+  await loadingController.present();
+  await this.deliveryManagmentService.deliveryOrdersSelect('DeliveryOrdersSelect')
+  .subscribe((data: any) => {
+   this.OrderList= data.deliveryOrders;
+   this.executives=data.deliveryexecutives;
+   loadingController.dismiss();
+  },
+    (error: any) => {
+      loadingController.dismiss();
+    });
   }
   toggle(order) {
+    console.log(order);
+    this.getStoreOrders(order.orderID);
+    //StoreOrderItemsList
     order.expand = !order.expand;
+  }
+
+  async getStoreOrders(orderId:string)
+  {   
+    const loadingController = await this.helperService.createLoadingController("loading");
+    await loadingController.present(); 
+    const dataObject={searchKey: orderId};
+    await  this.deliveryManagmentService.deliveryOrderItemsSelect('StoreOrderItemsList',dataObject)
+          .subscribe((data: any) => {
+            console.log(data);
+           this.orderItems=data.storeOrderList;
+           loadingController.dismiss();
+          },
+            (error: any) => {   
+              loadingController.dismiss();
+            });
   }
 }

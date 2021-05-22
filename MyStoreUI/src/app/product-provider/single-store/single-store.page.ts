@@ -36,7 +36,6 @@ tempStore=[];
     ) { }
 
 ngOnInit() {
-  debugger;
   if (sessionStorage.getItem('mobile') == 'true') {
     this.mobileApp = true;
   } else {

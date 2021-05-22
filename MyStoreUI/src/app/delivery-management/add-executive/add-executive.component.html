@@ -17,98 +17,143 @@
     </ion-col>
   </ion-row>
 
-  <form *ngIf="editExecutive">
+  <form [formGroup]="executiveFormGroup" *ngIf="editExecutive">
+
     <ion-row>
       <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
         <ion-item class="ion-ele" lines="full">
           <ion-label position="floating">Name</ion-label>
-          <ion-input type="text" required></ion-input>
+          <ion-input type="text" formControlName="Name" required></ion-input>
           <ion-icon name="person-circle-outline" slot="start"></ion-icon>
-        </ion-item>        
+        </ion-item>    
+        
+        <small *ngIf="isFormSubmitted &&  Name.errors"><span style="color: red;">*Name Required
+        </span>
+    </small>
+
       </ion-col>
       <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
         <ion-item class="ion-ele" lines="full">
           <ion-label position="floating">Address</ion-label>
-          <ion-textarea required></ion-textarea>
+          <ion-textarea formControlName="Address" required></ion-textarea>
           <ion-icon name="location-outline" slot="start"></ion-icon>
-        </ion-item>       
+        </ion-item>  
+        
+        <small *ngIf="isFormSubmitted &&  Address.errors"><span style="color: red;">*Address Required
+        </span>
+    </small>
+
       </ion-col>
 
       <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
         <ion-item class="ion-ele" lines="full">
           <ion-label position="floating">City</ion-label>
-          <ion-input type="text" required></ion-input>
+          <ion-input type="text"  formControlName="City"  required></ion-input>
           <ion-icon name="diamond-outline" slot="start"></ion-icon>
-        </ion-item>       
+        </ion-item>   
+        
+        <small *ngIf="isFormSubmitted &&  City.errors"><span style="color: red;">*City Required
+        </span>
+    </small>
+        
       </ion-col>
       <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
         <ion-item class="ion-ele" lines="full">
           <ion-label position="floating">State</ion-label>
-          <ion-input type="text" required></ion-input>
+          <ion-input type="text"  formControlName="State" required></ion-input>
           <ion-icon name="file-tray-outline" slot="start"></ion-icon>
-        </ion-item>       
+        </ion-item>  
+        
+        
+
+        <small *ngIf="isFormSubmitted &&  State.errors"><span style="color: red;">*State Required
+        </span>
+    </small>
+
       </ion-col>
       <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
         <ion-item class="ion-ele" lines="full">
           <ion-label position="floating">Pin Code</ion-label>
-          <ion-input type="number" required></ion-input>
+          <ion-input type="number"  formControlName="Pincode" required></ion-input>
           <ion-icon name="diamond-outline" slot="start"></ion-icon>
-        </ion-item>       
+        </ion-item>     
+        
+        
+        <small *ngIf="isFormSubmitted &&  Pincode.errors"><span style="color: red;">*Pin Code Required
+        </span>
+    </small>
+
+
       </ion-col>
       <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
         <ion-item class="ion-ele" lines="full">
           <ion-label position="floating">Mobile Number</ion-label>
-          <ion-input type="number" required></ion-input>
+          <ion-input type="number"  formControlName="MobileNmuber"  required></ion-input>
           <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
-        </ion-item>       
+        </ion-item>   
+        
+        <small *ngIf="isFormSubmitted &&  MobileNmuber.errors"><span style="color: red;">*Mobile Number Required
+        </span>
+    </small>
+
+
       </ion-col>
       <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
         <ion-item class="ion-ele" lines="full">
           <ion-label position="floating">User Name</ion-label>
-          <ion-input type="text" required></ion-input>
+          <ion-input type="text"  formControlName="Username"  required></ion-input>
           <ion-icon name="person-outline" slot="start"></ion-icon>
-        </ion-item>       
+        </ion-item>    
+        
+        
+        <small *ngIf="isFormSubmitted &&  Username.errors"><span style="color: red;">*User Name Required
+        </span>
+    </small>
+
       </ion-col>
       <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
         <ion-item class="ion-ele" lines="full">
           <ion-label position="floating">Password</ion-label>
-          <ion-input type="text" required></ion-input>
+          <ion-input type="text"   formControlName="Password"  required></ion-input>
           <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
-        </ion-item>       
-      </ion-col>
-      <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
-        <ion-item class="ion-ele" lines="full">
-          <ion-label position="floating">ID Number</ion-label>
-          <ion-input type="number" required></ion-input>
-          <ion-icon name="id-card-outline" slot="start"></ion-icon>
-        </ion-item>       
-      </ion-col>
+        </ion-item>   
+        
+            
+        <small *ngIf="isFormSubmitted &&  Password.errors"><span style="color: red;">*Password Required
+        </span>
+    </small>
+
+        
+      </ion-col>     
       </ion-row>
     <ion-row>
       <ion-col class="ion-text-center ion-margin-top" size-md="6" size-xs="12" size-sm="12" push-md="3" push-lg="3"
         size-lg="6">
         <ion-button type="submit" shape="round" expand="block" (click)="addExecutive()" class="ion-margin-bottom">
-          Add Executive</ion-button>
+          {{this.title}}</ion-button>
       </ion-col>
+
+      
     </ion-row>   
   </form>
-  <div direction="x" class="wide-as-needed">
-  <ion-grid class="executive-members" *ngIf="!editExecutive">
-  <div class="ion-text-center header">
-    <ion-col size="3"><b>Name</b></ion-col>
-    <ion-col size="3"><b>ID Number</b></ion-col>
-    <ion-col size="3"><b>Phone Number</b></ion-col>
-    <ion-col size="3"><b>Action</b></ion-col>
-  </div>
-  <div class="body">
-    <ion-col size="3">Ashok</ion-col>
-    <ion-col size="3">484561</ion-col>
-    <ion-col size="3">9848756895</ion-col>
-    <ion-col size="3" class="ion-text-center">
-        <ion-icon name="trash-outline" size="large" (click)="deleteExecutive()"></ion-icon>
-        <ion-icon name="create-outline" size="large" (click)="editExecutiveData()"></ion-icon>
-    </ion-col>
-  </div>
+
+  
+<ion-grid *ngIf="!editExecutive" class="store-list-fee">
+  <ion-row class="header">
+    <ion-col size="4"><b>Name</b></ion-col>
+    <ion-col size="4"><b>IDNumber</b></ion-col>
+    <ion-col size="3"><b>Mobile Number</b></ion-col>
+    <ion-col size="1"><b>Action</b></ion-col>
+  </ion-row>
+  <ion-row  *ngFor="let item of executiveList;">
+    <ion-col size="4">{{item.name}}</ion-col>
+    <ion-col size="4">{{item.idNumber}}</ion-col>
+    <ion-col size="3">{{item.mobileNumber}}</ion-col>
+    <ion-icon name="create-outline" size="large" (click)="editExecutiveData(item)"></ion-icon>
+  </ion-row>
 </ion-grid>
-</div>
+
+
+
+
 </ion-content>

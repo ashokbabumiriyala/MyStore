@@ -13,12 +13,11 @@ import { MangementOrdersTableComponent } from './mangement-orders-table/mangemen
 import { DeliveryFeeComponent } from './delivery-fee/delivery-fee.component';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { ExcutiveOrdersTableComponent } from './excutive-orders-table/excutive-orders-table.component';
-
-
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
+    CommonModule,    
+    ReactiveFormsModule,
     IonicModule,
     DeliveryManagementPageRoutingModule,
     IonicSelectableModule

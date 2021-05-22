@@ -7,7 +7,7 @@
     <div direction="x" class="wide-as-needed">
       <ion-grid>
         <div class="header">
-          <ion-col class="col-width">Assigned Status</ion-col>
+          <ion-col class="col-width">Assigned To</ion-col>
           <ion-col>Order Status</ion-col>
           <ion-col>Order Id</ion-col>
           <ion-col>Order Date and Time</ion-col>
@@ -20,28 +20,32 @@
           <ion-col>Total Amount</ion-col>
         </div>
         <div style="max-height: 330px;overflow: auto;display: inline-block;">
-          <div *ngFor="let order of orderDataArray">
+          <div *ngFor="let order of OrderList">
             <div class="body" style="display: flex;">
               <ion-col class="col-width">
-                <ion-item class="ion-ele">
-                  <ion-label position="fixed">Assign To</ion-label>
+                <ion-item class="ion-ele">                 
                   <ion-select class="assign-orders">
-                    <ion-select-option value="abc">abc</ion-select-option>
-                    <ion-select-option value="xyz">xyz</ion-select-option>
-                  </ion-select>
+                    <ion-select-option *ngFor="let service of executives" value="{{service.value}}">
+                        {{service.text}}</ion-select-option>
+                </ion-select>
+
                 </ion-item>
                 <!-- Assigned To: <b>{{order.assignto}}</b> -->
               </ion-col>
-              <ion-col (click)="toggle(order)">{{order.status}}</ion-col>
-              <ion-col (click)="toggle(order)">{{order.orderId}}</ion-col>
-              <ion-col (click)="toggle(order)">{{order.date}}</ion-col>
-              <ion-col (click)="toggle(order)">{{order.name}}</ion-col>
-              <ion-col (click)="toggle(order)">{{order.phone}}</ion-col>
+
+
+              
+
+              <ion-col (click)="toggle(order)">{{order.deliveryStatus}}</ion-col>
+              <ion-col (click)="toggle(order)">{{order.orderID}}</ion-col>
+              <ion-col (click)="toggle(order)">{{order.orderDate|date:'dd/MM/yyyy'}}</ion-col>
+              <ion-col (click)="toggle(order)">{{order.customer}}</ion-col>
+              <ion-col (click)="toggle(order)">{{order.mobileNumber}}</ion-col>
               <ion-col (click)="toggle(order)">{{order.address}}</ion-col>
               <ion-col (click)="toggle(order)">{{order.storeName}}</ion-col>
               <ion-col (click)="toggle(order)">{{order.storeAddress}}</ion-col>
-              <ion-col (click)="toggle(order)">{{order.storeManagerMobile}}</ion-col>
-              <ion-col (click)="toggle(order)">{{order.price| currency:'INR'}}</ion-col>
+              <ion-col (click)="toggle(order)">{{order.storeManagerMobileNumber}}</ion-col>
+              <ion-col (click)="toggle(order)">{{order.totalAmount| currency:'INR'}}</ion-col>
             </div>
             <div class="order-details" *ngIf="order.expand">
               <ion-list class="ion-list-ele">
@@ -54,13 +58,13 @@
                       <ion-label>
                         <ion-row>
                           <ion-col size="3">
-                            <h3>Name:{{itm.name}}</h3>
+                            <h3>Name:{{itm.productName}}</h3>
                           </ion-col>
                           <ion-col size="3">
-                            <h3>Count:{{itm.count}}</h3>
+                            <h3>Count:{{itm.quantity}}</h3>
                           </ion-col>
                           <ion-col size="3">
-                            <h3>Price:{{itm.price | currency:'INR'}}</h3>
+                            <h3>Price:{{itm.sellingPrice | currency:'INR'}}</h3>
                           </ion-col>
                           <ion-col size="3">
                             <h3>Units:{{itm.units}}</h3>
@@ -72,6 +76,9 @@
                 </ion-row>
               </ion-list>
             </div>
+
+
+         
           </div>
         </div>
       </ion-grid>
