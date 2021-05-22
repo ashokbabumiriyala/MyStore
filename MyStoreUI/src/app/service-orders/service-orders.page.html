@@ -3,7 +3,7 @@
     <ion-icon name="aperture-outline" slot="start"></ion-icon>Service Orders
   </h2>
   <ion-list class="ion-list-ele">
-    <ion-row (click)="expandItem($event,item)" class="order-status" *ngFor="let item of orderedItems">
+    <ion-row (click)="expandItem($event,item)" class="order-status" *ngFor="let item of serviceOrders">
       <ion-col size="6">
         <ion-label>Order Number: <b>{{item.orderId}}</b></ion-label>
       </ion-col>
@@ -22,7 +22,8 @@
       <ion-col size="6">
         <ion-label>Delivery Status: <b>{{item.deliveryStatus}}</b></ion-label>
       </ion-col>
-      <app-service-order-items [items]="services" [expanded]="item.expand"></app-service-order-items>
+      <app-service-order-items *ngIf="showServiceOrders" 
+       [items]="serviceOrderedItems" [expanded]="item.expand"></app-service-order-items>
     </ion-row>
   </ion-list>
 </ion-content>

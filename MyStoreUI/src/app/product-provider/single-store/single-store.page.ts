@@ -247,7 +247,7 @@ async presentAlertConfirm(rowData:any) {
   const alert = await this.alertController.create({
     cssClass: 'my-custom-class',
     header: 'Do you want to delete',
-    message: rowData.storeMasterName + ' ?',
+    message: rowData.storeName + ' ?',
     buttons: [
       {
         text: 'Confirm',

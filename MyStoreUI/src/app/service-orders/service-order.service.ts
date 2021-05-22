@@ -14,5 +14,9 @@ export class ServiceOrderService {
     serviceOrdersSelect(methodName: string, resouce: any): Observable<any> {
     return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
     }
+
+    serviceOrdersItemsSelect(methodName: string, resouce: any): Observable<any> {
+      return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
+      }
   }
 

@@ -33,30 +33,11 @@ export class StoreOrdersPage implements OnInit {
           loadingController.dismiss();
         });
     }
-
     filterItems() {
-      this.storeOrderedItems = this.items.filter(item => {
-        return item.name.toLowerCase().indexOf(this.searchOrder.toLowerCase()) > -1;
+      this.storeOrders = this.items.filter(item => {
+        return item.name.toLowerCase().indexOf(this.searchOrder) > -1;
       });
     }
-
-  // expandItem(item): void { 
-  //   this.storeOrderedItems=[];
-  //   this.showStoreOrders=false;  
-  //   if (item.expanded) {
-  //     item.expanded = false;
-  //   } else {
-  //     this.items.map(listItem => {
-  //       if (item == listItem) {
-  //         listItem.expanded = !listItem.expanded;
-  //         this.getStoreOrders(item.orderId);          
-  //       } else {
-  //         listItem.expanded = false;        }
-  //       return listItem;
-  //     });     
-  //   }
-  // }
-
   expandItem(event, ele): void {  
     this.storeOrderedItems=[];
     this.showStoreOrders=false;
@@ -70,10 +51,8 @@ export class StoreOrdersPage implements OnInit {
       this.getStoreOrders(ele.orderId);   
     }
   }
-
   async getStoreOrders(orderId:string)
-  {
-    debugger;
+  {   
     const loadingController = await this.helperService.createLoadingController("loading");
     await loadingController.present(); 
     const dataObject={searchKey: orderId};

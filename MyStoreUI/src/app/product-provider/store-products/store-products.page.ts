@@ -279,17 +279,18 @@ constructor(private storeProductService:StoreProductService,
       header: 'Do you want to delete ?',
       message:rowdata.productName,
       buttons: [
+       {
+          text: 'Confirm',
+          handler: () => {
+           this.deleteStoreProduct(rowdata.id)
+          }
+        },
         {
           text: 'Cancel',
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
-          }
-        }, {
-          text: 'Yes',
-          handler: () => {
-           this.deleteStoreProduct(rowdata.id)
           }
         }
       ]

@@ -208,17 +208,18 @@ editMasterInfo(rowdata:any) {
       header: 'Do you want to delete ?',
       message: 'Message <strong>text</strong>!!!',
       buttons: [
+       {
+          text: 'Confirm',
+          handler: () => {
+            console.log('Confirm Okay');
+          }
+        },
         {
           text: 'Cancel',
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
-          }
-        }, {
-          text: 'Yes',
-          handler: () => {
-            console.log('Confirm Okay');
           }
         }
       ]

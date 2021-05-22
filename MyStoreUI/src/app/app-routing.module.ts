@@ -74,17 +74,11 @@ const routes: Routes = [
     ,
     canActivate: [AuthGuardService]
   },
-  {
-    path: 'delivery-management',
-    loadChildren: () => import('./delivery-management/delivery-management.module').then( m => m.DeliveryManagementPageModule)
-    // canActivate: [AuthGuardService]
-  }
-
-
-
-
-
-
+  // {
+  //   path: 'delivery-management',
+  //   loadChildren: () => import('./delivedelivery-managementry-management/delivery-management.module').then( m => m.DeliveryManagementPageModule)
+  //   // canActivate: [AuthGuardService]
+  // }
 ];
 
 @NgModule({
