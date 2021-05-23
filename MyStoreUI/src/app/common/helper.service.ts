@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { IProviderDetails} from 'src/app/common/provider-details';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ToastController, AlertController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
 })
-export class HelperService { 
+export class HelperService {
  iProviderDetails:IProviderDetails;
 // public providerSource = new BehaviorSubject<IProviderDetails>(this.iProviderDetails)
 // providerDetails = this.providerSource.asObservable();
 
-constructor(private loadingController:LoadingController) { }
+constructor(private loadingController:LoadingController, private toastController: ToastController,
+  private alertController: AlertController) { }
 
 
 private profileObs$: BehaviorSubject<IProviderDetails> = new BehaviorSubject(null);
@@ -21,7 +22,7 @@ getProfileObs(): Observable<any> {
 }
 
 setProfileObs(profile: IProviderDetails) {
-    this.profileObs$.next(profile);   
+    this.profileObs$.next(profile);
 }
 
 async createLoadingController(displayMessage:string): Promise<any> {
@@ -44,6 +45,48 @@ prepareDropDownData(items: any): iDropdown[] {
   return iDropdownItems;
 }
 
+async presentToast(data: string, toastColor:string) {
+  const toast = await this.toastController.create({
+    message: data,
+    duration: 2000,
+    position: 'bottom',
+    color: toastColor
+  });
+  toast.present();
+}
+  async presentAlertConfirm(message) {
+    let result;
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Alert',
+      message: message,
+      buttons: [
+      {
+          text: 'Confirm',
+          handler: () => {
+            // console.log('Confirm Okay');
+            alert.dismiss(true);
+            return false;
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            // console.log('Confirm Cancel: blah');
+            alert.dismiss(false);
+            return false;
+          }
+        }
+      ]
+    });
+    await alert.present();
+    await alert.onDidDismiss().then((data) => {
+      result = data;
+    })
+    return result;
+  }
 }
 
 export interface iDropdown {

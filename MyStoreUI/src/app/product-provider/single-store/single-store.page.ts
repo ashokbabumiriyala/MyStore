@@ -9,7 +9,9 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ActionSheetController } from '@ionic/angular';
 import {File, FileEntry} from '@ionic-native/file/ngx';
 import { Alert } from 'ionic-angular';
+import { throwError, Observable } from 'rxjs';
 
+declare var google:any;
  @Component({
   selector: 'app-single-store',
   templateUrl: './single-store.page.html',
@@ -28,12 +30,17 @@ storeId:number;
 mobileApp:boolean;
 selectedDocs=[];
 tempStore=[];
+geocoder:any;
+latitude:any;
+longitude:any;
 @ViewChild('selectedWebDocs') selectedWebDocs;
   constructor(private   toastController:ToastController,private helperService:HelperService,
     private singleStoreService:SingleStoreService,
     private actionSheetController:ActionSheetController,
-    private camera: Camera,private alertController:AlertController
-    ) { }
+    private camera: Camera, private alertController:AlertController
+    ) {
+      this.geocoder = new google.maps.Geocoder();
+    }
 
 ngOnInit() {
   if (sessionStorage.getItem('mobile') == 'true') {
@@ -136,19 +143,29 @@ async saveStore():Promise<void>{
   else{
     const loadingController = await this.helperService.createLoadingController("loading");
     await loadingController.present();
-    const storeObject = {
+    let fullAddress = this.Address.value + ',' + this.LandMark.value + ',' + this.City.value + ','
+    + this.State.value + ',' + this.PinCode.value;
+    this.geocoder.geocode( { 'address': fullAddress}, (results, status) =>{
+      if (status == google.maps.GeocoderStatus.OK) {
+        this.latitude =  results[0].geometry.location.lat();
+        this.longitude =  results[0].geometry.location.lng();
+      } else {
+        this.latitude = null;
+        this.longitude = null;
+      }
+      const storeObject = {
       StoreMasterID:Number(this.StoreMasterID.value), StoreType:Number(this.StoreType.value),
       Name: this.Name.value, ManagerName: this.ManagerName.value.toString(), ManagerID: Number(this.ManagerID.value),
       MobileNmuber: this.MobileNmuber.value.toString(), Address:this.Address.value,City:this.City.value,
       State:this.State.value,PinCode:this.PinCode.value.toString(),LandMark:this.LandMark.value,FromTime:this.FromTime.value,
-      ToTime:this.ToTime.value,Id:this.storeId,Mode:this.title, Files: this.selectedDocs
+      ToTime:this.ToTime.value,Id:this.storeId,Mode:this.title, Files: this.selectedDocs, Latitude: this.latitude, Longitude: this.longitude
     };
     this.tempStore.push(storeObject);
     this.selectedDocs = [];
     this.selectedWebDocs.nativeElement.value = "";
     let formDataList = this.getFormData(this.tempStore);
     this.singleStoreFormGroup.reset();
-    await this.singleStoreService.singleStoreSave('StoreSave',formDataList[0])
+    this.singleStoreService.singleStoreSave('StoreSave',formDataList[0])
     .subscribe((data: any) => {
       this.presentToast("Store " + this.title+ "  successfully.","success");
       this.editStore=false;
@@ -160,6 +177,9 @@ async saveStore():Promise<void>{
       (error: any) => {
         loadingController.dismiss();
       });
+    });
+
+
   }
 }
 
@@ -188,7 +208,7 @@ async editStoreInfo(rowdata:any){
   this.editStore = true;
   if(rowdata==null){
     this.storeId=0;
-    this.singleStoreFormGroup.reset();  
+    this.singleStoreFormGroup.reset();
     this.title="Register";
   }else{
     const loadingController = await this.helperService.createLoadingController("loading");
@@ -270,9 +290,9 @@ async presentAlertConfirm(rowData:any) {
 async deleteStore(storeId:number){
   const loadingController = await this.helperService.createLoadingController("loading");
     await loadingController.present();
-    const dataObject={StoreId: storeId};  
+    const dataObject={StoreId: storeId};
     await this.singleStoreService.deleteStore('storeDelete', dataObject)
-    .subscribe((data: any) => {     
+    .subscribe((data: any) => {
       this.subStoreList();
       loadingController.dismiss();
     },
@@ -337,21 +357,4 @@ async _handleReaderLoaded(readerEvt) {
   this.selectedDocs.push(blob);
 }
 }
-// interface ISingleStore{
-//  StoreMasterID :number;
-//  StoreType :number;
-//  Name:string;
-//  ManagerName :string;
-//  ManagerID :number;
-//  MobileNmuber :string;
-//  Address :string;
-//  City :string;
-//  State:string;
-//  PinCode :string;
-//  LandMark :string;
-//  FromTime :string;
-//  ToTime :string;
-//  Id:number;
-//  Mode:string;
 
-// }

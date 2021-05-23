@@ -8,6 +8,8 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ActionSheetController } from '@ionic/angular';
 import { File, FileEntry } from '@ionic-native/file/ngx';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+
+declare var google:any;
 @Component({
   selector: 'app-service-locations',
   templateUrl: './service-locations.page.html',
@@ -28,11 +30,16 @@ export class ServiceLocationsPage implements OnInit {
   mobileApp: boolean;
   selectedDocs = [];
   tempServiceLocation = [];
+  latitude:any;
+  longitude:any;
+  geocoder:any;
   constructor(private toastController: ToastController,
     private helperService: HelperService, private serviceLocationService: ServiceLocationService,
     private camera: Camera,
     private actionSheetController: ActionSheetController, private file: File,
-    private alertController:AlertController) { }
+    private alertController:AlertController) {
+      this.geocoder = new google.maps.Geocoder();
+    }
   ngOnInit() {
     this.createserviceLocationForm();
     this.title = "Register";
@@ -130,20 +137,30 @@ export class ServiceLocationsPage implements OnInit {
     } else {
       const loadingController = await this.helperService.createLoadingController("loading");
       await loadingController.present();
+      let fullAddress = this.Address.value + ',' + this.LandMark.value + ',' + this.City.value + ','
+    + this.State.value + ',' + this.PinCode.value;
+    this.geocoder.geocode( { 'address': fullAddress}, (results, status) =>{
+      if (status == google.maps.GeocoderStatus.OK) {
+        this.latitude =  results[0].geometry.location.lat();
+        this.longitude =  results[0].geometry.location.lng();
+      } else {
+        this.latitude = null;
+        this.longitude = null;
+      }
       const serviceLocationObject = {
         ServiceMasterID: Number(this.ServiceMasterID.value), BusinessType: Number(this.BusinessType.value),
         BusinessName: this.BusinessName.value, BusinessManagerName: this.BusinessManagerName.value.toString(), ManagerID: Number(this.ManagerID.value),
         MobileNmuber: this.MobileNmuber.value.toString(), Address: this.Address.value, City: this.City.value,
         State: this.State.value, PinCode: this.PinCode.value.toString(), LandMark: this.LandMark.value, FromTime: this.FromTime.value,
         ToTime: this.ToTime.value, DeliveryType: Number(this.DeliveryType.value),
-        Id: this.locationId, Mode: this.title, Files: this.selectedDocs
+        Id: this.locationId, Mode: this.title, Files: this.selectedDocs, Latitude: this.latitude, Longitude: this.longitude
       };
       this.tempServiceLocation.push(serviceLocationObject);
       this.selectedDocs = [];
       this.selectedWebDocs.nativeElement.value = "";
       let formDataList = this.getFormData(this.tempServiceLocation);
 
-      await this.serviceLocationService.locationSave('ServiceLocationSave', formDataList[0])
+       this.serviceLocationService.locationSave('ServiceLocationSave', formDataList[0])
         .subscribe((data: any) => {
           this.presentToast("Service Location " + this.title + "  successfully.", "success");
           this.tempServiceLocation=[];
@@ -157,6 +174,7 @@ export class ServiceLocationsPage implements OnInit {
             loadingController.dismiss();
 
           });
+        });
 
     }
   }
@@ -304,7 +322,7 @@ export class ServiceLocationsPage implements OnInit {
     this.editLocation = false;
     this.serviceLocationForm.reset();
   }
-  async presentAlertConfirm(rowdata:any) {    
+  async presentAlertConfirm(rowdata:any) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Do you want to delete',
@@ -332,9 +350,9 @@ export class ServiceLocationsPage implements OnInit {
   async deleteLocation(locationId:number){
     const loadingController = await this.helperService.createLoadingController("loading");
       await loadingController.present();
-      const dataObject={ServiceLocationId: locationId};  
+      const dataObject={ServiceLocationId: locationId};
       await this.serviceLocationService.locationDelete('serviceLocationDelete', dataObject)
-      .subscribe((data: any) => {     
+      .subscribe((data: any) => {
         this.serviceLocationListSelect();
         loadingController.dismiss();
       },
@@ -349,8 +367,8 @@ export class ServiceLocationsPage implements OnInit {
 // interface IServiceLocations{
 //   ServiceMasterID :number;
 //   BusinessType :number;
-//   BusinessName:string; 
-//   BusinessManagerName :string; 
+//   BusinessName:string;
+//   BusinessManagerName :string;
 //   ManagerID :number;
 //   MobileNmuber :string;
 //   Address :string;
@@ -362,5 +380,5 @@ export class ServiceLocationsPage implements OnInit {
 //   ToTime :string;
 //   DeliveryType:Number;
 //   Id:number;
-//   Mode:string; 
+//   Mode:string;
 //  }
