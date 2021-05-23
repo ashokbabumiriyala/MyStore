@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
+import {DeliveryManagmentService}  from '../../delivery-management/delivery-managment.service';
+import { ToastController } from '@ionic/angular';
+import { HelperService } from 'src/app/common/helper.service';
 @Component({
   selector: 'app-excutive-orders-table',
   templateUrl: './excutive-orders-table.component.html',
@@ -9,28 +11,55 @@ export class ExcutiveOrdersTableComponent implements OnInit {
   orderDetails: boolean = false;
   orderItems:any;
   orderDataArray: any;
-  constructor() { }
+  executiveOrders= [];
+  deliveryStatus=[];
+  constructor(private deliveryManagmentService:DeliveryManagmentService,
+     private helperService:HelperService
+     ,private toastController:ToastController) { }
 
   ngOnInit() {
-    this.orderItems = [
-      { name: 'Santoor', price: 30, count: 1, thumb: 'merchantProduct-1.jpeg',units: 'item'},
-      { name: 'Lays', price: 50, count: 5, thumb: 'merchantProduct-2.jpeg',units: 'item' },
-      { name: 'Biscuits', price: 50, count: 10, thumb: 'merchantProduct-3.jpeg',units: 'item' },
-      { name: 'Ground Nuts', price: 100, count: 1, thumb: 'merchantProduct-4.jpeg',units: 'Kg' },
-      { name: 'Oil', price: 150, count: 1, thumb: 'merchantProduct-5.jpeg',units: 'Ltrs' }
-    ];
-    this.orderDataArray = [
-      { orderId: 25678, date: '11/05/2021 11:12 AM', name: 'Ashok',phone: 9878485868,
-      address:'Hyderabad', price:5000,expand:false,status:'Picked Up',storeName:'IKEA',storeAddress:'Hyderabad',
-      storeManagerMobile:9787675747 },
-      { orderId: 45789, date: '15/05/2021 10:25 AM', name: 'satish',phone: 9878485868,
-      address:'Vijayawada', price:2500,expand:false,status:'Delivered',storeName:'IKEA',storeAddress:'Vijayawada',
-      storeManagerMobile:6797874757 },
+   this.executiveOrderList();
+  }
 
-    ]
+  async executiveOrderList() {
+    const loadingController = await this.helperService.createLoadingController("loading");
+    await loadingController.present();   
+    const dataObject={ProviderId: Number(sessionStorage.getItem("providerId"))}; 
+    await this.deliveryManagmentService.executiveOrders('ExecutiveOrderSelect',dataObject)
+    .subscribe((data: any) => {
+      if(data.executiveOrders.length>0){
+        this.executiveOrders=data.executiveOrders;
+        this.deliveryStatus=data.deliveryStatus;
+        this.deliveryStatus.forEach((element,index)=>{     
+         if(element.value ==1)  this.deliveryStatus.splice(index,1);
+        });
+      }else{
+        this.executiveOrders=[];
+      }
+      loadingController.dismiss();
+    },
+      (error: any) => {
+        loadingController.dismiss();
+      });
   }
   toggle(order) {
     order.expand = !order.expand;
+  }
+
+ async deliveryStatusChange(data:any,order:any){
+
+
+    const loadingController = await this.helperService.createLoadingController("loading");
+    await loadingController.present(); 
+    const dataObject={OrderStatusId: Number(data.detail.value),OrderId:order.orderID};
+    await  this.deliveryManagmentService.deliveryOrderItemsSelect('UpdateDeliveryStatus',dataObject)
+          .subscribe((data: any) => {
+            this.executiveOrderList();
+           loadingController.dismiss();
+          },
+            (error: any) => {   
+              loadingController.dismiss();
+            });
   }
 }
 

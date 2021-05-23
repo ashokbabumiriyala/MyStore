@@ -32,6 +32,14 @@ export class DeliveryManagmentService {
     deliveryExecutivies(methodName: string): Observable<any> {
       return this.commonApiServiceCallsService.getAll(this.apiUrl + methodName);
     } 
+   executiveOrders(methodName: string, resouce: any): Observable<any> {
+      return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
+    } 
+
+
+    deliveryOrderAssignInsert(methodName: string, resouce: any): Observable<any> {
+      return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
+    } 
 
 
     

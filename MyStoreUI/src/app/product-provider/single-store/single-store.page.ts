@@ -133,8 +133,6 @@ private createSingleStoreForm() {
     ToTime: new FormControl('', Validators.required)
   });
 }
-//2021-03-23T10:17:21.362+05:30
-
 async saveStore():Promise<void>{
   this.isFormSubmitted=true;
   if (this.singleStoreFormGroup.invalid) {
@@ -178,8 +176,6 @@ async saveStore():Promise<void>{
         loadingController.dismiss();
       });
     });
-
-
   }
 }
 

@@ -12,12 +12,12 @@ export class MangementOrdersTableComponent implements OnInit {
   orderDataArray: any;
   OrderList= [];
   executives= [];
+ 
   constructor(private deliveryManagmentService:DeliveryManagmentService,
     private helperService:HelperService) { }
 
   ngOnInit() {
     this.deliveryOrdersList();
-
   }
   async deliveryOrdersList(){
     const loadingController = await this.helperService.createLoadingController("loading");
@@ -53,5 +53,21 @@ export class MangementOrdersTableComponent implements OnInit {
             (error: any) => {   
               loadingController.dismiss();
             });
+  }
+
+  async executivesChange(data:any,order:any)
+  {
+    const loadingController = await this.helperService.createLoadingController("loading");
+    await loadingController.present(); 
+    const dataObject={AssignId: Number(sessionStorage.getItem("providerId")),OrderId: order.orderID,ExecutiveId:Number(data.detail.value)};
+    await  this.deliveryManagmentService.deliveryOrderItemsSelect('DeliveryOrderAssignInsert',dataObject)
+          .subscribe((data: any) => {
+            this.deliveryOrdersList();
+           loadingController.dismiss();
+          },
+            (error: any) => {   
+              loadingController.dismiss();
+            });
+
   }
 }

@@ -15,7 +15,6 @@ export class ServiceOrderItemsComponent implements OnInit {
   @Input("expanded") expanded: boolean;
 
   constructor(public renderer: Renderer2,  private toastController:ToastController) {
-  
   }
 
   ngOnInit() { 

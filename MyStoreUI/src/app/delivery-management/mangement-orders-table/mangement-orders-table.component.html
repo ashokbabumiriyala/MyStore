@@ -22,20 +22,20 @@
         <div style="max-height: 330px;overflow: auto;display: inline-block;">
           <div *ngFor="let order of OrderList">
             <div class="body" style="display: flex;">
-              <ion-col class="col-width">
-                <ion-item class="ion-ele">                 
-                  <ion-select class="assign-orders">
+              <ion-col class="col-width"  >
+                <ion-item class="ion-ele" *ngIf="order.assignedTo=='0'">Select Executive                 
+                  <ion-select class="assign-orders" (ionChange)="executivesChange($event,order)">
                     <ion-select-option *ngFor="let service of executives" value="{{service.value}}">
                         {{service.text}}</ion-select-option>
                 </ion-select>
-
                 </ion-item>
-                <!-- Assigned To: <b>{{order.assignto}}</b> -->
-              </ion-col>
 
+                <ion-item class="ion-ele" *ngIf="order.assignedTo!='0'">                 
+                  {{order.assignedTo}}
+                </ion-item>
 
-              
-
+              </ion-col>    
+           
               <ion-col (click)="toggle(order)">{{order.deliveryStatus}}</ion-col>
               <ion-col (click)="toggle(order)">{{order.orderID}}</ion-col>
               <ion-col (click)="toggle(order)">{{order.orderDate|date:'dd/MM/yyyy'}}</ion-col>

@@ -18,9 +18,10 @@
     </ion-row>
     <ion-list class="ion-list-ele" *ngIf="!editStore && provideSubStoreList.length !== 0">
         <ion-item *ngFor="let subStore of provideSubStoreList;">
-            <ion-avatar item-start size="3">
-                <img src="assets/default-image.jpg">
-            </ion-avatar>
+            <ion-avatar>
+                <img  src="{{subStore.url}}" *ngIf="subStore.logo">
+                <img src="../../assets/images/default-image.jpg" *ngIf="!subStore.logo">
+              </ion-avatar>
             <ion-col size="7">
                 <ion-label>Store: <b>{{ subStore.storeName }}</b></ion-label>
                 <ion-label>Manager: <b>{{ subStore.managerName}}</b></ion-label>

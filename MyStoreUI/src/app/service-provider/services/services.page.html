@@ -33,9 +33,10 @@
 
     <ion-list class="ion-list-ele" *ngIf="!editService && serviceProductList.length > 0">
         <ion-item *ngFor="let product of serviceProductList;">
-            <ion-avatar item-start size="3">
-                <img src="assets/default-image.jpg">
-            </ion-avatar>
+            <ion-avatar>
+                <img  src="{{product.url}}" *ngIf="product.logo">
+                <img src="../../assets/images/default-image.jpg" *ngIf="!product.logo">
+              </ion-avatar>
             <ion-col size="7">
                 <ion-label>Name: <b>{{ product.serviceName }}</b></ion-label>
                 <ion-label>Category: <b>{{product.category}}</b></ion-label>
