@@ -41,6 +41,11 @@ export class ServiceLocationsPage implements OnInit {
       this.geocoder = new google.maps.Geocoder();
     }
   ngOnInit() {
+    if (sessionStorage.getItem('mobile') == 'true') {
+      this.mobileApp = true;
+    } else {
+      this.mobileApp = false;
+    }
     this.createserviceLocationForm();
     this.title = "Register";
     this.serviceLocationListSelect();

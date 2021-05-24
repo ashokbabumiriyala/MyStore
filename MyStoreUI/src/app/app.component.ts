@@ -4,6 +4,13 @@ import {AppConstants} from 'src/app/common/AppConstants';
 import { Router, NavigationStart } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { FCM } from "cordova-plugin-fcm-with-dependecy-updated/ionic/ngx";
+import { AppVersion } from '@ionic-native/app-version/ngx';
+import { Market } from '@ionic-native/market/ngx';
+
+import { CommonApiServiceCallsService} from './Shared/common-api-service-calls.service';
+import { environment} from './../environments/environment';
+import { AlertController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-root',
@@ -16,8 +23,11 @@ export class AppComponent implements OnInit {
   providerId: number;
   menuItems = [];
   showHead:boolean;
+  version:any;
   constructor(private helperService:HelperService,private router: Router,
-    private platform: Platform, private fcm: FCM
+    private platform: Platform, private fcm: FCM, private appVersion: AppVersion,
+    private commonApiServiceCallsService: CommonApiServiceCallsService, 
+    private alertController: AlertController, private market: Market
     ) {
      console.log(this.platform.platforms());
       this.initializeApp();
@@ -30,27 +40,30 @@ export class AppComponent implements OnInit {
         } else {
           sessionStorage.setItem('mobile', 'false');
         }
-        if (sessionStorage.getItem('mobile') == 'true') {  
-        this.fcm.getToken().then(token => {
-          sessionStorage.setItem("PushToken",token);
-        });
-  
+        if (sessionStorage.getItem('mobile') == 'true') { 
+          this.appVersion.getVersionNumber().then((res) => {
+            console.log(res);
+            this.version = res;
+          }); 
+          this.fcm.getToken().then(token => {
+            sessionStorage.setItem("PushToken",token);
+          });
+          // ionic push notification example
+          this.fcm.onNotification().subscribe(data => {
+            console.log(data);
+            if (data.wasTapped) {
+              console.log('Received in background');
+            } else {
+              console.log('Received in foreground');
+            }
+          });
 
-        // ionic push notification example
-        this.fcm.onNotification().subscribe(data => {
-          console.log(data);
-          if (data.wasTapped) {
-            console.log('Received in background');
-          } else {
-            console.log('Received in foreground');
-          }
-        });
-
-        // refresh the FCM token
-        this.fcm.onTokenRefresh().subscribe(token => {
-          sessionStorage.setItem("PushToken",token);
-        });
-      }
+          // refresh the FCM token
+          this.fcm.onTokenRefresh().subscribe(token => {
+            sessionStorage.setItem("PushToken",token);
+          });
+        }
+        
       });    
     }
   ngOnInit() {
@@ -73,6 +86,32 @@ export class AppComponent implements OnInit {
       this.navigatePage(profile.defaultMenuId);
       }
     });
+    if (this.version){
+      let apiUrl = environment.adminServiceUrl;
+      this.commonApiServiceCallsService.getAll(apiUrl + 'GetAppVersion').subscribe((res)=>{
+        if (res.StoreAppVersion > this.version) {
+        }
+      }, (error) => {
+
+      })
+    }
+  }
+  async showAlert(){
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Alert',
+      message: 'Please update your App to avail Latest features provided by My3Karrt.',
+      backdropDismiss: false,
+      buttons: [
+      {
+          text: 'Update',
+          handler: () => {
+            this.market.open('com.velocious.my3Karrt_admin');
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
   private loadMenu(menus: any[]): void {
     if (!menus || menus === undefined) {

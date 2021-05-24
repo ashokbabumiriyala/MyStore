@@ -17,9 +17,19 @@
     min-width: 170px;
     white-space: break-spaces;
 }
-.wide-as-needed {
-    overflow: scroll;
-    .header, .body {
-        display: flex;
-    }
+.content-section {
+  height: auto;
+  max-height: 495px;
+  overflow-y: auto;
 }
+.wide-as-needed {
+  overflow: scroll;
+  .header, .body {
+    display: flex;
+  }  
+  .col-border {
+  border: black solid 1px;
+  }   
+}
+
+

@@ -136,24 +136,22 @@
       
     </ion-row>   
   </form>
-
-  
-<ion-grid *ngIf="!editExecutive" class="store-list-fee">
-  <ion-row class="header">
-    <ion-col size="4"><b>Name</b></ion-col>
-    <ion-col size="4"><b>IDNumber</b></ion-col>
-    <ion-col size="3"><b>Mobile Number</b></ion-col>
-    <ion-col size="1"><b>Action</b></ion-col>
-  </ion-row>
-  <ion-row  *ngFor="let item of executiveList;">
-    <ion-col size="4">{{item.name}}</ion-col>
-    <ion-col size="4">{{item.idNumber}}</ion-col>
-    <ion-col size="3">{{item.mobileNumber}}</ion-col>
-    <ion-icon name="create-outline" size="large" (click)="editExecutiveData(item)"></ion-icon>
-  </ion-row>
-</ion-grid>
-
-
-
-
+    <div direction="x" class="wide-as-needed">
+    <ion-grid *ngIf="!editExecutive" class="store-list-fee no-padding">
+      <ion-row class="header" >
+        <ion-col size="4" class="col-border"><b>Name</b></ion-col>
+        <ion-col size="3" class="col-border"><b>IDNumber</b></ion-col>
+        <ion-col size="3" class="col-border"><b>Mobile Number</b></ion-col>
+        <ion-col size="2" class="col-border"><b>Action</b></ion-col>
+      </ion-row>
+      <ion-row  *ngFor="let item of executiveList;" >
+        <ion-col size="4" class="col-border">{{item.name}}</ion-col>
+        <ion-col size="3" class="col-border">{{item.idNumber}}</ion-col>
+        <ion-col size="3" class="col-border">{{item.mobileNumber}}</ion-col>
+        <ion-col size="2" class="col-border">
+          <ion-icon name="create-outline" size="large" (click)="editExecutiveData(item)"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>

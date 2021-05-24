@@ -9,6 +9,10 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { FCM } from "cordova-plugin-fcm-with-dependecy-updated/ionic/ngx";
 import { File } from '@ionic-native/file/ngx';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { AppVersion } from '@ionic-native/app-version/ngx';
+import { Market } from '@ionic-native/market/ngx';
+
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,6 +21,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
   providers: [ Camera,
     FCM,
     File,
+    AppVersion,
+    Market,
     {provide: LocationStrategy, useClass: HashLocationStrategy}]
   ,
   bootstrap: [AppComponent],
