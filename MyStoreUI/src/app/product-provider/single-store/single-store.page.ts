@@ -165,12 +165,12 @@ async saveStore():Promise<void>{
     this.singleStoreFormGroup.reset();
     this.singleStoreService.singleStoreSave('StoreSave',formDataList[0])
     .subscribe((data: any) => {
+      loadingController.dismiss();
       this.presentToast("Store " + this.title+ "  successfully.","success");
       this.editStore=false;
       this.tempStore=[];
       this.isFormSubmitted=false
       this.subStoreList();
-      loadingController.dismiss();
     },
       (error: any) => {
         loadingController.dismiss();
@@ -188,10 +188,12 @@ getFormData(tempProducts:any[]){
         productFormData.append(key, tempProducts[i][key]);
       } else if (typeof(tempProducts[i][key]) == 'number'){
         productFormData.append(key, tempProducts[i][key] + "");
-      } else {
+      } else if(key == 'Files'){
         for (var j = 0; j < tempProducts[i][key].length; j++) {
           productFormData.append("files", tempProducts[i][key][j], 'StoreLogoImage' + j + '.jpg');
         }
+      }  else {
+        productFormData.append(key, tempProducts[i][key]);
       }
     }
     formData.push(productFormData);

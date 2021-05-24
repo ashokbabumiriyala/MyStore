@@ -22,7 +22,7 @@ const routes: Routes = [
   {
     path: 'signup',
     loadChildren: () => import('./Shared/signup/signup.module').then( m => m.SignupPageModule)
-  }, 
+  },
   {
     path: 'welcome-slides',
     loadChildren: () => import('./welcome-slides/welcome-slides.module').then( m => m.WelcomeSlidesPageModule),
@@ -61,7 +61,7 @@ const routes: Routes = [
     // ,
     // canActivate: [AuthGuardService]
   },
- 
+
   {
     path: 'store-orders',
     loadChildren: () => import('./store-orders/store-orders.module').then( m => m.StoreOrdersPageModule)
@@ -83,8 +83,8 @@ const routes: Routes = [
   {
     path: 'service-delivery-managment',
     loadChildren: () => import('./service-delivery-managment/service-delivery-managment.module').then( m => m.ServiceDeliveryManagmentPageModule)
-    // ,
-    // canActivate: [AuthGuardService]
+    ,
+    canActivate: [AuthGuardService]
   }
 
 ];

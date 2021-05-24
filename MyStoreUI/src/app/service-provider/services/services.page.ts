@@ -91,7 +91,7 @@ ngOnInit() {
 
   private createServiceLocationForm(){
     this.serviceLocationForm = new FormGroup({
-      LocationID: new FormControl('0')      
+      LocationID: new FormControl('0')
     });
   }
   private createServiceProductForm(){
@@ -102,7 +102,7 @@ ngOnInit() {
       DiscountType: new FormControl(''),
       Discount: new FormControl('')  ,
       PriceBeforeDiscount: new FormControl(''),
-      PriceAfterDiscount: new FormControl('', Validators.required)       
+      PriceAfterDiscount: new FormControl('', Validators.required)
     });
   }
 
@@ -153,33 +153,33 @@ ngOnInit() {
     const blob = await base64.blob();
     this.selectedDocs.push(blob);
   }
-  async uploadService():Promise<void> {  
+  async uploadService():Promise<void> {
     this.Discount.setErrors(null);
     this.PriceBeforeDiscount.setErrors(null);
     this.isFormSubmitted=true;
     if (this.serviceProductsForm.invalid) {
       return;
-    }else{      
+    }else{
       const productObject= {ProviderId: Number(sessionStorage.getItem("providerId")),ServiceLocationID: Number(this.ServiceLocationID.value), Category:this.Category.value,
-        ServiceName:this.ServiceName.value,       
+        ServiceName:this.ServiceName.value,
         DiscountType :this.DiscountType.value, Discount:Number(this.Discount.value),
         PriceBeforeDiscount:Number(this.PriceBeforeDiscount.value)
         ,PriceAfterDiscount:Number(this.PriceAfterDiscount.value), Files: this.selectedDocs};
-        this.tempProducts.push(productObject); 
+        this.tempProducts.push(productObject);
         let formDataList = this.getFormData(this.tempProducts);
         const loadingController = await this.helperService.createLoadingController("loading");
         await loadingController.present();
         await this.serviceUploadService.uploadServiceDocument('ServiceAndDocumentsSave', formDataList[0])
         .subscribe((data: any) => {
-          this.tempProducts=[]; 
+          loadingController.dismiss();
+          this.tempProducts=[];
           this.serviceProductsForm.reset();
           this.selectedDocs = [];
-          this.selectedWebDocs.nativeElement.value = "";   
+          this.selectedWebDocs.nativeElement.value = "";
           this.editService=false;
-          loadingController.dismiss();
-          this.serviceProductsList();
           this.isFormSubmitted=false;
           this.presentToast("Service saved Successfully","success");
+          this.serviceProductsList();
         },
           (error: any) => {
             loadingController.dismiss();
@@ -187,7 +187,7 @@ ngOnInit() {
     }
   }
 
-  changeBusiness(){  
+  changeBusiness(){
   this.serviceProductsList();
   }
 
@@ -200,7 +200,7 @@ ngOnInit() {
           productFormData.append(key, tempProducts[i][key]);
         } else if (typeof(tempProducts[i][key]) == 'number'){
           productFormData.append(key, tempProducts[i][key] + "");
-        }  else if (key == 'Files') {          
+        }  else if (key == 'Files') {
           for (var j = 0; j < tempProducts[i][key].length; j++) {
             productFormData.append("files", tempProducts[i][key][j], 'ServiceImage' + j + '.jpg');
           }
@@ -223,7 +223,7 @@ ngOnInit() {
     toast.present();
   }
 
-  selectedImgWeb(data){   
+  selectedImgWeb(data){
     var files = data.target.files;
     for(let i = 0 ; i <files.length; i++) {
       if (files[i]) {
@@ -242,7 +242,7 @@ ngOnInit() {
     this.editService = false;
     this.serviceLocationForm.reset();
   }
-  async presentAlertConfirm(rowdata:any) {    
+  async presentAlertConfirm(rowdata:any) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Do you want to delete ?',
@@ -271,9 +271,9 @@ ngOnInit() {
   async deleteService(serviceID:number){
     const loadingController = await this.helperService.createLoadingController("loading");
       await loadingController.present();
-      const dataObject={ServiceLocationServiceId: serviceID};  
+      const dataObject={ServiceLocationServiceId: serviceID};
       await this.serviceUploadService.serviceDelete('serviceLocationServiceDelete', dataObject)
-      .subscribe((data: any) => {     
+      .subscribe((data: any) => {
         this.serviceProductsList();
         loadingController.dismiss();
       },

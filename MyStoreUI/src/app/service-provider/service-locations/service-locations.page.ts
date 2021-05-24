@@ -161,13 +161,13 @@ export class ServiceLocationsPage implements OnInit {
 
        this.serviceLocationService.locationSave('ServiceLocationSave', formDataList[0])
         .subscribe((data: any) => {
+          loadingController.dismiss();
           this.presentToast("Service Location " + this.title + "  successfully.", "success");
           this.tempServiceLocation=[];
           this.serviceLocationForm.reset();
           this.editLocation = false;
           this.serviceLocationListSelect();
           this.isFormSubmitted = false;
-          loadingController.dismiss();
         },
           (error: any) => {
             loadingController.dismiss();

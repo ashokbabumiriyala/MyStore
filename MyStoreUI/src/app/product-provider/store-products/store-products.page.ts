@@ -79,7 +79,7 @@ constructor(private storeProductService:StoreProductService,
   }
   async storeProductsList(){
     const loadingController = await this.helperService.createLoadingController("loading");
-    await loadingController.present();   
+    await loadingController.present();
     const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Mode:'Select',StoreId:Number(this.SearchStoreId.value)};
    await this.storeProductService.storeProductList('ProviderStoreProductsSelect', dataObject)
     .subscribe((data: any) => {
@@ -153,14 +153,14 @@ constructor(private storeProductService:StoreProductService,
     });
   }
 
-  async uploadProduct():Promise<void> {  
+  async uploadProduct():Promise<void> {
     this.Discount.setErrors(null);
     this.PriceBeforeDiscount.setErrors(null);
     this.isFormSubmitted=true;
     if (this.storeProductsForm.invalid) {
       return;
-    }else{    
-      this.isFormSubmitted=false;     
+    }else{
+      this.isFormSubmitted=false;
       const productObject= {ProviderId: Number(sessionStorage.getItem("providerId")),StoreID:this.StoreID.value, Category:this.Category.value,
         ProductName:this.ProductName.value,
         Units:this.Units.value,Quantity:Number(this.Quantity.value),
@@ -168,8 +168,8 @@ constructor(private storeProductService:StoreProductService,
         PriceBeforeDiscount:Number(this.PriceBeforeDiscount.value)
         ,PriceAfterDiscount:Number(this.PriceAfterDiscount.value), Files: this.selectedDocs};
         this.tempProducts.push(productObject);
-        this.showTempList=true;       
-        
+        this.showTempList=true;
+
         let formDataList = this.getFormData(this.tempProducts);
         const loadingController = await this.helperService.createLoadingController("loading");
         await loadingController.present();
@@ -183,7 +183,6 @@ constructor(private storeProductService:StoreProductService,
           this.selectedWebDocs.nativeElement.value = "";
           this.presentToast("Product saved Successfully","success");
           loadingController.dismiss();
-
           this.storeProductsList();
         },
           (error: any) => {
@@ -194,7 +193,6 @@ constructor(private storeProductService:StoreProductService,
 
   }
   getFormData(tempProducts:any[]){
-    debugger;
     let formData = [];
     for(let i = 0; i < tempProducts.length; i++){
       let productFormData = new FormData();
@@ -266,7 +264,7 @@ constructor(private storeProductService:StoreProductService,
   }
   private createStoreForm(){
     this.storeForm = new FormGroup({
-      SearchStoreId: new FormControl('0')      
+      SearchStoreId: new FormControl('0')
     });
   }
 
@@ -294,15 +292,15 @@ constructor(private storeProductService:StoreProductService,
           }
         }
       ]
-    });  
+    });
     await alert.present();
   }
   async deleteStoreProduct(storeProductId:number){
     const loadingController = await this.helperService.createLoadingController("loading");
       await loadingController.present();
-      const dataObject={StoreProductId: storeProductId};  
+      const dataObject={StoreProductId: storeProductId};
       await this.storeProductService.deleteStoreProduct('storeProductDelete', dataObject)
-      .subscribe((data: any) => {     
+      .subscribe((data: any) => {
         this.storeProductsList();
         loadingController.dismiss();
       },
