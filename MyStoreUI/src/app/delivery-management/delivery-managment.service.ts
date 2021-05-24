@@ -8,6 +8,7 @@ import { CommonApiServiceCallsService} from '../Shared/common-api-service-calls.
 })
 export class DeliveryManagmentService {
   private apiUrl = environment.storeMasterServiceUrl;
+  private adminApiUrl = environment.adminServiceUrl;
   constructor(private commonApiServiceCallsService:CommonApiServiceCallsService) { }
 
 
@@ -47,6 +48,13 @@ export class DeliveryManagmentService {
       }
 
 
+      baseFeeSave(methodName: string, resouce: any): Observable<any> {
+        return this.commonApiServiceCallsService.select(this.adminApiUrl + methodName, resouce);
+        }
+        baseFeeSelect(methodName: string): Observable<any> {
+          return this.commonApiServiceCallsService.getAll(this.adminApiUrl + methodName);
+          }
+    
     
 }
 
