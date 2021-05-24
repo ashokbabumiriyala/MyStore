@@ -54,11 +54,11 @@ export class ServiceOrdersPage implements OnInit {
       this.showServiceOrders=false;
     } else {
       ele.expand = true;
-      this.getStoreOrders(ele.orderId);   
+      this.getServiceOrderItems(ele.orderId);   
     }
   }
 
-  async getStoreOrders(orderId:string)
+  async getServiceOrderItems(orderId:string)
   {   
     const loadingController = await this.helperService.createLoadingController("loading");
     await loadingController.present(); 
