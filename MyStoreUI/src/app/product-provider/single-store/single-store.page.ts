@@ -139,6 +139,7 @@ async saveStore():Promise<void>{
     return;
   }
   else{
+    this.isFormSubmitted=false;
     const loadingController = await this.helperService.createLoadingController("loading");
     await loadingController.present();
     let fullAddress = this.Address.value + ',' + this.LandMark.value + ',' + this.City.value + ','
@@ -162,14 +163,13 @@ async saveStore():Promise<void>{
     this.selectedDocs = [];
     this.selectedWebDocs.nativeElement.value = "";
     let formDataList = this.getFormData(this.tempStore);
-    this.singleStoreFormGroup.reset();
     this.singleStoreService.singleStoreSave('StoreSave',formDataList[0])
     .subscribe((data: any) => {
       loadingController.dismiss();
-      this.presentToast("Store " + this.title+ "  successfully.","success");
       this.editStore=false;
       this.tempStore=[];
-      this.isFormSubmitted=false
+      this.singleStoreFormGroup.reset();
+      this.presentToast("Store " + this.title+ "  successfully.","success");
       this.subStoreList();
     },
       (error: any) => {

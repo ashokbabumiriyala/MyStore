@@ -112,7 +112,7 @@ export class ServiceLocationsPage implements OnInit {
   }
 
   //#region   list
-  async serviceLocationListSelect() {    
+  async serviceLocationListSelect() {
     const loadingController = await this.helperService.createLoadingController("loading");
     await loadingController.present();
     const dataObject = { ProviderId: Number(sessionStorage.getItem("providerId")), Mode: 'Select' };
@@ -307,10 +307,12 @@ export class ServiceLocationsPage implements OnInit {
           productFormData.append(key, tempProducts[i][key]);
         } else if (typeof (tempProducts[i][key]) == 'number') {
           productFormData.append(key, tempProducts[i][key] + "");
-        } else {
+        } else if(key == 'Files'){
           for (var j = 0; j < tempProducts[i][key].length; j++) {
             productFormData.append("files", tempProducts[i][key][j], 'ServiceLocationImage' + j + '.jpg');
           }
+        } else {
+          productFormData.append(key, tempProducts[i][key]);
         }
       }
       formData.push(productFormData);
