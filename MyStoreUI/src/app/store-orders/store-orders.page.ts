@@ -13,6 +13,7 @@ export class StoreOrdersPage implements OnInit {
   showStoreOrders:boolean;
   public items: any = [];
   public searchOrder: string = "";
+  public masterData:any = [];
   constructor( private router: Router,private helperService:HelperService, 
     private storeOrderService:StoreOrderService) { }
 
@@ -25,17 +26,19 @@ export class StoreOrdersPage implements OnInit {
       const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Mode:'Select'};
       await this.storeOrderService.storeOrderSelect('StoreOrdersList', dataObject)
       .subscribe((data: any) => {
-        this.items=  data.storeOrderList;  
-        Object.assign(this.storeOrders,this.items);
+        this.items=  data.storeOrderList;
+        Object.assign(this.masterData,this.items);
           loadingController.dismiss();
       },
         (error: any) => {
           loadingController.dismiss();
         });
     }
+ 
     filterItems() {
-      this.storeOrders = this.items.filter(item => {
-        return item.name.toLowerCase().indexOf(this.searchOrder) > -1;
+      this.masterData = this.items.filter(item => {   
+        debugger;     
+        return item.deliveryStatus.toLowerCase().indexOf(this.searchOrder.toLowerCase()) > -1;
       });
     }
   expandItem(event, ele): void {  

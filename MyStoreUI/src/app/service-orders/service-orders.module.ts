@@ -16,5 +16,7 @@ import { ServiceOrdersPage } from './service-orders.page';
     ServiceOrdersPageRoutingModule
   ],
   declarations: [ServiceOrdersPage,ServiceOrderItemsComponent]
+  ,
+  exports:[ServiceOrderItemsComponent]
 })
 export class ServiceOrdersPageModule {}

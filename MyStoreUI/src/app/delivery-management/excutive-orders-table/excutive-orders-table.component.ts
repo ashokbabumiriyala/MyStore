@@ -16,6 +16,8 @@ export class ExcutiveOrdersTableComponent implements OnInit {
   deliveryStatus=[];
   storeOrderedItems:any = [];
   showOrdersItems:boolean;
+  public masterData:any = [];
+  public searchOrder: string = "";
   constructor(private deliveryManagmentService:DeliveryManagmentService,
      private helperService:HelperService
      ,private toastController:ToastController) { }
@@ -33,6 +35,7 @@ export class ExcutiveOrdersTableComponent implements OnInit {
       if(data.executiveOrders.length>0){
         this.executiveOrders=data.executiveOrders;
         this.deliveryStatus=data.deliveryStatus;
+        Object.assign(this.masterData,this.executiveOrders);
         this.deliveryStatus.forEach((element,index)=>{     
          if(element.value ==1)  this.deliveryStatus.splice(index,1);
         });
@@ -87,6 +90,13 @@ export class ExcutiveOrdersTableComponent implements OnInit {
             (error: any) => {   
               loadingController.dismiss();
             });
+  }
+
+  filterItems() {
+    this.masterData = this.executiveOrders.filter(item => {    
+      debugger;  
+      return item.deliveryStatus.toLowerCase().indexOf(this.searchOrder.toLowerCase()) > -1;
+    });
   }
 
 }

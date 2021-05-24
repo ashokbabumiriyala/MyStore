@@ -17,7 +17,8 @@ enum menuNavigation {
     Executives=15,
 	ExecutivesOrders=16,
 	ManagementOrders=17,
-	DeliveryFee=18
+    DeliveryFee=18,
+    ManagementServicesOrders=19
    
 }
 export class AppConstants {

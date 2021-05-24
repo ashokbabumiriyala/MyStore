@@ -4,7 +4,7 @@
   </h2>
   <ion-searchbar  [(ngModel)]="searchOrder" (ionChange)="filterItems()"></ion-searchbar>
   <ion-list class="ion-list-ele">
-    <ion-row (click)="expandItem($event, item)" class="order-status" *ngFor="let item of storeOrders">
+    <ion-row (click)="expandItem($event, item)" class="order-status" *ngFor="let item of masterData">
       <ion-col size="6">
         <ion-label>Order Number: <b>{{item.orderId}}</b></ion-label>
       </ion-col>

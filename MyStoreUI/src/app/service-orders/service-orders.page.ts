@@ -14,8 +14,8 @@ export class ServiceOrdersPage implements OnInit {
   serviceOrders:any=[]; 
   showServiceOrders:boolean;
   public items: any = [];
-  public searchOrder: string = "";
-
+  public searchService: string = "";
+  public masterData:any = [];
   constructor( private router: Router,private helperService:HelperService, private serviceOrderService:ServiceOrderService) { }
 
   ngOnInit() {
@@ -28,7 +28,7 @@ export class ServiceOrdersPage implements OnInit {
       await this.serviceOrderService.serviceOrdersSelect('ServiceOrdersList', dataObject)
       .subscribe((data: any) => {
         this.items=  data.servicesOrders;  
-        Object.assign(this.serviceOrders,this.items);         
+        Object.assign(this.masterData,this.items);         
           loadingController.dismiss();
       },
         (error: any) => {
@@ -38,8 +38,8 @@ export class ServiceOrdersPage implements OnInit {
     }
 
     filterItems() {
-      this.serviceOrders = this.items.filter(item => {
-        return item.name.toLowerCase().indexOf(this.searchOrder) > -1;
+      this.masterData = this.items.filter(item => {
+        return item.orderStatus.toLowerCase().indexOf(this.searchService.toLowerCase()) > -1;
       });
     }
 

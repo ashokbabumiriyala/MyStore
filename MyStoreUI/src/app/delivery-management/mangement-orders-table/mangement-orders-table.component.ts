@@ -13,6 +13,8 @@ export class MangementOrdersTableComponent implements OnInit {
   OrderList= [];
   executives= [];
   showOrdersItems:boolean;
+  public masterData:any = [];
+  public searchOrder: string = "";
   storeOrderedItems:any = [];
   constructor(private deliveryManagmentService:DeliveryManagmentService,
     private helperService:HelperService) { }
@@ -27,6 +29,7 @@ export class MangementOrdersTableComponent implements OnInit {
   .subscribe((data: any) => {
    this.OrderList= data.deliveryOrders;
    this.executives=data.deliveryexecutives;
+   Object.assign(this.masterData,this.OrderList);
    loadingController.dismiss();
   },
     (error: any) => {
@@ -74,6 +77,13 @@ export class MangementOrdersTableComponent implements OnInit {
               loadingController.dismiss();
             });
 
+  }
+
+  filterItems() {
+    this.masterData = this.OrderList.filter(item => {
+      
+      return item.deliveryStatus.toLowerCase().indexOf(this.searchOrder.toLowerCase()) > -1;
+    });
   }
   
 }

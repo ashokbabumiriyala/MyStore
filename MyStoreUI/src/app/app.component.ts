@@ -149,6 +149,12 @@ export class AppComponent implements OnInit {
           case AppConstants.menuNavigation.DeliveryFee:
           this.router.navigate(['delivery-management/delivery-fee']);
           break;
+
+          case AppConstants.menuNavigation.ManagementServicesOrders:
+            this.router.navigate(['service-delivery-managment']);
+            break;
+
+          
     }
   }
   openMenu() {

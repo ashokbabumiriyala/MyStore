@@ -23,7 +23,8 @@ import { StoreOrdersPageModule}  from '../store-orders/store-orders.module';
     IonicModule,
     DeliveryManagementPageRoutingModule,
     IonicSelectableModule,
-    StoreOrdersPageModule
+    StoreOrdersPageModule,
+    FormsModule
   ],
   declarations: [DeliveryManagementPage, AddExecutiveComponent, 
     MangementOrdersTableComponent, DeliveryFeeComponent, 

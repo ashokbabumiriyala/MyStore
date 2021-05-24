@@ -1,8 +1,9 @@
 <ion-content class="ion-padding after-login-bg">
   <h2 class="page-title">
-    <ion-icon name="archive-outline"></ion-icon>Management Orders Table
+    <ion-icon name="archive-outline"></ion-icon>Product Orders
   </h2>
-  <ion-searchbar placeholder="Search for Order"></ion-searchbar>
+ 
+  <ion-searchbar  [(ngModel)]="searchOrder" (ionChange)="filterItems()"></ion-searchbar>
   <div class="content-section">
     <div direction="x" class="wide-as-needed">
       <ion-grid>
@@ -20,7 +21,7 @@
           <ion-col>Total Amount</ion-col>
         </div>
         <div style="max-height: 330px;overflow: auto;display: inline-block;">
-          <div *ngFor="let order of OrderList">
+          <div *ngFor="let order of masterData">
             <div class="body" style="display: flex;">
               <ion-col class="col-width"  >
                 <ion-item class="ion-ele" *ngIf="order.assignedTo=='0'">Select Executive                 

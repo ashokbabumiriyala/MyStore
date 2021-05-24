@@ -1,0 +1,53 @@
+.cart-list {
+    border: 1px solid #bbb;
+    border-radius: 10px;
+    height: 90px;
+   ion-card-content {
+       padding: 10px !important;
+        img {
+           width: 100%;
+           height: 100%;
+       }
+   }
+}
+.cart-itm-wrap {
+    height: auto;
+    max-height: 310px;
+    overflow-y: auto;
+}
+.track {
+    text-decoration: underline;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    margin: 2px;
+}
+.ion-list-ele {
+    ion-row {
+        position: relative;
+        padding-left: 15px;
+        border: 1px solid darkorange;
+        border-radius: 6px;
+        margin-bottom: 6px;
+    }
+    .order-status::before{
+        content: '>';
+        position: absolute;
+        font-size: 3vw;
+        left: 3px;
+        color: darkorange;
+        top:23px;
+    }
+    .row-icon::before {
+        content: '<';
+        position: absolute;
+        font-size: 3vw;
+        left: 3px;
+        color: darkorange;
+        top:23px;
+    }
+    background: transparent;   
+    ion-col {
+        font-size: 2vw;
+    }
+}
