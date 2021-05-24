@@ -58,8 +58,7 @@ export class StoreOrdersPage implements OnInit {
     const dataObject={searchKey: orderId};
     await  this.storeOrderService.storeOrderItemsSelect('StoreOrderItemsList',dataObject)
           .subscribe((data: any) => {
-           this.storeOrderedItems=data.storeOrderList;
-           console.log(this.storeOrderedItems);
+           this.storeOrderedItems=data.storeOrderList;         
            this.showStoreOrders=true;
            loadingController.dismiss();
           },

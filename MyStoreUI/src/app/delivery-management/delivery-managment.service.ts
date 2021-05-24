@@ -42,6 +42,11 @@ export class DeliveryManagmentService {
     } 
 
 
+    storeOrderItemsSelect(methodName: string, resouce: any): Observable<any> {
+      return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
+      }
+
+
     
 }
 

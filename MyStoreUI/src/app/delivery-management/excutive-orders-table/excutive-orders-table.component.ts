@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {DeliveryManagmentService}  from '../../delivery-management/delivery-managment.service';
 import { ToastController } from '@ionic/angular';
 import { HelperService } from 'src/app/common/helper.service';
+
 @Component({
   selector: 'app-excutive-orders-table',
   templateUrl: './excutive-orders-table.component.html',
@@ -13,6 +14,7 @@ export class ExcutiveOrdersTableComponent implements OnInit {
   orderDataArray: any;
   executiveOrders= [];
   deliveryStatus=[];
+  storeOrderedItems:any = [];
   constructor(private deliveryManagmentService:DeliveryManagmentService,
      private helperService:HelperService
      ,private toastController:ToastController) { }
@@ -42,13 +44,9 @@ export class ExcutiveOrdersTableComponent implements OnInit {
         loadingController.dismiss();
       });
   }
-  toggle(order) {
-    order.expand = !order.expand;
-  }
+
 
  async deliveryStatusChange(data:any,order:any){
-
-
     const loadingController = await this.helperService.createLoadingController("loading");
     await loadingController.present(); 
     const dataObject={OrderStatusId: Number(data.detail.value),OrderId:order.orderID};
@@ -61,5 +59,35 @@ export class ExcutiveOrdersTableComponent implements OnInit {
               loadingController.dismiss();
             });
   }
+
+  toggle(ele): void {   
+    this.storeOrderedItems=[];   
+    // event.currentTarget.classList.toggle('order-status');
+    // event.currentTarget.classList.toggle('row-icon');
+    if (ele.expand) {
+      ele.expand = false;
+    } else {
+      ele.expand = true;
+      this.getStoreOrders(ele.orderID);   
+    }
+  }
+
+
+  async getStoreOrders(orderId:string)
+  {   
+    const loadingController = await this.helperService.createLoadingController("loading");
+    await loadingController.present(); 
+    const dataObject={searchKey: orderId};
+    await  this.deliveryManagmentService.storeOrderItemsSelect('StoreOrderItemsList',dataObject)
+          .subscribe((data: any) => {
+           this.storeOrderedItems=data.storeOrderList;
+         
+           loadingController.dismiss();
+          },
+            (error: any) => {   
+              loadingController.dismiss();
+            });
+  }
+
 }
 
