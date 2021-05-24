@@ -12,7 +12,8 @@ export class MangementOrdersTableComponent implements OnInit {
   orderDataArray: any;
   OrderList= [];
   executives= [];
- 
+  showOrdersItems:boolean;
+  storeOrderedItems:any = [];
   constructor(private deliveryManagmentService:DeliveryManagmentService,
     private helperService:HelperService) { }
 
@@ -32,11 +33,15 @@ export class MangementOrdersTableComponent implements OnInit {
       loadingController.dismiss();
     });
   }
-  toggle(order) {
-    console.log(order);
-    this.getStoreOrders(order.orderID);
-    //StoreOrderItemsList
-    order.expand = !order.expand;
+  toggle(ele): void { 
+     
+    this.storeOrderedItems=[]; 
+    if (ele.expand) {
+      ele.expand = false;
+    } else {
+      ele.expand = true;
+      this.getStoreOrders(ele.orderID);   
+    }
   }
 
   async getStoreOrders(orderId:string)
@@ -45,9 +50,9 @@ export class MangementOrdersTableComponent implements OnInit {
     await loadingController.present(); 
     const dataObject={searchKey: orderId};
     await  this.deliveryManagmentService.deliveryOrderItemsSelect('StoreOrderItemsList',dataObject)
-          .subscribe((data: any) => {
-            console.log(data);
-           this.orderItems=data.storeOrderList;
+          .subscribe((data: any) => {          
+           this.storeOrderedItems=data.storeOrderList;
+           this.showOrdersItems=true;
            loadingController.dismiss();
           },
             (error: any) => {   
@@ -70,4 +75,5 @@ export class MangementOrdersTableComponent implements OnInit {
             });
 
   }
+  
 }

@@ -71,9 +71,9 @@
                       </ion-label>
                     </ion-item>
                   </ion-col> -->
-                  <app-service-order-items  
-                  [items]="storeOrderedItems" [expanded]="order.expand" >
-                </app-service-order-items>
+                  <app-store-order-items  *ngIf="showOrdersItems"
+                  [orderedItems]="storeOrderedItems" [expanded]="order.expand" >
+                </app-store-order-items>
                 </ion-row>
               </ion-list>
             </div>

@@ -14,18 +14,21 @@ import { DeliveryFeeComponent } from './delivery-fee/delivery-fee.component';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { ExcutiveOrdersTableComponent } from './excutive-orders-table/excutive-orders-table.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import {ServiceOrderItemsComponent}  from '../service-orders/service-order-items/service-order-items.component'
+import { StoreOrdersPageModule}  from '../store-orders/store-orders.module';
+
 @NgModule({
   imports: [
     CommonModule,    
     ReactiveFormsModule,
     IonicModule,
     DeliveryManagementPageRoutingModule,
-    IonicSelectableModule
+    IonicSelectableModule,
+    StoreOrdersPageModule
   ],
   declarations: [DeliveryManagementPage, AddExecutiveComponent, 
     MangementOrdersTableComponent, DeliveryFeeComponent, 
     ExcutiveOrdersTableComponent
-  ,ServiceOrderItemsComponent]
+
+]
 })
 export class DeliveryManagementPageModule {}

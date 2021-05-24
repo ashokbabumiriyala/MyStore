@@ -158,8 +158,7 @@ constructor(private storeProductService:StoreProductService,
     this.isFormSubmitted=true;
     if (this.storeProductsForm.invalid) {
       return;
-    }else{
-      debugger;
+    }else{    
       this.isFormSubmitted=false;     
       const productObject= {ProviderId: Number(sessionStorage.getItem("providerId")),StoreID:this.StoreID.value, Category:this.Category.value,
         ProductName:this.ProductName.value,

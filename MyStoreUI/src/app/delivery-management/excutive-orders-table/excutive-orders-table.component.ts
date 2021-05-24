@@ -15,6 +15,7 @@ export class ExcutiveOrdersTableComponent implements OnInit {
   executiveOrders= [];
   deliveryStatus=[];
   storeOrderedItems:any = [];
+  showOrdersItems:boolean;
   constructor(private deliveryManagmentService:DeliveryManagmentService,
      private helperService:HelperService
      ,private toastController:ToastController) { }
@@ -60,10 +61,9 @@ export class ExcutiveOrdersTableComponent implements OnInit {
             });
   }
 
-  toggle(ele): void {   
-    this.storeOrderedItems=[];   
-    // event.currentTarget.classList.toggle('order-status');
-    // event.currentTarget.classList.toggle('row-icon');
+  toggle(ele): void { 
+     
+    this.storeOrderedItems=[]; 
     if (ele.expand) {
       ele.expand = false;
     } else {
@@ -71,17 +71,17 @@ export class ExcutiveOrdersTableComponent implements OnInit {
       this.getStoreOrders(ele.orderID);   
     }
   }
-
-
   async getStoreOrders(orderId:string)
   {   
+    debugger;
+    this.showOrdersItems=false;
     const loadingController = await this.helperService.createLoadingController("loading");
     await loadingController.present(); 
     const dataObject={searchKey: orderId};
     await  this.deliveryManagmentService.storeOrderItemsSelect('StoreOrderItemsList',dataObject)
           .subscribe((data: any) => {
            this.storeOrderedItems=data.storeOrderList;
-         
+           this.showOrdersItems=true;
            loadingController.dismiss();
           },
             (error: any) => {   

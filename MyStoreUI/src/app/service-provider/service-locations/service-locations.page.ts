@@ -112,8 +112,7 @@ export class ServiceLocationsPage implements OnInit {
   }
 
   //#region   list
-  async serviceLocationListSelect() {
-    debugger;
+  async serviceLocationListSelect() {    
     const loadingController = await this.helperService.createLoadingController("loading");
     await loadingController.present();
     const dataObject = { ProviderId: Number(sessionStorage.getItem("providerId")), Mode: 'Select' };

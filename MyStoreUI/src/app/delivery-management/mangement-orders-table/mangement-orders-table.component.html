@@ -50,7 +50,7 @@
             <div class="order-details" *ngIf="order.expand">
               <ion-list class="ion-list-ele">
                 <ion-row>
-                  <ion-col size="6" *ngFor="let itm of orderItems">
+                  <!-- <ion-col size="6" *ngFor="let itm of orderItems">
                     <ion-item>
                       <ion-avatar slot="start">
                         <img src="./assets/images/category.png">
@@ -72,7 +72,12 @@
                         </ion-row>
                       </ion-label>
                     </ion-item>
-                  </ion-col>
+                  </ion-col> -->
+
+                  <app-store-order-items  *ngIf="showOrdersItems"
+                  [orderedItems]="storeOrderedItems" [expanded]="order.expand" >
+                </app-store-order-items>
+                
                 </ion-row>
               </ion-list>
             </div>
