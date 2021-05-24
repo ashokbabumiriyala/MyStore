@@ -19,7 +19,7 @@
     <ion-list class="ion-list-ele" *ngIf="!editStore && provideSubStoreList.length !== 0">
         <ion-item *ngFor="let subStore of provideSubStoreList;">
             <ion-avatar>
-                <img  src="{{subStore.url}}" *ngIf="subStore.logo">
+                <img  src="{{subStore.logo}}" *ngIf="subStore.logo">
                 <img src="../../assets/images/default-image.jpg" *ngIf="!subStore.logo">
               </ion-avatar>
             <ion-col size="7">

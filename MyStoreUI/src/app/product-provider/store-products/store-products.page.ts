@@ -85,6 +85,7 @@ constructor(private storeProductService:StoreProductService,
     .subscribe((data: any) => {
       this.stores=data.storeDropdown;
       this.storeProductsData = data.storeProducts;
+      console.log(this.storeProductsData);
       loadingController.dismiss();
     },
     (error: any) => {
