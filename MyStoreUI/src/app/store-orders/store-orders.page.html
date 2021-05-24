@@ -2,7 +2,7 @@
   <h2 class="page-title">
     <ion-icon name="aperture-outline" slot="start"></ion-icon>Product Orders
   </h2>
-  <ion-searchbar  [(ngModel)]="searchOrder" (ionChange)="filterItems()"></ion-searchbar>
+  <ion-searchbar  [(ngModel)]="searchOrder" placeholder="Search By Delivery Status" (ionChange)="filterItems()"></ion-searchbar>
   <ion-list class="ion-list-ele">
     <ion-row (click)="expandItem($event, item)" class="order-status" *ngFor="let item of masterData">
       <ion-col size="6">
