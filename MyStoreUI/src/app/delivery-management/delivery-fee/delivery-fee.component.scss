@@ -27,3 +27,27 @@ ion-col{
     font-weight: bold;
 }
 }
+.wide-as-needed {
+    overflow: scroll;
+    white-space: nowrap;
+    max-height:395px;
+    .col-width {
+      ion-item {
+        --background:transparent;
+      }
+    }
+    .header ion-col, .body ion-col {
+        border: 1px solid;
+        border-collapse: collapse;
+        min-width: 150px;
+        white-space: break-spaces;               
+    }    
+  }
+  .header {
+    display: flex;
+    text-align: center;
+    font-weight: bold;
+    ion-col {
+      padding-top: 15px !important;
+    }
+  }

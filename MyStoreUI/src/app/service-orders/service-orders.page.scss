@@ -22,32 +22,69 @@
     width: 100%;
     margin: 2px;
 }
-.ion-list-ele {
-    ion-row {
-        position: relative;
-        padding-left: 15px;
-        border: 1px solid darkorange;
-        border-radius: 6px;
-        margin-bottom: 6px;
+// .ion-list-ele {
+//     ion-row {
+//         position: relative;
+//         padding-left: 15px;
+//         border: 1px solid darkorange;
+//         border-radius: 6px;
+//         margin-bottom: 6px;
+//     }
+//     .order-status::before{
+//         content: '>';
+//         position: absolute;
+//         font-size: 3vw;
+//         left: 3px;
+//         color: darkorange;
+//         top:23px;
+//     }
+//     .row-icon::before {
+//         content: '<';
+//         position: absolute;
+//         font-size: 3vw;
+//         left: 3px;
+//         color: darkorange;
+//         top:23px;
+//     }
+//     background: transparent;   
+//     ion-col {
+//         font-size: 2vw;
+//     }
+// }
+
+
+.wide-as-needed {
+    overflow: scroll;
+    white-space: nowrap;
+    height:435px;
+    .col-width {
+      min-width: 70px !important;
+      ion-item {
+        --background:transparent;
+      }
     }
-    .order-status::before{
-        content: '>';
-        position: absolute;
-        font-size: 3vw;
-        left: 3px;
-        color: darkorange;
-        top:23px;
-    }
-    .row-icon::before {
-        content: '<';
-        position: absolute;
-        font-size: 3vw;
-        left: 3px;
-        color: darkorange;
-        top:23px;
-    }
-    background: transparent;   
+    .body ion-col {
+        min-width: 150px;
+        white-space: break-spaces;               
+    }    
+  }
+  .content-section {
+    height: auto;
+    max-height: 495px;
+    overflow-y: auto;
+  }  
+  .header {
+    display: flex;
+    text-align: center;
+    font-weight: bold;
     ion-col {
-        font-size: 2vw;
+      padding-top: 15px !important;
     }
-}
+  }
+  .order-status {
+    border: 1px solid;
+    border-radius: 15px;
+    min-width: 450px;
+    width: auto;
+    margin-bottom: 5px;
+  }

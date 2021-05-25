@@ -41,3 +41,7 @@ ion-grid {
   border-radius: 15px;
   --background: transparent !important;
 }
+.ion-list-ele {
+    max-height: 359px;
+    overflow: auto;
+}

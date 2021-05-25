@@ -136,22 +136,27 @@
       
     </ion-row>   
   </form>
-    <div direction="x" class="wide-as-needed">
-    <ion-grid *ngIf="!editExecutive" class="store-list-fee no-padding">
-      <ion-row class="header" >
-        <ion-col size="4" class="col-border"><b>Name</b></ion-col>
-        <ion-col size="3" class="col-border"><b>IDNumber</b></ion-col>
-        <ion-col size="3" class="col-border"><b>Mobile Number</b></ion-col>
-        <ion-col size="2" class="col-border"><b>Action</b></ion-col>
-      </ion-row>
-      <ion-row  *ngFor="let item of executiveList;" >
-        <ion-col size="4" class="col-border">{{item.name}}</ion-col>
-        <ion-col size="3" class="col-border">{{item.idNumber}}</ion-col>
-        <ion-col size="3" class="col-border">{{item.mobileNumber}}</ion-col>
-        <ion-col size="2" class="col-border">
-          <ion-icon name="create-outline" size="large" (click)="editExecutiveData(item)"></ion-icon>
-        </ion-col>
-      </ion-row>
+   
+  <div direction="x" class="wide-as-needed" *ngIf="!editExecutive">
+    <ion-grid>
+      <div class="header ion-text-center">
+        <ion-col class="col-width"><b>Action</b></ion-col>
+        <ion-col><b>Name</b></ion-col>
+        <ion-col><b>IDNumber</b></ion-col>
+        <ion-col><b>Mobile Number</b></ion-col>
+      </div>
+      <div style="max-height: 330px;overflow: auto;display: inline-block;min-width: 100%;">
+        <div *ngFor="let item of executiveList;">
+          <div class="body" style="display: flex;">
+            <ion-col class="col-width ion-text-center">
+              <ion-icon name="create-outline" size="large" (click)="editExecutiveData(item)"></ion-icon>
+            </ion-col>
+            <ion-col>{{item.name}}</ion-col>
+            <ion-col>{{item.idNumber}}</ion-col>
+            <ion-col>{{item.mobileNumber}}</ion-col>
+          </div>
+        </div>
+      </div>
     </ion-grid>
   </div>
 </ion-content>

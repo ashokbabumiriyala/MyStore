@@ -3,7 +3,7 @@
     <ion-icon name="aperture-outline" slot="start"></ion-icon>Product Orders
   </h2>
   <ion-searchbar  [(ngModel)]="searchOrder" placeholder="Search By Delivery Status" (ionChange)="filterItems()"></ion-searchbar>
-  <ion-list class="ion-list-ele">
+  <!-- <ion-list class="ion-list-ele">
     <ion-row (click)="expandItem($event, item)" class="order-status" *ngFor="let item of masterData">
       <ion-col size="6">
         <ion-label>Order Number: <b>{{item.orderId}}</b></ion-label>
@@ -26,6 +26,39 @@
       <app-store-order-items *ngIf="showStoreOrders" [orderedItems]="storeOrderedItems" 
        [expanded]="item.expand"></app-store-order-items>    
     </ion-row>
-  </ion-list>
+  </ion-list> -->
+
+  <div direction="x" class="wide-as-needed">
+    <ion-grid>
+        <div  (click)="expandItem($event, item)" *ngFor="let item of masterData" class="order-status">
+          <div class="body" style="display: flex;">
+            <ion-col>
+              <ion-label>Order Number: <b>{{item.orderId}}</b></ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label>Ordered Date: <b>{{item.orderDate|date:"dd/MM/yy"}}</b></ion-label>
+            </ion-col>
+            </div>
+            <div class="body" style="display: flex;">
+            <ion-col>
+              <ion-label>User Name: <b>{{item.userName}}</b></ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label>MobileNumber: <b>{{item.mobileNumber}}</b></ion-label>
+            </ion-col>
+          </div>
+          <div class="body" style="display: flex;">
+            <ion-col>
+              <ion-label>Store Location: <b>{{item.address}}</b></ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label>Delivery Status: <b>{{item.deliveryStatus}}</b></ion-label>
+            </ion-col>
+          </div>
+          <app-store-order-items *ngIf="showStoreOrders" [orderedItems]="storeOrderedItems" 
+       [expanded]="item.expand"></app-store-order-items>   
+        </div>
+    </ion-grid>
+  </div>
 </ion-content>
 

@@ -84,7 +84,6 @@ async register(): Promise<void>{
     };
     await  this.signUpService.providerSignUp('ProviderSignupSave', this.isignUp)
     .subscribe((data: any) => {   
-      debugger;
       if(data.operationStatusDTO.transactionStatus==10){
         loadingController.dismiss();
         this.presentToast("This username or mobile number already exists.","danger");

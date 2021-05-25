@@ -19,11 +19,11 @@
 
     <ion-list class="ion-list-ele" *ngIf="!editLocation">
         <ion-item *ngFor="let location of providerLocationList;">
-            <ion-avatar>
+            <ion-avatar size="1">
                 <img  src="{{location.logo}}" *ngIf="location.logo">
                 <img src="../../assets/images/default-image.jpg" *ngIf="!location.logo">
               </ion-avatar>
-            <ion-col size="7">
+            <ion-col size="9">
                 <ion-label>Business: <b>{{ location.businessName }}</b></ion-label>
                 <ion-label>Manager: <b>{{ location.businessManagerName}}</b></ion-label>
             </ion-col>

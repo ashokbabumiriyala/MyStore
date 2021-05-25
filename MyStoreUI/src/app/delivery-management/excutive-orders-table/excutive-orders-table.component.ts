@@ -76,7 +76,6 @@ export class ExcutiveOrdersTableComponent implements OnInit {
   }
   async getStoreOrders(orderId:string)
   {   
-    debugger;
     this.showOrdersItems=false;
     const loadingController = await this.helperService.createLoadingController("loading");
     await loadingController.present(); 
@@ -94,7 +93,6 @@ export class ExcutiveOrdersTableComponent implements OnInit {
 
   filterItems() {
     this.masterData = this.executiveOrders.filter(item => {    
-      debugger;  
       return item.deliveryStatus.toLowerCase().indexOf(this.searchOrder.toLowerCase()) > -1;
     });
   }

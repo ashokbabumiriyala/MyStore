@@ -37,15 +37,14 @@ export class StoreOrdersPage implements OnInit {
  
     filterItems() {
       this.masterData = this.items.filter(item => {   
-        debugger;     
         return item.deliveryStatus.toLowerCase().indexOf(this.searchOrder.toLowerCase()) > -1;
       });
     }
   expandItem(event, ele): void {  
     this.storeOrderedItems=[];
     this.showStoreOrders=false;
-    event.currentTarget.classList.toggle('order-status');
-    event.currentTarget.classList.toggle('row-icon');
+    // event.currentTarget.classList.toggle('order-status');
+    // event.currentTarget.classList.toggle('row-icon');
     if (ele.expand) {
       ele.expand = false;
       this.showStoreOrders=false;

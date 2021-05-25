@@ -47,8 +47,8 @@ export class ServiceOrdersPage implements OnInit {
   
     this.serviceOrderedItems=[];
     this.showServiceOrders=false;
-    event.currentTarget.classList.toggle('order-status');
-    event.currentTarget.classList.toggle('row-icon');
+    // event.currentTarget.classList.toggle('order-status');
+    // event.currentTarget.classList.toggle('row-icon');
     if (ele.expand) {
       ele.expand = false;
       this.showServiceOrders=false;

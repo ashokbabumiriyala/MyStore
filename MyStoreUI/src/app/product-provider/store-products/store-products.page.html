@@ -29,11 +29,11 @@
   </form>
   <ion-list class="ion-list-ele" *ngIf="!editProduct && storeProductsData.length > 0">
     <ion-item *ngFor="let product of storeProductsData;">
-      <ion-avatar>
+      <ion-avatar size="1">
         <img  src="{{product.logo}}" *ngIf="product.logo">
         <img src="../../assets/images/default-image.jpg" *ngIf="!product.logo">
       </ion-avatar>
-      <ion-col size="7">
+      <ion-col size="9">
         <ion-label>Name: <b>{{ product.productName }}</b></ion-label>
         <ion-label>Category: <b>{{product.category}}</b></ion-label>
       </ion-col>
