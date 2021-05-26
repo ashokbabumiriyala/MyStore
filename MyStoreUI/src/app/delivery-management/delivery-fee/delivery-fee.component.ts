@@ -69,7 +69,9 @@ export class DeliveryFeeComponent implements OnInit {
       .subscribe((data: any) => {
         console.log(data);
         this.storeMasters=data.storeMasters;
-       this.setbasePriceToPage(data.basePrice[0].price)
+        if(data.basePrice.length>0){
+          this.setbasePriceToPage(data.basePrice[0].price);
+        }
         loadingController.dismiss();
       },
         (error: any) => {
