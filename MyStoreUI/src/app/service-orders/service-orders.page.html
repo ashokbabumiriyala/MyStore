@@ -28,6 +28,14 @@
     </ion-row>
   </ion-list> -->
 
+  <div *ngIf="masterData.length == 0">
+    <h6 class="no-records">
+      You do not have any orders from customers yet.<br/>
+	            Let Us hope for great business.
+    </h6>
+    <img class="ion-text-center" src="../assets/images/logo.png">
+  </div>
+  
   <div direction="x" class="wide-as-needed">
     <ion-grid>
         <div  (click)="expandItem($event,item)" class="order-status" *ngFor="let item of masterData">

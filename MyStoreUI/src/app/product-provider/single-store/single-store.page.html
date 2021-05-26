@@ -16,20 +16,29 @@
             </ion-button>
         </ion-col>
     </ion-row>
+
+    <div  *ngIf="!editStore && provideSubStoreList.length == 0">
+        <h6 class="no-records">
+            If you have added store master information, kindly add store location details to proceed.
+        </h6>
+        <p class="note-text"><b>Note:</b>You can add multiple store locations.</p>
+        <img class="ion-text-center" src="../assets/images/logo.png">
+    </div>
+
     <ion-list class="ion-list-ele" *ngIf="!editStore && provideSubStoreList.length !== 0">
         <ion-item *ngFor="let subStore of provideSubStoreList;">
             <ion-avatar>
-                <img  src="{{subStore.logo}}" *ngIf="subStore.logo">
+                <img src="{{subStore.logo}}" *ngIf="subStore.logo">
                 <img src="../../assets/images/default-image.jpg" *ngIf="!subStore.logo">
-              </ion-avatar>
+            </ion-avatar>
             <ion-col size="10">
                 <ion-label>Store: <b>{{ subStore.storeName }}</b></ion-label>
                 <ion-label>Manager: <b>{{ subStore.managerName}}</b></ion-label>
             </ion-col>
-             <ion-col size="2" class="ion-text-right">
+            <ion-col size="2" class="ion-text-right">
                 <ion-icon name="trash-outline" size="large" (click)="presentAlertConfirm(subStore)"></ion-icon>
             </ion-col>
-           <!-- <ion-col size="1">
+            <!-- <ion-col size="1">
                 <ion-icon name="create-outline" size="large" (click)="editStoreInfo(subStore)"></ion-icon>
             </ion-col> -->
         </ion-item>

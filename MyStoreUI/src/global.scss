@@ -56,7 +56,7 @@ ion-button {
     margin: 0px auto;
     margin-bottom: 15px;
     font-weight: bold;
-    font-family: lato sans-serif;
+    // font-family: lato sans-serif;
     color: var(--btnbg);
     text-decoration: underline;
     ion-icon {
@@ -81,6 +81,61 @@ ion-button {
         color: var(--iconcolor);
     }
 }
+.terms-conditions {
+    --max-width:500px;
+    .alert-wrapper{
+        width: 90%;
+        max-height: 70%;
+        .agree-button-ok {
+            border: 1px solid;
+            border-radius: 15px;
+            background: var(--btnbg);
+            color: #FFF;
+            padding: 8px 16px;
+        }
+        .agree-button-cancel {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            font-size: 0px;
+            cursor: default;
+            margin: 0px;
+            color: var(--iconcolor);
+        }
+        .agree-button-cancel::before {
+            content: "x";
+            color: var(--iconcolor);
+            border: 1px solid var(--iconcolor);
+            padding: 1px 5px;
+            border-radius: 15px;
+            font-size: 16px;
+            right: 0px;
+            top: 0px;
+            cursor: pointer;
+            }
+        h2 {
+            text-align: center;
+            margin: 0px auto;
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: var(--btnbg);
+            text-decoration: underline;
+        }
+  }
+}
+
 .assign-orders {
     font-weight: bold !important;    
+}
+* {
+    font-family: cursive !important;
+}
+body {
+    font-family: cursive !important;
+}
+:host {
+    font-family: cursive !important;
+}
+.note-text, .no-records {
+    color: orange;
 }

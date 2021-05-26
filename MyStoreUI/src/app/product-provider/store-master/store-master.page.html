@@ -18,6 +18,10 @@
         </ion-col>
     </ion-row>
 
+    <h6 *ngIf="!storeMasterList && provideStoreList.length == 0" class="no-records">
+        Kindly Add store master information by clicking on Add Master link to proceed.
+    </h6>
+
     <ion-list class="ion-list-ele" *ngIf="!storeMasterList && provideStoreList.length !== 0">
         <ion-item *ngFor="let storeMaster of provideStoreList;">
             <!-- <ion-avatar item-start size="3">

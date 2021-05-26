@@ -17,6 +17,10 @@
         </ion-col>
     </ion-row>
 
+    <h6 *ngIf="!serviceMasterList && providerServiceMasterList.length == 0" class="no-records">
+        Kindly Add Service master information by clicking on Add Master link to proceed.
+    </h6>
+
     <ion-list class="ion-list-ele" *ngIf="!serviceMasterList">
         <ion-item *ngFor="let serviceMaster of providerServiceMasterList;">
             <!-- <ion-avatar item-start size="3">

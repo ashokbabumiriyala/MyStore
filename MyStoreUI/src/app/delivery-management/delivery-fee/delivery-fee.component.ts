@@ -22,6 +22,7 @@ export class DeliveryFeeComponent implements OnInit {
   basePriceFormGroup:FormGroup;
   isFormSubmitted:boolean;
   storeMasters:any;
+  basePriceAmount:number;
   constructor(private deliveryManagmentService:DeliveryManagmentService,
     private helperService:HelperService) { }
 
@@ -77,6 +78,7 @@ export class DeliveryFeeComponent implements OnInit {
   }
 
   private setbasePriceToPage(price: number): void {
+    this.basePriceAmount = price;
     this.basePriceFormGroup.patchValue({
       basePrice:price
   });

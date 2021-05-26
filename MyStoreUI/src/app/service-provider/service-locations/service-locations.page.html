@@ -17,6 +17,14 @@
         </ion-col>
     </ion-row>
 
+    <div  *ngIf="!editLocation && providerLocationList.length == 0">
+        <h6 class="no-records">
+            If you have added service master information, kindly add service location details to proceed.
+        </h6>
+        <p class="note-text"><b>Note:</b>You can add multiple service locations.</p>
+        <img class="ion-text-center" src="../assets/images/logo.png">
+    </div>
+
     <ion-list class="ion-list-ele" *ngIf="!editLocation">
         <ion-item *ngFor="let location of providerLocationList;">
             <ion-avatar size="1">

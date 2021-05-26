@@ -19,24 +19,32 @@
 
     <ion-row [formGroup]="serviceLocationForm" *ngIf="!editService">
         <ion-col size="12">
-        <ion-item class="ion-ele">
-            <ion-label position="floating">Select Business</ion-label>
-            <ion-select formControlName="LocationID" (ionChange)="changeBusiness()">
-                <ion-select-option *ngFor="let serviceItem of services" value="{{serviceItem.value}}">
-                    {{serviceItem.text}}
-                </ion-select-option>
-            </ion-select>
-            <ion-icon name="cog-outline" slot="start"></ion-icon>
-        </ion-item>
-    </ion-col>
+            <ion-item class="ion-ele">
+                <ion-label position="floating">Select Business</ion-label>
+                <ion-select formControlName="LocationID" (ionChange)="changeBusiness()">
+                    <ion-select-option *ngFor="let serviceItem of services" value="{{serviceItem.value}}">
+                        {{serviceItem.text}}
+                    </ion-select-option>
+                </ion-select>
+                <ion-icon name="cog-outline" slot="start"></ion-icon>
+            </ion-item>
+        </ion-col>
     </ion-row>
+
+    <div *ngIf="!editService && serviceProductList.length == 0">
+        <h6 class="no-records">
+            kindly upload Serive information by clicking on add new service link to proceed.
+        </h6>
+        <p class="note-text"><b>Note:</b>You can add services for single store or all stores in one go.</p>
+        <img class="ion-text-center" src="../assets/images/logo.png">
+    </div>
 
     <ion-list class="ion-list-ele" *ngIf="!editService && serviceProductList.length > 0">
         <ion-item *ngFor="let product of serviceProductList;">
             <ion-avatar size="1">
-                <img  src="{{product.logo}}" *ngIf="product.logo">
+                <img src="{{product.logo}}" *ngIf="product.logo">
                 <img src="../../assets/images/default-image.jpg" *ngIf="!product.logo">
-              </ion-avatar>
+            </ion-avatar>
             <ion-col size="9">
                 <ion-label>Name: <b>{{ product.serviceName }}</b></ion-label>
                 <ion-label>Category: <b>{{product.category}}</b></ion-label>

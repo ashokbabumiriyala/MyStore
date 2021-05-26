@@ -7,6 +7,7 @@ import { Router, NavigationStart } from '@angular/router';
 import { ConfirmPasswordValidation } from 'src/app/common/must-match.validator';
 import { FCM } from "cordova-plugin-fcm-with-dependecy-updated/ionic/ngx";
 import { IfStmt } from '@angular/compiler';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-signup',
@@ -14,9 +15,10 @@ import { IfStmt } from '@angular/compiler';
   styleUrls: ['./signup.page.scss'],
 })
 export class SignupPage implements OnInit {
+  agreed: boolean = false;
 
   constructor(private helperService:HelperService,
-    private toastController:ToastController,
+    private toastController:ToastController,public alertController: AlertController,
     private router:Router, private signUpService:SignUpService, public fcm: FCM) { }
   isignUp:IsignUp;
   signUpFormGroup:FormGroup;
@@ -103,6 +105,52 @@ async register(): Promise<void>{
 
       });
       
+}
+async presentAlertTermsConditions() {
+  const alert = await this.alertController.create({
+    cssClass: 'terms-conditions',
+    header: 'Terms And Conditions',
+    message: `<b>Terms and Conditions (“Terms”)</b>
+    <p>Please read these terms and conditions carefully before using My3Karrt mobile apps or website operated by the
+      company- Down South Empire Pvt. Ltd.</p>
+    <p>Your access to and use of the service is conditioned on your acceptance of and compliance with these terms.
+       These terms apply to all visitors, users and others who access or use this service.</p>
+    <b>Subscriptions:</b>
+    <p>Services provided by My3Karrt through this app are billed on a subscription basis. You will be billed in
+       advance on a recurring basis.</p>
+    <b>Confidential Information:</b>
+    <p>The bank details of each merchant or service provider is required for the sake of directing customers’ 
+       transaction amount directly to the Merchant or Service provider account.</p>
+    <p>Hence, after signing up, every Merchant and Service Provider have to provide the Bank information for the 
+       sake of KYC verification and online transactions. My3Karrt is responsible for the confidentiality of any 
+       information provided by the Merchants and Service Providers.</p>
+    <b>Access:</b>
+    <p>My3Karrt would require access to the business location or device location in order to display the business 
+    information to the customer. Camera or Photo library access would also be required in order to upload images.</p>
+    `,    
+    buttons: [
+      {
+        text: 'OK',
+        role: 'OK',
+        cssClass: 'agree-button-ok',
+        handler: () => {
+          this.agreed = true;
+        }
+      },
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'agree-button-cancel',
+        handler: () => {
+        }
+      }
+    ]
+  });
+
+  await alert.present();
+}
+dismisstAlertTermsConditions() {
+const ele = document.getElementsByClassName('terms-conditions')[0] as HTMLElement;
 }
 async presentToast(data: string,tostarColor:string) {
   const toast = await this.toastController.create({
