@@ -1,4 +1,5 @@
 <div #expandWrapper class='expand-wrapper' [ngClass]="!expanded ? 'collapsed':'expanded'">
+  <h6>Total Order Value:{{500 | currency:'INR'}}</h6>
   <ion-list>
     <ion-item *ngFor="let itm of  items">
       <ion-avatar slot="start">
