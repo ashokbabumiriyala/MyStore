@@ -39,6 +39,7 @@
         "rxjs": "~6.6.0",
         "strip-final-newline": "^2.0.0",
         "tslib": "^2.0.0",
+        "xcode": "^3.0.1",
         "zone.js": "~0.10.2"
     },
     "devDependencies": {

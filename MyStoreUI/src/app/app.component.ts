@@ -5,11 +5,9 @@ import { Router, NavigationStart } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { FCM } from "cordova-plugin-fcm-with-dependecy-updated/ionic/ngx";
 import { AppVersion } from '@ionic-native/app-version/ngx';
-import { Market } from '@ionic-native/market/ngx';
 
 import { CommonApiServiceCallsService} from './Shared/common-api-service-calls.service';
 import { environment} from './../environments/environment';
-import { AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -26,10 +24,8 @@ export class AppComponent implements OnInit {
   version:any;
   constructor(private helperService:HelperService,private router: Router,
     private platform: Platform, private fcm: FCM, private appVersion: AppVersion,
-    private commonApiServiceCallsService: CommonApiServiceCallsService, 
-    private alertController: AlertController, private market: Market
+    private commonApiServiceCallsService: CommonApiServiceCallsService
     ) {
-     console.log(this.platform.platforms());
       this.initializeApp();
     }
     initializeApp() {
@@ -40,11 +36,22 @@ export class AppComponent implements OnInit {
         } else {
           sessionStorage.setItem('mobile', 'false');
         }
-        if (sessionStorage.getItem('mobile') == 'true') { 
+        if (sessionStorage.getItem('mobile') == 'true') {
           this.appVersion.getVersionNumber().then((res) => {
             console.log(res);
             this.version = res;
-          }); 
+            if (this.version){
+              let apiUrl = environment.adminServiceUrl;
+              this.commonApiServiceCallsService.getAll(apiUrl + 'GetAppVersion').subscribe((res)=>{
+                let appNewVersion = res[0]['storeAppVersion'];
+                let needUpdate = appNewVersion.localeCompare(this.version, undefined, { numeric: true, sensitivity: 'base' })
+                if (needUpdate == 1) {
+                  this.helperService.showAlert('Please update your App to avail Latest features provided by My3Karrt.');
+                }
+              }, (error) => {
+              })
+            }
+          });
           this.fcm.getToken().then(token => {
             sessionStorage.setItem("PushToken",token);
           });
@@ -63,8 +70,8 @@ export class AppComponent implements OnInit {
             sessionStorage.setItem("PushToken",token);
           });
         }
-        
-      });    
+
+      });
     }
   ngOnInit() {
     this.router.events.forEach((event) => {
@@ -86,32 +93,7 @@ export class AppComponent implements OnInit {
       this.navigatePage(profile.defaultMenuId);
       }
     });
-    if (this.version){
-      let apiUrl = environment.adminServiceUrl;
-      this.commonApiServiceCallsService.getAll(apiUrl + 'GetAppVersion').subscribe((res)=>{
-        if (res.StoreAppVersion > this.version) {
-        }
-      }, (error) => {
 
-      })
-    }
-  }
-  async showAlert(){
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Alert',
-      message: 'Please update your App to avail Latest features provided by My3Karrt.',
-      backdropDismiss: false,
-      buttons: [
-      {
-          text: 'Update',
-          handler: () => {
-            this.market.open('com.velocious.my3Karrt_admin');
-          }
-        }
-      ]
-    });
-    await alert.present();
   }
   private loadMenu(menus: any[]): void {
     if (!menus || menus === undefined) {
@@ -193,7 +175,7 @@ export class AppComponent implements OnInit {
             this.router.navigate(['service-delivery-managment']);
             break;
 
-          
+
     }
   }
   openMenu() {
@@ -202,8 +184,10 @@ export class AppComponent implements OnInit {
   }
   logout() {
     let pushToken = sessionStorage.getItem('PushToken');
+    let mobileApp = sessionStorage.getItem('mobile');
     sessionStorage.clear();
     sessionStorage.setItem('PushToken',pushToken );
+    sessionStorage.setItem('mobile', mobileApp);
     this.menuItems = [];
     this.router.navigate(['login']);
   }

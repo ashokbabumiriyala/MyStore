@@ -175,7 +175,9 @@ ngOnInit() {
           this.tempProducts=[];
           this.serviceProductsForm.reset();
           this.selectedDocs = [];
-          this.selectedWebDocs.nativeElement.value = "";
+          if (this.selectedWebDocs) {
+            this.selectedWebDocs.nativeElement.value = "";
+          }
           this.editService=false;
           this.isFormSubmitted=false;
           this.presentToast("Service saved Successfully","success");

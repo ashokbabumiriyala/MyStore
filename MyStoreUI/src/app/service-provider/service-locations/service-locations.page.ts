@@ -139,6 +139,7 @@ export class ServiceLocationsPage implements OnInit {
     if (this.serviceLocationForm.invalid) {
       return;
     } else {
+      this.isFormSubmitted = false;
       const loadingController = await this.helperService.createLoadingController("loading");
       await loadingController.present();
       let fullAddress = this.Address.value + ',' + this.LandMark.value + ',' + this.City.value + ','
@@ -161,18 +162,20 @@ export class ServiceLocationsPage implements OnInit {
       };
       this.tempServiceLocation.push(serviceLocationObject);
       this.selectedDocs = [];
-      this.selectedWebDocs.nativeElement.value = "";
+
       let formDataList = this.getFormData(this.tempServiceLocation);
 
        this.serviceLocationService.locationSave('ServiceLocationSave', formDataList[0])
         .subscribe((data: any) => {
           loadingController.dismiss();
           this.presentToast("Service Location " + this.title + "  successfully.", "success");
+          if (this.selectedWebDocs) {
+            this.selectedWebDocs.nativeElement.value = "";
+          }
           this.tempServiceLocation=[];
           this.serviceLocationForm.reset();
           this.editLocation = false;
           this.serviceLocationListSelect();
-          this.isFormSubmitted = false;
         },
           (error: any) => {
             loadingController.dismiss();

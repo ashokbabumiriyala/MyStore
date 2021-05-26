@@ -175,14 +175,16 @@ constructor(private storeProductService:StoreProductService,
         await loadingController.present();
         await this.storeProductService.storeProductSave('StoreProductSave', formDataList[0])
         .subscribe((data: any) => {
+          loadingController.dismiss();
           this.storeProductsForm.reset();
           this.selectedDocs = [];
           this.tempProducts=[];
+          if (this.selectedWebDocs) {
+            this.selectedWebDocs.nativeElement.value = "";
+          }
           this.showTempList=false;
           this.editProduct = false;
-          this.selectedWebDocs.nativeElement.value = "";
           this.presentToast("Product saved Successfully","success");
-          loadingController.dismiss();
           this.storeProductsList();
         },
           (error: any) => {

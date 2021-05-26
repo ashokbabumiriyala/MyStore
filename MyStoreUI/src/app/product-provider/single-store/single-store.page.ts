@@ -7,9 +7,6 @@ import {HelperService} from '../../common/helper.service';
 import {SingleStoreService} from '../single-store/single-store.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ActionSheetController } from '@ionic/angular';
-import {File, FileEntry} from '@ionic-native/file/ngx';
-import { Alert } from 'ionic-angular';
-import { throwError, Observable } from 'rxjs';
 
 declare var google:any;
  @Component({
@@ -161,14 +158,16 @@ async saveStore():Promise<void>{
     };
     this.tempStore.push(storeObject);
     this.selectedDocs = [];
-    this.selectedWebDocs.nativeElement.value = "";
     let formDataList = this.getFormData(this.tempStore);
     this.singleStoreService.singleStoreSave('StoreSave',formDataList[0])
     .subscribe((data: any) => {
       loadingController.dismiss();
-      this.editStore=false;
+      if (this.selectedWebDocs) {
+        this.selectedWebDocs.nativeElement.value = "";
+      }
       this.tempStore=[];
       this.singleStoreFormGroup.reset();
+      this.editStore=false;
       this.presentToast("Store " + this.title+ "  successfully.","success");
       this.subStoreList();
     },
@@ -330,6 +329,14 @@ pickImage(sourceType) {
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE,
   }
+  this.camera.getPicture(options).then((imageData) => {
+    // imageData is a file URI
+      let base64Img = 'data:image/jpeg;base64,' + imageData;
+      this.getblobObject(base64Img);
+    }, (err) => {
+      // Handle error
+      console.log(err);
+    });
 
 }
 selectedImgWeb(data){

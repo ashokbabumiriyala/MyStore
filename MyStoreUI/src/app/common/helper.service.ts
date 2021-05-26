@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { IProviderDetails} from 'src/app/common/provider-details';
 import { LoadingController, ToastController, AlertController } from '@ionic/angular';
+import { Market } from '@ionic-native/market/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class HelperService {
 // providerDetails = this.providerSource.asObservable();
 
 constructor(private loadingController:LoadingController, private toastController: ToastController,
-  private alertController: AlertController) { }
+  private alertController: AlertController, private market: Market) { }
 
 
 private profileObs$: BehaviorSubject<IProviderDetails> = new BehaviorSubject(null);
@@ -87,7 +88,25 @@ async presentToast(data: string, toastColor:string) {
     })
     return result;
   }
+  async showAlert(message){
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Alert',
+      message: message,
+      backdropDismiss: false,
+      buttons: [
+      {
+          text: 'Update',
+          handler: () => {
+            this.market.open('com.velocious.my3Karrt_admin');
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
 }
+
 
 export interface iDropdown {
   label: string;
