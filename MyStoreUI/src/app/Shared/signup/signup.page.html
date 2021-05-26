@@ -85,8 +85,13 @@
             <ion-row>
                 <ion-item style="--background: transparent;" lines="none">
                     <ion-label>I agree to the <a href="javascript:;" (click)="presentAlertTermsConditions()">Terms & Conditions</a>.</ion-label>
-                    <ion-checkbox slot="start" style="margin-inline-end:16px;--background: transparent;" [checked]="agreed" ([ngModel])="agreed" name="termsConditions"></ion-checkbox>
+                  
+                    <ion-checkbox slot="start" style="margin-inline-end:16px;--background: transparent;"   checked="false"
+                    formControlName="agreed"></ion-checkbox>
                 </ion-item>
+                <small *ngIf="isFormSubmitted &&  agreed.errors"><span style="color: red;">*Please accept the terms
+                </span>
+                </small>
             </ion-row>
             <ion-row>
                 <ion-col class="ion-text-center ion-margin-top" size-md="6" size-xs="12" size-sm="12" push-md="3"

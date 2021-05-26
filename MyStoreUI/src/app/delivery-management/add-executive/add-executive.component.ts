@@ -120,12 +120,18 @@ export class AddExecutiveComponent implements OnInit {
       };
       await this.deliveryManagmentService.saveDeliveryExecutive(serviceName,this.iExecutive)
       .subscribe((data: any) => {  
+        if(data.operationStatusDTO.transactionStatus==10){
+          loadingController.dismiss();
+          this.presentToast("This username or mobile number already exists.","danger");
+        }else{
+          this.isFormSubmitted=false;
         this.executiveId=0;      
         this.presentToast(message,"success");
         this.executiveFormGroup.reset();
         loadingController.dismiss();
-       this.editExecutive= false;
-       this.executivesListSelect();
+        this.editExecutive= false;
+        this.executivesListSelect();
+        }
       },
         (error: any) => {
           loadingController.dismiss();

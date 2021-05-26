@@ -15,7 +15,7 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./signup.page.scss'],
 })
 export class SignupPage implements OnInit {
-  agreed: boolean = false;
+  
 
   constructor(private helperService:HelperService,
     private toastController:ToastController,public alertController: AlertController,
@@ -45,6 +45,9 @@ export class SignupPage implements OnInit {
   get ProviderName() {
     return this.signUpFormGroup.get('ProviderName');
   }
+  get agreed() {
+    return this.signUpFormGroup.get('agreed');
+  }
   get Category() {
     return this.signUpFormGroup.get('Category');
   }
@@ -60,7 +63,8 @@ get confirmPassword(){
       MobileNumber: new FormControl('', Validators.required)  ,
       Email: new FormControl('', Validators.required),
       Password: new FormControl('', Validators.required),
-      confirmPassword:new FormControl('', Validators.required)
+      confirmPassword:new FormControl('', Validators.required),
+      agreed:new FormControl('false',Validators.required)
     },
     {
       validators: [ConfirmPasswordValidation.ConfirmPassword
@@ -69,6 +73,9 @@ get confirmPassword(){
   );
 }
 async register(): Promise<void>{
+  if(this.signUpFormGroup.controls.agreed.value==="false" ||this.signUpFormGroup.controls.agreed.value===false){  
+    this.signUpFormGroup.controls['agreed'].setErrors({'error': true});
+  }
   this.isFormSubmitted = true;
     if (this.signUpFormGroup.invalid) {
       return;
@@ -132,10 +139,7 @@ async presentAlertTermsConditions() {
       {
         text: 'OK',
         role: 'OK',
-        cssClass: 'agree-button-ok',
-        handler: () => {
-          this.agreed = true;
-        }
+        cssClass: 'agree-button-ok'        
       },
       {
         text: 'Cancel',

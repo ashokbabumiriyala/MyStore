@@ -40,6 +40,7 @@ longitude:any;
     }
 
 ngOnInit() {
+  debugger;
   if (sessionStorage.getItem('mobile') == 'true') {
     this.mobileApp = true;
   } else {
@@ -56,6 +57,7 @@ const loadingController = await this.helperService.createLoadingController("load
   const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Mode:'Select'};
   await this.singleStoreService.subStoreListSelect('ProviderSubStoreSelect', dataObject)
   .subscribe((data: any) => {
+    console.log(data);
    this.masterStore= data.storeMaster;
    this.storeType= data.provideStoreType;
     if(data.provideStoreList.length>0){

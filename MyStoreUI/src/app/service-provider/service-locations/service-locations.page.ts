@@ -331,7 +331,7 @@ export class ServiceLocationsPage implements OnInit {
     this.editLocation = false;
     this.serviceLocationForm.reset();
   }
-  async presentAlertConfirm(rowdata:any) {
+  async presentAlertConfirm(rowdata:any) {   
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Do you want to delete',
@@ -340,7 +340,7 @@ export class ServiceLocationsPage implements OnInit {
        {
           text: 'Confirm',
           handler: () => {
-           this.deleteLocation(rowdata.Id);
+           this.deleteLocation(rowdata.id);
           }
         }
         , {
@@ -357,9 +357,10 @@ export class ServiceLocationsPage implements OnInit {
   }
 
   async deleteLocation(locationId:number){
+  
     const loadingController = await this.helperService.createLoadingController("loading");
       await loadingController.present();
-      const dataObject={ServiceLocationId: locationId};
+      const dataObject={LocationId:Number(locationId)};
       await this.serviceLocationService.locationDelete('serviceLocationDelete', dataObject)
       .subscribe((data: any) => {
         this.serviceLocationListSelect();

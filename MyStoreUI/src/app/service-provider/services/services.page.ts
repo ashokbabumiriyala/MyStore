@@ -251,16 +251,17 @@ ngOnInit() {
       message: rowdata.serviceName,
       buttons: [
         {
+          text: 'Confirm',
+          handler: () => {
+           this.deleteService(rowdata.serviceID);
+          }
+        },
+        {
           text: 'Cancel',
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
-          }
-        }, {
-          text: 'Okay',
-          handler: () => {
-           this.deleteService(rowdata.serviceID);
           }
         }
       ]
