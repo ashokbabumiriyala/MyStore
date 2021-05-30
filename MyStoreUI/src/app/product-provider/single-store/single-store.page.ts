@@ -56,7 +56,6 @@ const loadingController = await this.helperService.createLoadingController("load
   const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Mode:'Select'};
   await this.singleStoreService.subStoreListSelect('ProviderSubStoreSelect', dataObject)
   .subscribe((data: any) => {
-    console.log(data);
    this.masterStore= data.storeMaster;
    this.storeType= data.provideStoreType;
     if(data.provideStoreList.length>0){
@@ -137,6 +136,7 @@ async saveStore():Promise<void>{
     return;
   }
   else{
+    const serviceName= this.storeId>0?"StoreUpdate":"StoreSave";
     this.isFormSubmitted=false;
     const loadingController = await this.helperService.createLoadingController("loading");
     await loadingController.present();
@@ -160,17 +160,19 @@ async saveStore():Promise<void>{
     this.tempStore.push(storeObject);
     this.selectedDocs = [];
     let formDataList = this.getFormData(this.tempStore);
-    this.singleStoreService.singleStoreSave('StoreSave',formDataList[0])
+    this.singleStoreService.singleStoreSave(serviceName,formDataList[0])
     .subscribe((data: any) => {
+     if(data.responsecode=== 6000){
       loadingController.dismiss();
       if (this.selectedWebDocs) {
         this.selectedWebDocs.nativeElement.value = "";
       }
       this.tempStore=[];
-      this.singleStoreFormGroup.reset();
-      this.editStore=false;
-      this.presentToast("Store " + this.title+ "  successfully.","success");
+      this.singleStoreFormGroup.reset();     
+      this.presentToast("Store " + this.title+ "  successfully.","success");    
       this.subStoreList();
+      this.editStore=false;
+    }
     },
       (error: any) => {
         loadingController.dismiss();
@@ -203,28 +205,15 @@ getFormData(tempProducts:any[]){
 
 //#endregion
 async editStoreInfo(rowdata:any){
+  console.log(rowdata);
   this.editStore = true;
   if(rowdata==null){
     this.storeId=0;
     this.singleStoreFormGroup.reset();
     this.title="Register";
   }else{
-    const loadingController = await this.helperService.createLoadingController("loading");
-    await loadingController.present();
-    const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Id: Number(rowdata.id),Mode:'Edit'};
-    this.storeId=Number(rowdata.id);
-    await this.singleStoreService.subStoreListSelect('ProviderSubStoreSelect', dataObject)
-    .subscribe((data: any) => {
-      this.masterStore=[];
-      this.storeType=[];
-      this.masterStore= data.storeMaster;
-      this.storeType= data.provideStoreType;
-      this.setForamADetailsToPage(data.provideStoreList[0]);
-      loadingController.dismiss();
-    },
-      (error: any) => {
-        loadingController.dismiss();
-      });
+    this.storeId=rowdata.id;
+   this.setForamADetailsToPage(rowdata)
     this.title="Update";
   }
 	// this.storeMasterList = true;

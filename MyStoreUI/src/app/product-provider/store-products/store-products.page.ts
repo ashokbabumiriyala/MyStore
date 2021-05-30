@@ -29,6 +29,7 @@ stores=[];
 tempDocs=[];
 selectedDocs=[];
 mobileApp:boolean;
+productId:number;
 constructor(private storeProductService:StoreProductService,
   private   toastController:ToastController,
   private helperService:HelperService,
@@ -160,8 +161,11 @@ constructor(private storeProductService:StoreProductService,
     if (this.storeProductsForm.invalid) {
       return;
     }else{
+      debugger;
+      const serviceName=this.productId>0?"StoreProductUpdate":"StoreProductSave";
       this.isFormSubmitted=false;
-      const productObject= {ProviderId: Number(sessionStorage.getItem("providerId")),StoreID:this.StoreID.value, Category:this.Category.value,
+      const productObject= {ProductId: Number(this.productId),ProviderId: Number(sessionStorage.getItem("providerId")),
+        StoreID:this.StoreID.value, Category:this.Category.value,
         ProductName:this.ProductName.value,
         Units:this.Units.value,Quantity:Number(this.Quantity.value),
         DiscountType :this.DiscountType.value, Discount:Number(this.Discount.value),
@@ -173,7 +177,7 @@ constructor(private storeProductService:StoreProductService,
         let formDataList = this.getFormData(this.tempProducts);
         const loadingController = await this.helperService.createLoadingController("loading");
         await loadingController.present();
-        await this.storeProductService.storeProductSave('StoreProductSave', formDataList[0])
+        await this.storeProductService.storeProductSave(serviceName, formDataList[0])
         .subscribe((data: any) => {
           loadingController.dismiss();
           this.storeProductsForm.reset();
@@ -191,8 +195,6 @@ constructor(private storeProductService:StoreProductService,
             loadingController.dismiss();
           });
     }
-
-
   }
   getFormData(tempProducts:any[]){
     let formData = [];
@@ -226,13 +228,29 @@ constructor(private storeProductService:StoreProductService,
     this.showTempList=false;
   }
   }
-  editProductInfo(){
-      this.editProduct = true;
-  }
-  addNewProduct() {
+  editProductInfo(rowdata:any){
     this.editProduct = true;
-    this.editMaster = !this.editMaster;
+   
+    if(rowdata===null){
+        this.productId=0;
+    }else{
+      this.productId=rowdata.id;
+      this.setForamADetailsToPage(rowdata);
+    }
   }
+  private setForamADetailsToPage(data: any): void {
+    this.storeProductsForm.patchValue({
+      StoreID:String(data.storeID),
+      Category:data.category,
+      ProductName: data.productName,
+      Units: data.units,
+      Quantity: data.quantity,
+      DiscountType: data.discountType,
+      Discount: data.discount,
+      PriceBeforeDiscount: data.priceBeforeDiscount ,  
+      PriceAfterDiscount: data.priceAfterDiscount    
+  });
+  }  
   async presentToast(data: string,tostarColor:string) {
     const toast = await this.toastController.create({
       message: data,
@@ -311,4 +329,3 @@ constructor(private storeProductService:StoreProductService,
         });
   }
 }
-

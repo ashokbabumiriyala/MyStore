@@ -152,6 +152,7 @@ export class ServiceLocationsPage implements OnInit {
         this.latitude = null;
         this.longitude = null;
       }
+      const serviceName=this.locationId>0?"ServiceLocationUpdate":"ServiceLocationSave";
       const serviceLocationObject = {
         ServiceMasterID: Number(this.ServiceMasterID.value), BusinessType: Number(this.BusinessType.value),
         BusinessName: this.BusinessName.value, BusinessManagerName: this.BusinessManagerName.value.toString(), ManagerID: Number(this.ManagerID.value),
@@ -165,7 +166,7 @@ export class ServiceLocationsPage implements OnInit {
 
       let formDataList = this.getFormData(this.tempServiceLocation);
 
-       this.serviceLocationService.locationSave('ServiceLocationSave', formDataList[0])
+       this.serviceLocationService.locationSave(serviceName, formDataList[0])
         .subscribe((data: any) => {
           loadingController.dismiss();
           this.presentToast("Service Location " + this.title + "  successfully.", "success");
@@ -204,21 +205,7 @@ export class ServiceLocationsPage implements OnInit {
       await loadingController.present();
       this.locationId = rowdata.id;
       this.title = "Update";
-      const dataObject = { ProviderId: Number(sessionStorage.getItem("providerId")), Id: Number(rowdata.id), Mode: 'Edit' };
-      await this.serviceLocationService.locationListSelect('serviceLocationSelect', dataObject)
-        .subscribe((data: any) => {
-          this.serviceMaster = [];
-          this.deliveryType = [];
-          this.businessType = [];
-          this.serviceMaster = data.serviceMaster;
-          this.deliveryType = data.deliveryType;
-          this.businessType = data.serviceType;
-          this.setForamADetailsToPage(data.locationList[0]);
-          loadingController.dismiss();
-        },
-          (error: any) => {
-            loadingController.dismiss();
-          });
+     this. setForamADetailsToPage(rowdata);
     }
   }
 

@@ -24,6 +24,7 @@ selectedDocs=[];
 tempProducts=[];
 services=[];
 serviceProductList=[];
+serviceId:number;
 @ViewChild('selectedWebDocs') selectedWebDocs;
 mobileApp:boolean;
   constructor(private   toastController:ToastController,
@@ -42,8 +43,26 @@ ngOnInit() {
   this.createServiceLocationForm();
   this.serviceProductsList();
 }
-  editServiceInfo(){
-	  this.editService = true;
+  editServiceInfo(rowdata:any){
+    this.editService = true;
+    if(rowdata===null){
+       this.serviceId=0;
+    }else{
+      this.serviceId=rowdata.serviceID;
+     this.setForamADetailsToPage(rowdata);
+    }
+  }
+  private setForamADetailsToPage(data: any): void {
+    this.serviceProductsForm.patchValue({
+      ServiceLocationID:String(data.serviceLocationID),
+      Category:data.category,
+      ServiceName: data.serviceName,
+      DiscountType: data.discountType,
+      Discount: data.discount,
+      PriceBeforeDiscount: data.priceBeforeDiscount,
+      PriceAfterDiscount: data.priceAfterDiscount
+     
+  });
   }
   async serviceProductsList(){
     const loadingController = await this.helperService.createLoadingController("loading");
@@ -160,7 +179,9 @@ ngOnInit() {
     if (this.serviceProductsForm.invalid) {
       return;
     }else{
-      const productObject= {ProviderId: Number(sessionStorage.getItem("providerId")),ServiceLocationID: Number(this.ServiceLocationID.value), Category:this.Category.value,
+      const serviceName=this.serviceId>0?"ServiceAndDocumentsUpdate":"ServiceAndDocumentsSave";
+      const productObject= {ServiceId:Number(this.serviceId),ProviderId: Number(sessionStorage.getItem("providerId")),
+      ServiceLocationID: Number(this.ServiceLocationID.value), Category:this.Category.value,
         ServiceName:this.ServiceName.value,
         DiscountType :this.DiscountType.value, Discount:Number(this.Discount.value),
         PriceBeforeDiscount:Number(this.PriceBeforeDiscount.value)
@@ -169,7 +190,7 @@ ngOnInit() {
         let formDataList = this.getFormData(this.tempProducts);
         const loadingController = await this.helperService.createLoadingController("loading");
         await loadingController.present();
-        await this.serviceUploadService.uploadServiceDocument('ServiceAndDocumentsSave', formDataList[0])
+        await this.serviceUploadService.uploadServiceDocument(serviceName, formDataList[0])
         .subscribe((data: any) => {
           loadingController.dismiss();
           this.tempProducts=[];
