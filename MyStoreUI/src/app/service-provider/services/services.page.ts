@@ -25,6 +25,7 @@ tempProducts=[];
 services=[];
 serviceProductList=[];
 serviceId:number;
+uploadedDocuments= [];
 @ViewChild('selectedWebDocs') selectedWebDocs;
 mobileApp:boolean;
   constructor(private   toastController:ToastController,
@@ -45,13 +46,27 @@ ngOnInit() {
 }
   editServiceInfo(rowdata:any){
     this.editService = true;
+    this.uploadedDocuments= [];
     if(rowdata===null){
        this.serviceId=0;
     }else{
       this.serviceId=rowdata.serviceID;
-     this.setForamADetailsToPage(rowdata);
+      this.setForamADetailsToPage(rowdata);
+      this.getUploadDocuments( this.serviceId);
     }
   }
+  private getUploadDocuments(serviceProductsID:number) {  
+    this.uploadedDocuments= [];
+    const objData={Id: Number(serviceProductsID) ,searchKey:'ServicesUpload'}
+          this.serviceUploadService.getUploadDocuments("UploadedDocuments", objData)
+         .subscribe((data: any) => {
+            this.uploadedDocuments=data;
+         },
+           (error: any) => {
+            
+           });
+   }
+
   private setForamADetailsToPage(data: any): void {
     this.serviceProductsForm.patchValue({
       ServiceLocationID:String(data.serviceLocationID),
@@ -265,7 +280,7 @@ ngOnInit() {
     this.editService = false;
     this.serviceLocationForm.reset();
   }
-  async presentAlertConfirm(rowdata:any) {
+  async presentAlertConfirm(rowdata:any,type:string) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Do you want to delete ?',
@@ -274,7 +289,12 @@ ngOnInit() {
         {
           text: 'Confirm',
           handler: () => {
-           this.deleteService(rowdata.serviceID);
+           if(type==='document'){   
+             this.deleteDocument(rowdata);
+            
+          }else{
+            this.deleteService(rowdata.serviceID);
+          }
           }
         },
         {
@@ -305,4 +325,20 @@ ngOnInit() {
           loadingController.dismiss();
         });
      }
+
+     async deleteDocument(rowdata:any){     
+      const loadingController = await this.helperService.createLoadingController("loading");
+      
+        await loadingController.present();
+        const dataObject={searchKey:'ServicesUpload',ProductId: rowdata.servicesID,DocumentId:rowdata.id,filePath:rowdata.logo};
+        await this.serviceUploadService.deleteDocument('DeleteDocument', dataObject)
+        .subscribe((data: any) => {
+          this.uploadedDocuments= [];
+          loadingController.dismiss();
+          this.getUploadDocuments(Number(rowdata.servicesID));
+        },
+          (error: any) => {
+            loadingController.dismiss();
+          });
+    }
 }

@@ -7,6 +7,7 @@ import { CommonApiServiceCallsService} from '../../Shared/common-api-service-cal
 })
 export class ServiceUploadService {
   private apiUrl = environment.serviceMasterServiceUrl;
+  private apiStoreUrl = environment.storeMasterServiceUrl;
 
   constructor(private commonApiServiceCallsService:CommonApiServiceCallsService) { }
   uploadServiceDocument(methodName: string, resouce: any): Observable<any> {
@@ -18,6 +19,15 @@ export class ServiceUploadService {
 
   serviceDelete(methodName: string, resouce: any): Observable<any> {
     return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
+  }
+
+  
+  getUploadDocuments(methodName: string, resouce: any): Observable<any> {
+    return this.commonApiServiceCallsService.select(this.apiStoreUrl + methodName, resouce);
+  }
+
+  deleteDocument(methodName: string, resouce: any): Observable<any> {
+    return this.commonApiServiceCallsService.select(this.apiStoreUrl + methodName, resouce);
   }
 
 }

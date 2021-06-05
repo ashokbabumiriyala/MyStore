@@ -20,4 +20,12 @@ constructor(private commonApiServiceCallsService:CommonApiServiceCallsService) {
     return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
   }
 
+  getUploadDocuments(methodName: string, resouce: any): Observable<any> {
+    return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
+  }
+
+  deleteDocument(methodName: string, resouce: any): Observable<any> {
+    return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
+  }
+
 }

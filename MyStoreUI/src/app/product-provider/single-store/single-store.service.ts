@@ -20,4 +20,13 @@ export class SingleStoreService {
       deleteStore(methodName: string, resouce: any): Observable<any> {
         return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
         }
+
+        
+  getUploadDocuments(methodName: string, resouce: any): Observable<any> {
+    return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
+  }
+
+  deleteDocument(methodName: string, resouce: any): Observable<any> {
+    return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
+  }
 }

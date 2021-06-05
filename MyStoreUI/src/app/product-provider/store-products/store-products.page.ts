@@ -30,6 +30,7 @@ tempDocs=[];
 selectedDocs=[];
 mobileApp:boolean;
 productId:number;
+uploadedDocuments= [];
 constructor(private storeProductService:StoreProductService,
   private   toastController:ToastController,
   private helperService:HelperService,
@@ -229,14 +230,27 @@ constructor(private storeProductService:StoreProductService,
   }
   }
   editProductInfo(rowdata:any){
-    this.editProduct = true;
    
+    this.editProduct = true  ;
+    this.uploadedDocuments= [];
     if(rowdata===null){
         this.productId=0;
     }else{
       this.productId=rowdata.id;
       this.setForamADetailsToPage(rowdata);
+      this.getUploadDocuments(this.productId);
     }
+  }
+
+  private getUploadDocuments(storeProductsID:number) {
+   const objData={Id: Number(storeProductsID) ,searchKey:'StoreUpload'}
+         this.storeProductService.getUploadDocuments("UploadedDocuments", objData)
+        .subscribe((data: any) => {
+           this.uploadedDocuments=data;
+        },
+          (error: any) => {
+           
+          });
   }
   private setForamADetailsToPage(data: any): void {
     this.storeProductsForm.patchValue({
@@ -287,11 +301,11 @@ constructor(private storeProductService:StoreProductService,
       SearchStoreId: new FormControl('0')
     });
   }
-
   changeStore(){
     this.storeProductsList();
-  }
-  async presentAlertConfirm(rowdata:any) {
+  } 
+
+  async presentAlertConfirm(rowdata:any,type:string) {
       const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Do you want to delete ?',
@@ -299,8 +313,12 @@ constructor(private storeProductService:StoreProductService,
       buttons: [
        {
           text: 'Confirm',
-          handler: () => {
-           this.deleteStoreProduct(rowdata.id)
+          handler: () => {           
+            if(type==='document'){
+              this.deleteDocument(rowdata);
+            }else{
+           this.deleteStoreProduct(rowdata.id);
+            }
           }
         },
         {
@@ -323,6 +341,23 @@ constructor(private storeProductService:StoreProductService,
       .subscribe((data: any) => {
         this.storeProductsList();
         loadingController.dismiss();
+      },
+        (error: any) => {
+          loadingController.dismiss();
+        });
+  }
+
+
+  async deleteDocument(rowdata:any){
+    const loadingController = await this.helperService.createLoadingController("loading");
+    
+      await loadingController.present();
+      const dataObject={searchKey:'StoreUpload',ProductId: rowdata.storeProductsID,DocumentId:rowdata.id,filePath:rowdata.logo};
+      await this.storeProductService.deleteDocument('DeleteDocument', dataObject)
+      .subscribe((data: any) => {
+        this.uploadedDocuments= [];
+        loadingController.dismiss();
+        this.getUploadDocuments(Number(rowdata.storeProductsID));
       },
         (error: any) => {
           loadingController.dismiss();

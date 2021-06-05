@@ -30,6 +30,7 @@ tempStore=[];
 geocoder:any;
 latitude:any;
 longitude:any;
+uploadedDocuments= [];
 @ViewChild('selectedWebDocs') selectedWebDocs;
   constructor(private   toastController:ToastController,private helperService:HelperService,
     private singleStoreService:SingleStoreService,
@@ -205,7 +206,7 @@ getFormData(tempProducts:any[]){
 
 //#endregion
 async editStoreInfo(rowdata:any){
-  console.log(rowdata);
+  this.uploadedDocuments= [];
   this.editStore = true;
   if(rowdata==null){
     this.storeId=0;
@@ -215,9 +216,20 @@ async editStoreInfo(rowdata:any){
     this.storeId=rowdata.id;
    this.setForamADetailsToPage(rowdata)
     this.title="Update";
+    this.getUploadDocuments(rowdata.id);
   }
-	// this.storeMasterList = true;
 }
+private getUploadDocuments(storeId:number) {
+  const objData={Id: Number(storeId) ,searchKey:'Store'}
+        this.singleStoreService.getUploadDocuments("UploadedDocuments", objData)
+       .subscribe((data: any) => {
+          this.uploadedDocuments=data;
+       },
+         (error: any) => {
+          
+         });
+ }
+
 private setForamADetailsToPage(data: any): void {
   this.singleStoreFormGroup.patchValue({
     StoreMasterID:String(data.storeMasterID),
@@ -249,7 +261,7 @@ ionViewDidLeave() {
   this.editStore = false;
   this.singleStoreFormGroup.reset();
 }
-async presentAlertConfirm(rowData:any) {
+async presentAlertConfirm(rowData:any,type:string) {
   const alert = await this.alertController.create({
     cssClass: 'my-custom-class',
     header: 'Do you want to delete',
@@ -257,9 +269,13 @@ async presentAlertConfirm(rowData:any) {
     buttons: [
       {
         text: 'Confirm',
-        handler: () => {
-          console.log(rowData);
-          this.deleteStore(rowData.id);
+        handler: () => {   
+          if(type==='document'){
+            this.deleteDocument(rowData);
+          }else{
+            this.deleteStore(rowData.id);
+          }     
+         
         }
       },
       {
@@ -274,6 +290,22 @@ async presentAlertConfirm(rowData:any) {
   });
   await alert.present();
 }
+
+async deleteDocument(rowdata:any){
+  const loadingController = await this.helperService.createLoadingController("loading");  
+    await loadingController.present();
+    const dataObject={searchKey:'Store',ProductId:rowdata.id,DocumentId:0,filePath:rowdata.logo};
+    await this.singleStoreService.deleteDocument('DeleteDocument', dataObject)
+    .subscribe((data: any) => {
+      this.uploadedDocuments= [];
+      loadingController.dismiss();
+      this.getUploadDocuments(Number(rowdata.storeProductsID));
+    },
+      (error: any) => {
+        loadingController.dismiss();
+      });
+}
+
 async deleteStore(storeId:number){
   const loadingController = await this.helperService.createLoadingController("loading");
     await loadingController.present();

@@ -33,6 +33,7 @@ export class ServiceLocationsPage implements OnInit {
   latitude:any;
   longitude:any;
   geocoder:any;
+  uploadedDocuments= [];
   constructor(private toastController: ToastController,
     private helperService: HelperService, private serviceLocationService: ServiceLocationService,
     private camera: Camera,
@@ -206,8 +207,21 @@ export class ServiceLocationsPage implements OnInit {
       this.locationId = rowdata.id;
       this.title = "Update";
      this. setForamADetailsToPage(rowdata);
+     this.getUploadDocuments(rowdata.id);
+
+
     }
   }
+
+  private getUploadDocuments(serviceID:number) {
+    const objData={Id: Number(serviceID) ,searchKey:'Services'}
+          this.serviceLocationService.getUploadDocuments("UploadedDocuments", objData)
+         .subscribe((data: any) => {
+            this.uploadedDocuments=data;
+         },
+           (error: any) => {            
+           });
+    }
 
   async selectImage() {
     const actionSheet = await this.actionSheetController.create({
@@ -276,8 +290,7 @@ export class ServiceLocationsPage implements OnInit {
       DeliveryType: String(data.deliveryTypeId)
     });
   }
-  selectedImgWeb(data) {
-    console.log(data);
+  selectedImgWeb(data) {   
     var files = data.target.files;
     for (let i = 0; i < files.length; i++) {
       if (files[i]) {
@@ -318,7 +331,7 @@ export class ServiceLocationsPage implements OnInit {
     this.editLocation = false;
     this.serviceLocationForm.reset();
   }
-  async presentAlertConfirm(rowdata:any) {   
+  async presentAlertConfirm(rowdata:any,type:string) {   
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Do you want to delete',
@@ -327,7 +340,12 @@ export class ServiceLocationsPage implements OnInit {
        {
           text: 'Confirm',
           handler: () => {
+
+            if(type==='document'){
+              this.deleteDocument(rowdata);
+            }else{
            this.deleteLocation(rowdata.id);
+            }
           }
         }
         , {
@@ -341,6 +359,20 @@ export class ServiceLocationsPage implements OnInit {
       ]
     });
     await alert.present();
+  }
+  async deleteDocument(rowdata:any){
+    const loadingController = await this.helperService.createLoadingController("loading");    
+      await loadingController.present();
+      const dataObject={searchKey:'Services',ProductId:rowdata.id,DocumentId:0,filePath:rowdata.logo};
+      await this.serviceLocationService.deleteDocument('DeleteDocument', dataObject)
+      .subscribe((data: any) => {
+        this.uploadedDocuments= [];
+        loadingController.dismiss();
+        this.getUploadDocuments(Number(rowdata.storeProductsID));
+      },
+        (error: any) => {
+          loadingController.dismiss();
+        });
   }
 
   async deleteLocation(locationId:number){
@@ -358,24 +390,3 @@ export class ServiceLocationsPage implements OnInit {
         });
      }
 }
-
-
-
-// interface IServiceLocations{
-//   ServiceMasterID :number;
-//   BusinessType :number;
-//   BusinessName:string;
-//   BusinessManagerName :string;
-//   ManagerID :number;
-//   MobileNmuber :string;
-//   Address :string;
-//   City :string;
-//   State:string;
-//   PinCode :string;
-//   LandMark :string;
-//   FromTime :string;
-//   ToTime :string;
-//   DeliveryType:Number;
-//   Id:number;
-//   Mode:string;
-//  }
