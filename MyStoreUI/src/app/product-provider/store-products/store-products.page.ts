@@ -79,6 +79,14 @@ constructor(private storeProductService:StoreProductService,
   get SearchStoreId(){
     return this.storeForm.get('SearchStoreId');
   }
+
+  get AvailableQty(){
+    return this.storeProductsForm.get('AvailableQty');
+  }
+
+  get Description(){
+    return this.storeProductsForm.get('Description');
+  }
   async storeProductsList(){
     const loadingController = await this.helperService.createLoadingController("loading");
     await loadingController.present();
@@ -151,18 +159,19 @@ constructor(private storeProductService:StoreProductService,
       DiscountType: new FormControl(''),
       Discount: new FormControl('') ,
       PriceBeforeDiscount: new FormControl('') ,
-      PriceAfterDiscount: new FormControl('', Validators.required)
+      PriceAfterDiscount: new FormControl('', Validators.required),
+      AvailableQty: new FormControl('', Validators.required),
+      Description: new FormControl('', Validators.required)
     });
   }
 
-  async uploadProduct():Promise<void> {
+  async uploadProduct():Promise<void> {  
     this.Discount.setErrors(null);
     this.PriceBeforeDiscount.setErrors(null);
     this.isFormSubmitted=true;
     if (this.storeProductsForm.invalid) {
       return;
-    }else{
-      debugger;
+    }else{     
       const serviceName=this.productId>0?"StoreProductUpdate":"StoreProductSave";
       this.isFormSubmitted=false;
       const productObject= {ProductId: Number(this.productId),ProviderId: Number(sessionStorage.getItem("providerId")),
@@ -171,7 +180,8 @@ constructor(private storeProductService:StoreProductService,
         Units:this.Units.value,Quantity:Number(this.Quantity.value),
         DiscountType :this.DiscountType.value, Discount:Number(this.Discount.value),
         PriceBeforeDiscount:Number(this.PriceBeforeDiscount.value)
-        ,PriceAfterDiscount:Number(this.PriceAfterDiscount.value), Files: this.selectedDocs};
+        ,PriceAfterDiscount:Number(this.PriceAfterDiscount.value),AvailableQty:Number(this.AvailableQty.value),
+        Description:this.Description.value, Files: this.selectedDocs};
         this.tempProducts.push(productObject);
         this.showTempList=true;
 
@@ -262,7 +272,9 @@ constructor(private storeProductService:StoreProductService,
       DiscountType: data.discountType,
       Discount: data.discount,
       PriceBeforeDiscount: data.priceBeforeDiscount ,  
-      PriceAfterDiscount: data.priceAfterDiscount    
+      PriceAfterDiscount: data.priceAfterDiscount,   
+      AvailableQty: data.availableQty   ,
+      Description: data.description   
   });
   }  
   async presentToast(data: string,tostarColor:string) {

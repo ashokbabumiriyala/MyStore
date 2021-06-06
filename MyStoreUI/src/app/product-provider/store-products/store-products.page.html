@@ -155,6 +155,26 @@
             Required </span>
         </small>
       </ion-col>
+
+      <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
+        <ion-item class="ion-ele">
+          <ion-label position="floating">Available Quantity</ion-label>
+          <ion-input type="number" formControlName="AvailableQty" required></ion-input>
+          <ion-icon name="basket-outline" slot="start"></ion-icon>
+        </ion-item>
+        <small *ngIf="isFormSubmitted &&  AvailableQty.errors"><span style="color: red;">*Available Quantity Required </span>
+        </small>
+      </ion-col>   
+      <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
+        <ion-item class="ion-ele">
+          <ion-label position="floating">Description</ion-label>
+          <ion-input type="text" formControlName="Description"  required></ion-input>
+          <ion-icon name="pricetags-outline" slot="start"></ion-icon>
+        </ion-item>
+        <small *ngIf="isFormSubmitted &&  Description.errors"><span style="color: red;">*Description Required </span>
+        </small>
+      </ion-col>
+   
       <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3" *ngIf="mobileApp">
         <ion-item class="ion-ele">
           <ion-icon name="images-outline" slot="start"></ion-icon>
@@ -180,13 +200,7 @@
       </ion-col>
     </ion-row>
 
-    <!-- <ion-row>
-      <ion-col class="ion-text-center ion-margin-top" size-md="6" size-xs="12" size-sm="12" push-md="3" push-lg="3"
-        size-lg="6">
-        <ion-button type="submit" shape="round" expand="block" (click)="addProduct();"
-          class="ion-margin-bottom ion-button">Add</ion-button>
-      </ion-col>
-    </ion-row> -->
+
 
     <ion-list class="ion-list-ele"  *ngIf="uploadedDocuments.length > 0">
       <ion-item *ngFor="let document of uploadedDocuments;">
