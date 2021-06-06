@@ -42,7 +42,7 @@
         <img src="{{product.logo}}" *ngIf="product.logo">
         <img src="../../assets/images/default-image.jpg" *ngIf="!product.logo">
       </ion-avatar>
-      <ion-col size="6">
+      <ion-col size="4">
         <ion-label>Name: <b>{{ product.productName }}</b></ion-label>
         <ion-label>Category: <b>{{product.category}}</b></ion-label>
       </ion-col>
@@ -52,6 +52,10 @@
       <ion-col size="2">
         <ion-icon name="create-outline" size="large" (click)="editProductInfo(product)"></ion-icon>
       </ion-col>
+      <ion-col size="2">
+        <ion-toggle checked={{product.isActive}}  (ionChange)="updateProductStatus(product)"></ion-toggle>
+      </ion-col>
+     
     </ion-item>
   </ion-list>
 
@@ -173,8 +177,7 @@
         </ion-item>
         <small *ngIf="isFormSubmitted &&  Description.errors"><span style="color: red;">*Description Required </span>
         </small>
-      </ion-col>
-   
+      </ion-col>   
       <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3" *ngIf="mobileApp">
         <ion-item class="ion-ele">
           <ion-icon name="images-outline" slot="start"></ion-icon>
@@ -183,25 +186,16 @@
           <ion-label class="ion-text-right" *ngIf="selectedDocs.length != 0">
             <ion-icon name="eye-outline"></ion-icon> {{selectedDocs.length}}
           </ion-label>
-        </ion-item>
-        <!-- <small *ngIf="isFormSubmitted && selectedDocs.length == 0"><span style="color: red;">*Atleast One Image Required
-          </span>
-        </small> -->
+        </ion-item>      
       </ion-col>
       <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3" *ngIf="!mobileApp">
         <ion-item class="ion-ele">
           <ion-label>Image</ion-label>
           <input type="file" #selectedWebDocs multiple (change)="selectedImgWeb($event)" />
           <ion-icon name="images-outline" slot="start"></ion-icon>
-        </ion-item>
-        <!-- <small *ngIf="isFormSubmitted && selectedDocs.length == 0"><span style="color: red;">*Atleast One Image Required
-          </span>
-        </small> -->
+        </ion-item>      
       </ion-col>
     </ion-row>
-
-
-
     <ion-list class="ion-list-ele"  *ngIf="uploadedDocuments.length > 0">
       <ion-item *ngFor="let document of uploadedDocuments;">
         <ion-avatar size="6">

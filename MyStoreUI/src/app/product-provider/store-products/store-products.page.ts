@@ -184,7 +184,6 @@ constructor(private storeProductService:StoreProductService,
         Description:this.Description.value, Files: this.selectedDocs};
         this.tempProducts.push(productObject);
         this.showTempList=true;
-
         let formDataList = this.getFormData(this.tempProducts);
         const loadingController = await this.helperService.createLoadingController("loading");
         await loadingController.present();
@@ -373,6 +372,20 @@ constructor(private storeProductService:StoreProductService,
       },
         (error: any) => {
           loadingController.dismiss();
+        });
+  }
+
+
+  
+  async updateProductStatus(rowdata:any){  
+   
+       const dataObject={ProductId:rowdata.id,Status: rowdata.isActive===true?false:true,};
+      await this.storeProductService.updateProductStatus('updateStoreProductStatus', dataObject)
+      .subscribe((data: any) => {
+        this.storeProductsList();
+      },
+        (error: any) => {
+      
         });
   }
 }

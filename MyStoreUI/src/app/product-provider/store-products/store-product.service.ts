@@ -27,5 +27,7 @@ constructor(private commonApiServiceCallsService:CommonApiServiceCallsService) {
   deleteDocument(methodName: string, resouce: any): Observable<any> {
     return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
   }
-
+  updateProductStatus(methodName: string, resouce: any): Observable<any> {
+    return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
+  }
 }

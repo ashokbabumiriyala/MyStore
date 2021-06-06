@@ -118,10 +118,13 @@ ngOnInit() {
     return this.serviceProductsForm.get('PriceAfterDiscount');
   }
 
-
   get LocationID(){
     return this.serviceLocationForm.get('LocationID');
   }
+
+  // get Description(){
+  //   return this.serviceLocationForm.get('Description');
+  // }
 
   private createServiceLocationForm(){
     this.serviceLocationForm = new FormGroup({
@@ -137,6 +140,7 @@ ngOnInit() {
       Discount: new FormControl('')  ,
       PriceBeforeDiscount: new FormControl(''),
       PriceAfterDiscount: new FormControl('', Validators.required)
+      // Description: new FormControl('')
     });
   }
 
@@ -188,6 +192,7 @@ ngOnInit() {
     this.selectedDocs.push(blob);
   }
   async uploadService():Promise<void> {
+    debugger;
     this.Discount.setErrors(null);
     this.PriceBeforeDiscount.setErrors(null);
     this.isFormSubmitted=true;
@@ -200,7 +205,8 @@ ngOnInit() {
         ServiceName:this.ServiceName.value,
         DiscountType :this.DiscountType.value, Discount:Number(this.Discount.value),
         PriceBeforeDiscount:Number(this.PriceBeforeDiscount.value)
-        ,PriceAfterDiscount:Number(this.PriceAfterDiscount.value), Files: this.selectedDocs};
+        ,PriceAfterDiscount:Number(this.PriceAfterDiscount.value),
+         Files: this.selectedDocs};
         this.tempProducts.push(productObject);
         let formDataList = this.getFormData(this.tempProducts);
         const loadingController = await this.helperService.createLoadingController("loading");
