@@ -27,16 +27,20 @@
 
     <ion-list class="ion-list-ele" *ngIf="!editLocation">
         <ion-item *ngFor="let location of providerLocationList;">
-            <ion-avatar size="1">
+            <ion-avatar size="2">
                 <img  src="{{location.logo}}" *ngIf="location.logo">
                 <img src="../../assets/images/default-image.jpg" *ngIf="!location.logo">
               </ion-avatar>
-            <ion-col size="9">
+            <ion-col size="6">
                 <ion-label>Business: <b>{{ location.businessName }}</b></ion-label>
                 <ion-label>Manager: <b>{{ location.businessManagerName}}</b></ion-label>
             </ion-col>
             <ion-col size="2" class="ion-text-right">
                 <ion-icon name="trash-outline" size="large" (click)="presentAlertConfirm(location,'services')"></ion-icon>
+            </ion-col>
+            <ion-col size="2" class="ion-text-right">
+              
+                <ion-icon name="create-outline" size="large" (click)="editServiceInfo(location)"></ion-icon>
             </ion-col>
         </ion-item>
     </ion-list>
