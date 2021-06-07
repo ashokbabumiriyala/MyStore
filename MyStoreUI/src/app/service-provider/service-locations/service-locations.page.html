@@ -224,7 +224,7 @@
               <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3" *ngIf="!mobileApp">
                 <ion-item class="ion-ele">
                   <ion-label>Image</ion-label>
-                  <input type="file" #selectedWebDocs multiple (change)="selectedImgWeb($event)" />
+                  <input type="file" #selectedWebDocs (change)="selectedImgWeb($event)" />
                   <ion-icon name="images-outline" slot="start"></ion-icon>
                 </ion-item>
                 <!-- <small *ngIf="isFormSubmitted && selectedDocs.length == 0"><span style="color: red;">*Atleast One Image Required </span>
