@@ -45,6 +45,7 @@ ngOnInit() {
   this.serviceProductsList();
 }
   editServiceInfo(rowdata:any){
+   
     this.editService = true;
     this.uploadedDocuments= [];
     if(rowdata===null){
@@ -75,8 +76,8 @@ ngOnInit() {
       DiscountType: data.discountType,
       Discount: data.discount,
       PriceBeforeDiscount: data.priceBeforeDiscount,
-      PriceAfterDiscount: data.priceAfterDiscount
-     
+      PriceAfterDiscount: data.priceAfterDiscount,
+      Description:data.description
   });
   }
   async serviceProductsList(){
@@ -122,9 +123,9 @@ ngOnInit() {
     return this.serviceLocationForm.get('LocationID');
   }
 
-  // get Description(){
-  //   return this.serviceLocationForm.get('Description');
-  // }
+  get Description(){
+    return this.serviceProductsForm.get('Description');
+  }
 
   private createServiceLocationForm(){
     this.serviceLocationForm = new FormGroup({
@@ -139,8 +140,8 @@ ngOnInit() {
       DiscountType: new FormControl(''),
       Discount: new FormControl('')  ,
       PriceBeforeDiscount: new FormControl(''),
-      PriceAfterDiscount: new FormControl('', Validators.required)
-      // Description: new FormControl('')
+      PriceAfterDiscount: new FormControl('', Validators.required),
+      Description: new FormControl('', Validators.required),
     });
   }
 
@@ -191,8 +192,7 @@ ngOnInit() {
     const blob = await base64.blob();
     this.selectedDocs.push(blob);
   }
-  async uploadService():Promise<void> {
-    debugger;
+  async uploadService():Promise<void> {  
     this.Discount.setErrors(null);
     this.PriceBeforeDiscount.setErrors(null);
     this.isFormSubmitted=true;
@@ -205,7 +205,7 @@ ngOnInit() {
         ServiceName:this.ServiceName.value,
         DiscountType :this.DiscountType.value, Discount:Number(this.Discount.value),
         PriceBeforeDiscount:Number(this.PriceBeforeDiscount.value)
-        ,PriceAfterDiscount:Number(this.PriceAfterDiscount.value),
+        ,PriceAfterDiscount:Number(this.PriceAfterDiscount.value),Description:this.Description.value,
          Files: this.selectedDocs};
         this.tempProducts.push(productObject);
         let formDataList = this.getFormData(this.tempProducts);
