@@ -345,7 +345,9 @@ async selectImage() {
 
 pickImage(sourceType) {
   const options: CameraOptions = {
-    quality: 100,
+    quality: 40,
+    targetWidth: 600,
+    targetHeight: 600,
     sourceType: sourceType,
     destinationType: this.camera.DestinationType.DATA_URL,
     encodingType: this.camera.EncodingType.JPEG,

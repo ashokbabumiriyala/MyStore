@@ -45,7 +45,7 @@ ngOnInit() {
   this.serviceProductsList();
 }
   editServiceInfo(rowdata:any){
-   
+
     this.editService = true;
     this.uploadedDocuments= [];
     if(rowdata===null){
@@ -56,7 +56,7 @@ ngOnInit() {
       this.getUploadDocuments( this.serviceId);
     }
   }
-  private getUploadDocuments(serviceProductsID:number) {  
+  private getUploadDocuments(serviceProductsID:number) {
     this.uploadedDocuments= [];
     const objData={Id: Number(serviceProductsID) ,searchKey:'ServicesUpload'}
           this.serviceUploadService.getUploadDocuments("UploadedDocuments", objData)
@@ -64,7 +64,7 @@ ngOnInit() {
             this.uploadedDocuments=data;
          },
            (error: any) => {
-            
+
            });
    }
 
@@ -170,7 +170,9 @@ ngOnInit() {
   }
   pickImage(sourceType) {
     const options: CameraOptions = {
-      quality: 100,
+      quality: 40,
+      targetWidth: 600,
+      targetHeight: 600,
       sourceType: sourceType,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
@@ -192,7 +194,7 @@ ngOnInit() {
     const blob = await base64.blob();
     this.selectedDocs.push(blob);
   }
-  async uploadService():Promise<void> {  
+  async uploadService():Promise<void> {
     this.Discount.setErrors(null);
     this.PriceBeforeDiscount.setErrors(null);
     this.isFormSubmitted=true;
@@ -295,9 +297,9 @@ ngOnInit() {
         {
           text: 'Confirm',
           handler: () => {
-           if(type==='document'){   
+           if(type==='document'){
              this.deleteDocument(rowdata);
-            
+
           }else{
             this.deleteService(rowdata.serviceID);
           }
@@ -332,9 +334,9 @@ ngOnInit() {
         });
      }
 
-     async deleteDocument(rowdata:any){     
+     async deleteDocument(rowdata:any){
       const loadingController = await this.helperService.createLoadingController("loading");
-      
+
         await loadingController.present();
         const dataObject={searchKey:'ServicesUpload',ProductId: rowdata.servicesID,DocumentId:rowdata.id,filePath:rowdata.logo};
         await this.serviceUploadService.deleteDocument('DeleteDocument', dataObject)

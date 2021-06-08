@@ -105,7 +105,9 @@ constructor(private storeProductService:StoreProductService,
   }
   pickImage(sourceType) {
     const options: CameraOptions = {
-      quality: 100,
+      quality: 40,
+      targetWidth: 600,
+      targetHeight: 600,
       sourceType: sourceType,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
@@ -165,13 +167,13 @@ constructor(private storeProductService:StoreProductService,
     });
   }
 
-  async uploadProduct():Promise<void> {  
+  async uploadProduct():Promise<void> {
     this.Discount.setErrors(null);
     this.PriceBeforeDiscount.setErrors(null);
     this.isFormSubmitted=true;
     if (this.storeProductsForm.invalid) {
       return;
-    }else{     
+    }else{
       const serviceName=this.productId>0?"StoreProductUpdate":"StoreProductSave";
       this.isFormSubmitted=false;
       const productObject= {ProductId: Number(this.productId),ProviderId: Number(sessionStorage.getItem("providerId")),
@@ -239,7 +241,7 @@ constructor(private storeProductService:StoreProductService,
   }
   }
   editProductInfo(rowdata:any){
-   
+
     this.editProduct = true  ;
     this.uploadedDocuments= [];
     if(rowdata===null){
@@ -258,7 +260,7 @@ constructor(private storeProductService:StoreProductService,
            this.uploadedDocuments=data;
         },
           (error: any) => {
-           
+
           });
   }
   private setForamADetailsToPage(data: any): void {
@@ -270,12 +272,12 @@ constructor(private storeProductService:StoreProductService,
       Quantity: data.quantity,
       DiscountType: data.discountType,
       Discount: data.discount,
-      PriceBeforeDiscount: data.priceBeforeDiscount ,  
-      PriceAfterDiscount: data.priceAfterDiscount,   
+      PriceBeforeDiscount: data.priceBeforeDiscount ,
+      PriceAfterDiscount: data.priceAfterDiscount,
       AvailableQty: data.availableQty   ,
-      Description: data.description   
+      Description: data.description
   });
-  }  
+  }
   async presentToast(data: string,tostarColor:string) {
     const toast = await this.toastController.create({
       message: data,
@@ -314,7 +316,7 @@ constructor(private storeProductService:StoreProductService,
   }
   changeStore(){
     this.storeProductsList();
-  } 
+  }
 
   async presentAlertConfirm(rowdata:any,type:string) {
       const alert = await this.alertController.create({
@@ -324,7 +326,7 @@ constructor(private storeProductService:StoreProductService,
       buttons: [
        {
           text: 'Confirm',
-          handler: () => {           
+          handler: () => {
             if(type==='document'){
               this.deleteDocument(rowdata);
             }else{
@@ -361,7 +363,7 @@ constructor(private storeProductService:StoreProductService,
 
   async deleteDocument(rowdata:any){
     const loadingController = await this.helperService.createLoadingController("loading");
-    
+
       await loadingController.present();
       const dataObject={searchKey:'StoreUpload',ProductId: rowdata.storeProductsID,DocumentId:rowdata.id,filePath:rowdata.logo};
       await this.storeProductService.deleteDocument('DeleteDocument', dataObject)
@@ -376,16 +378,16 @@ constructor(private storeProductService:StoreProductService,
   }
 
 
-  
-  async updateProductStatus(rowdata:any){  
-   
+
+  async updateProductStatus(rowdata:any){
+
        const dataObject={ProductId:rowdata.id,Status: rowdata.isActive===true?false:true,};
       await this.storeProductService.updateProductStatus('updateStoreProductStatus', dataObject)
       .subscribe((data: any) => {
         this.storeProductsList();
       },
         (error: any) => {
-      
+
         });
   }
 }
