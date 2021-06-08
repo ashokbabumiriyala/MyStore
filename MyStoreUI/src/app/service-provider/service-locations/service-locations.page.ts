@@ -219,7 +219,7 @@ export class ServiceLocationsPage implements OnInit {
          .subscribe((data: any) => {
             this.uploadedDocuments=data;
          },
-           (error: any) => {            
+           (error: any) => {
            });
     }
 
@@ -269,7 +269,7 @@ export class ServiceLocationsPage implements OnInit {
   async getblobObject(base64Data) {
     const base64 = await fetch(base64Data);
     const blob = await base64.blob();
-    this.selectedDocs.push(blob);
+    this.selectedDocs = [blob];
   }
 
   private setForamADetailsToPage(data: any): void {
@@ -290,7 +290,7 @@ export class ServiceLocationsPage implements OnInit {
       DeliveryType: String(data.deliveryTypeId)
     });
   }
-  selectedImgWeb(data) {   
+  selectedImgWeb(data) {
     var files = data.target.files;
     for (let i = 0; i < files.length; i++) {
       if (files[i]) {
@@ -331,7 +331,7 @@ export class ServiceLocationsPage implements OnInit {
     this.editLocation = false;
     this.serviceLocationForm.reset();
   }
-  async presentAlertConfirm(rowdata:any,type:string) {   
+  async presentAlertConfirm(rowdata:any,type:string) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Do you want to delete',
@@ -361,7 +361,7 @@ export class ServiceLocationsPage implements OnInit {
     await alert.present();
   }
   async deleteDocument(rowdata:any){
-    const loadingController = await this.helperService.createLoadingController("loading");    
+    const loadingController = await this.helperService.createLoadingController("loading");
       await loadingController.present();
       const dataObject={searchKey:'Services',ProductId:rowdata.id,DocumentId:0,filePath:rowdata.logo};
       await this.serviceLocationService.deleteDocument('DeleteDocument', dataObject)
@@ -376,7 +376,7 @@ export class ServiceLocationsPage implements OnInit {
   }
 
   async deleteLocation(locationId:number){
-  
+
     const loadingController = await this.helperService.createLoadingController("loading");
       await loadingController.present();
       const dataObject={LocationId:Number(locationId)};

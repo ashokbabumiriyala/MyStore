@@ -169,8 +169,8 @@ async saveStore():Promise<void>{
         this.selectedWebDocs.nativeElement.value = "";
       }
       this.tempStore=[];
-      this.singleStoreFormGroup.reset();     
-      this.presentToast("Store " + this.title+ "  successfully.","success");    
+      this.singleStoreFormGroup.reset();
+      this.presentToast("Store " + this.title+ "  successfully.","success");
       this.subStoreList();
       this.editStore=false;
     }
@@ -226,7 +226,7 @@ private getUploadDocuments(storeId:number) {
           this.uploadedDocuments=data;
        },
          (error: any) => {
-          
+
          });
  }
 
@@ -269,13 +269,13 @@ async presentAlertConfirm(rowData:any,type:string) {
     buttons: [
       {
         text: 'Confirm',
-        handler: () => {   
+        handler: () => {
           if(type==='document'){
             this.deleteDocument(rowData);
           }else{
             this.deleteStore(rowData.id);
-          }     
-         
+          }
+
         }
       },
       {
@@ -292,7 +292,7 @@ async presentAlertConfirm(rowData:any,type:string) {
 }
 
 async deleteDocument(rowdata:any){
-  const loadingController = await this.helperService.createLoadingController("loading");  
+  const loadingController = await this.helperService.createLoadingController("loading");
     await loadingController.present();
     const dataObject={searchKey:'Store',ProductId:rowdata.id,DocumentId:0,filePath:rowdata.logo};
     await this.singleStoreService.deleteDocument('DeleteDocument', dataObject)
@@ -381,7 +381,7 @@ async _handleReaderLoaded(readerEvt) {
  async getblobObject(base64Data){
   const base64 = await fetch(base64Data);
   const blob = await base64.blob();
-  this.selectedDocs.push(blob);
+  this.selectedDocs = [blob];
 }
 }
 

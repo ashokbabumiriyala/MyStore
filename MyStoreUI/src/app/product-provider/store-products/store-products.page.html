@@ -24,7 +24,7 @@
         <ion-select-option *ngFor="let storeItem of stores" value="{{storeItem.value}}">{{storeItem.text}}
         </ion-select-option>
       </ion-select>
-      <ion-icon name="funnel-outline" slot="start"></ion-icon>    
+      <ion-icon name="funnel-outline" slot="start"></ion-icon>
     </ion-item>
   </form>
 
@@ -55,7 +55,7 @@
       <ion-col size="2">
         <ion-toggle checked={{product.isActive}}  (ionChange)="updateProductStatus(product)"></ion-toggle>
       </ion-col>
-     
+
     </ion-item>
   </ion-list>
 
@@ -162,13 +162,13 @@
 
       <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
         <ion-item class="ion-ele">
-          <ion-label position="floating">Available Quantity</ion-label>
+          <ion-label position="floating">Stock Available</ion-label>
           <ion-input type="number" formControlName="AvailableQty" required></ion-input>
           <ion-icon name="basket-outline" slot="start"></ion-icon>
         </ion-item>
         <small *ngIf="isFormSubmitted &&  AvailableQty.errors"><span style="color: red;">*Available Quantity Required </span>
         </small>
-      </ion-col>   
+      </ion-col>
       <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
         <ion-item class="ion-ele">
           <ion-label position="floating">Description</ion-label>
@@ -177,7 +177,7 @@
         </ion-item>
         <small *ngIf="isFormSubmitted &&  Description.errors"><span style="color: red;">*Description Required </span>
         </small>
-      </ion-col>   
+      </ion-col>
       <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3" *ngIf="mobileApp">
         <ion-item class="ion-ele">
           <ion-icon name="images-outline" slot="start"></ion-icon>
@@ -186,14 +186,14 @@
           <ion-label class="ion-text-right" *ngIf="selectedDocs.length != 0">
             <ion-icon name="eye-outline"></ion-icon> {{selectedDocs.length}}
           </ion-label>
-        </ion-item>      
+        </ion-item>
       </ion-col>
       <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3" *ngIf="!mobileApp">
         <ion-item class="ion-ele">
           <ion-label>Image</ion-label>
           <input type="file" #selectedWebDocs multiple (change)="selectedImgWeb($event)" />
           <ion-icon name="images-outline" slot="start"></ion-icon>
-        </ion-item>      
+        </ion-item>
       </ion-col>
     </ion-row>
     <ion-list class="ion-list-ele"  *ngIf="uploadedDocuments.length > 0">
@@ -201,14 +201,14 @@
         <ion-avatar size="6">
           <img src="{{document.logo}}" *ngIf="document.logo">
           <img src="../../assets/images/default-image.jpg" *ngIf="!document.logo">
-        </ion-avatar>   
+        </ion-avatar>
         <ion-col size="6" class="ion-text-right">
           <ion-icon name="trash-outline" size="large" (click)="presentAlertConfirm(document,'document')"></ion-icon>
-        </ion-col>    
+        </ion-col>
       </ion-item>
     </ion-list>
 
-    
+
     <ion-row>
       <ion-col class="ion-text-center ion-margin-top" size-md="6" size-xs="12" size-sm="12" push-md="3" push-lg="3"
         size-lg="6">
