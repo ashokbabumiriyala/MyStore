@@ -119,8 +119,8 @@ export class ServiceLocationsPage implements OnInit {
 
   //#region   list
   async serviceLocationListSelect() {
-    const loadingController = await this.helperService.createLoadingController("loading");
-    await loadingController.present();
+     const loadingController = await this.helperService.createLoadingController("loading");
+     await loadingController.present();
     const dataObject = { ProviderId: Number(sessionStorage.getItem("providerId")), Mode: 'Select' };
     await this.serviceLocationService.locationListSelect('serviceLocationSelect', dataObject)
       .subscribe((data: any) => {
@@ -208,7 +208,7 @@ export class ServiceLocationsPage implements OnInit {
       this.title = "Update";
      this. setForamADetailsToPage(rowdata);
      this.getUploadDocuments(rowdata.id);
-
+     await loadingController.dismiss();
 
     }
   }
