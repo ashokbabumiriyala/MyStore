@@ -90,7 +90,7 @@ constructor(private storeProductService:StoreProductService,
     return this.storeProductsForm.get('Description');
   }
 
-  async presentModal(rowdata:any) {  
+  async presentModal(rowdata:any) { 
     const modal = await this.modalController.create({
       component: ModalPageComponent,
       cssClass: 'my-custom-class',

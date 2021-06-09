@@ -30,4 +30,8 @@ constructor(private commonApiServiceCallsService:CommonApiServiceCallsService) {
   updateProductStatus(methodName: string, resouce: any): Observable<any> {
     return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
   }
+
+  updateInventory(methodName: string, resouce: any): Observable<any> {
+    return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
+  }
 }
