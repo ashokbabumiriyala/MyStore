@@ -9,7 +9,7 @@ import {File, FileEntry} from '@ionic-native/file/ngx';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Console } from 'console';
 import { ModalController } from '@ionic/angular';
-import {ModalPageComponent}  from '../product-provider/../modal-page/modal-page.component';
+
 @Component({
   selector: 'app-store-products',
   templateUrl: './store-products.page.html',
@@ -91,15 +91,61 @@ constructor(private storeProductService:StoreProductService,
   }
 
   async presentModal(rowdata:any) { 
-    const modal = await this.modalController.create({
-      component: ModalPageComponent,
+    // const modal = await this.modalController.create({
+    //   component: ModalPageComponent,
+    //   cssClass: 'my-custom-class',
+    //   componentProps: {
+    //     'productId': rowdata.id,
+    //     'quantity': rowdata.availableQty    
+    //   }
+    // });
+    // await modal.present();
+
+
+    const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      componentProps: {
-        'productId': rowdata.id,
-        'quantity': rowdata.availableQty    
-      }
+      header: 'Update Quantity',
+      message: 'Available Quantity:' +  rowdata.availableQty,
+      inputs: [       
+        {
+          name: 'quantity',
+          type: 'number',
+          id: 'availableQty',
+          value: 0 ,         
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Add',
+          handler: (currentQuantity) => {           
+           this.updateStockQuantity(rowdata,currentQuantity.quantity)
+          }
+        }
+      ]
     });
-    return await modal.present();
+
+    await alert.present();
+
+  }
+
+
+  async updateStockQuantity(rowdata:any,currentQuantity:number):Promise<void> {   
+      this.isFormSubmitted=false;     
+      const dataObj={ProductId:rowdata.id,Status:true,AvlQuantity : Number(currentQuantity)}; 
+        await this.storeProductService.updateInventory("updateInventoryQuantity", dataObj)
+        .subscribe((data: any) => {
+          this.storeProductsList();
+        },
+          (error: any) => {           
+        });
+    // }
   }
 
   async storeProductsList(){

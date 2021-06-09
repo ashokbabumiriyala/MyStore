@@ -47,15 +47,13 @@
         <ion-label>Name: <b>{{ product.productName }}</b></ion-label>
         <ion-label>Category: <b>{{product.category}}</b></ion-label>
       </ion-col>
-      <ion-col size="4" class="ion-text-right">
-        <ion-icon name="trash-outline" class="item-icons" (click)="presentAlertConfirm(product,'product')"></ion-icon>
-        <ion-icon name="create-outline" class="item-icons"(click)="editProductInfo(product)"></ion-icon>
-      <!-- </ion-col>
-      <ion-col size="2"> -->
-        <ion-icon name="add-circle-outline" class="item-icons" (click)="presentModal(product)"></ion-icon>
-        <ion-toggle checked={{product.isActive}}  (ionChange)="updateProductStatus(product)" style="padding: 6px;"></ion-toggle>
+      <ion-col size="5" class="ion-text-right">
+        <ion-icon size="1" name="trash-outline" class="item-icons" (click)="presentAlertConfirm(product,'product')"></ion-icon>
+        <ion-icon size="1" name="create-outline" class="item-icons"(click)="editProductInfo(product)"></ion-icon>
+        <ion-icon size="1" name="add-circle-outline" class="item-icons" (click)="presentModal(product)"></ion-icon>
+        <ion-toggle size="2" checked={{product.isActive}}  (ionChange)="updateProductStatus(product)" style="padding: 6px;"></ion-toggle>
       </ion-col> 
-    <!-- </ion-row>     -->
+   
     </ion-item>
   </ion-list>
 
