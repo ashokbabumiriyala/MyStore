@@ -391,4 +391,7 @@ export class ServiceLocationsPage implements OnInit {
           loadingController.dismiss();
         });
      }
+     showImage(imgUrl){
+      this.helperService.showImage(imgUrl);
+     }
 }

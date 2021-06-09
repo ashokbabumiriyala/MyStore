@@ -90,13 +90,13 @@ constructor(private storeProductService:StoreProductService,
     return this.storeProductsForm.get('Description');
   }
 
-  async presentModal(rowdata:any) { 
+  async presentModal(rowdata:any) {
     // const modal = await this.modalController.create({
     //   component: ModalPageComponent,
     //   cssClass: 'my-custom-class',
     //   componentProps: {
     //     'productId': rowdata.id,
-    //     'quantity': rowdata.availableQty    
+    //     'quantity': rowdata.availableQty
     //   }
     // });
     // await modal.present();
@@ -106,12 +106,12 @@ constructor(private storeProductService:StoreProductService,
       cssClass: 'my-custom-class',
       header: 'Update Quantity',
       message: 'Available Quantity:' +  rowdata.availableQty,
-      inputs: [       
+      inputs: [
         {
           name: 'quantity',
           type: 'number',
           id: 'availableQty',
-          value: 0 ,         
+          value: 0 ,
         }
       ],
       buttons: [
@@ -124,7 +124,7 @@ constructor(private storeProductService:StoreProductService,
           }
         }, {
           text: 'Add',
-          handler: (currentQuantity) => {           
+          handler: (currentQuantity) => {
            this.updateStockQuantity(rowdata,currentQuantity.quantity)
           }
         }
@@ -136,14 +136,14 @@ constructor(private storeProductService:StoreProductService,
   }
 
 
-  async updateStockQuantity(rowdata:any,currentQuantity:number):Promise<void> {   
-      this.isFormSubmitted=false;     
-      const dataObj={ProductId:rowdata.id,Status:true,AvlQuantity : Number(currentQuantity)}; 
+  async updateStockQuantity(rowdata:any,currentQuantity:number):Promise<void> {
+      this.isFormSubmitted=false;
+      const dataObj={ProductId:rowdata.id,Status:true,AvlQuantity : Number(currentQuantity)};
         await this.storeProductService.updateInventory("updateInventoryQuantity", dataObj)
         .subscribe((data: any) => {
           this.storeProductsList();
         },
-          (error: any) => {           
+          (error: any) => {
         });
     // }
   }
@@ -155,7 +155,7 @@ constructor(private storeProductService:StoreProductService,
    await this.storeProductService.storeProductList('ProviderStoreProductsSelect', dataObject)
     .subscribe((data: any) => {
       this.stores=data.storeDropdown;
-      this.storeProductsData = data.storeProducts;     
+      this.storeProductsData = data.storeProducts;
       loadingController.dismiss();
     },
     (error: any) => {
@@ -347,7 +347,7 @@ constructor(private storeProductService:StoreProductService,
     });
     toast.present();
   }
-  selectedImgWeb(data){   
+  selectedImgWeb(data){
     var files = data.target.files;
     for(let i = 0 ; i <files.length; i++) {
       if (files[i]) {
@@ -449,4 +449,8 @@ constructor(private storeProductService:StoreProductService,
 
         });
   }
+  showImage(imgUrl){
+    this.helperService.showImage(imgUrl);
+   }
+
 }

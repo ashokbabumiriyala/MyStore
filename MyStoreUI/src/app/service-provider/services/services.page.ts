@@ -349,4 +349,7 @@ ngOnInit() {
             loadingController.dismiss();
           });
     }
+    showImage(imgUrl){
+      this.helperService.showImage(imgUrl);
+     }
 }

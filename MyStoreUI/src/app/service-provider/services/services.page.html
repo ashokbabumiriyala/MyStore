@@ -42,7 +42,7 @@
     <ion-list class="ion-list-ele" *ngIf="!editService && serviceProductList.length > 0">
         <ion-item *ngFor="let product of serviceProductList;">
             <ion-avatar size="2">
-                <img src="{{product.logo}}" *ngIf="product.logo">
+                <img src="{{product.logo}}" *ngIf="product.logo" (click)="showImage(product.logo)">
                 <img src="../../assets/images/default-image.jpg" *ngIf="!product.logo">
             </ion-avatar>
             <ion-col size="6">
@@ -193,10 +193,10 @@
               <ion-avatar size="6">
                 <img src="{{document.logo}}" *ngIf="document.logo">
                 <img src="../../assets/images/default-image.jpg" *ngIf="!document.logo">
-              </ion-avatar>   
+              </ion-avatar>
               <ion-col size="6" class="ion-text-right">
                 <ion-icon name="trash-outline" size="large" (click)="presentAlertConfirm(document,'document')"></ion-icon>
-              </ion-col>    
+              </ion-col>
             </ion-item>
           </ion-list>
 

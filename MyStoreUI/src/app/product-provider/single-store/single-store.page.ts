@@ -385,5 +385,8 @@ async _handleReaderLoaded(readerEvt) {
   const blob = await base64.blob();
   this.selectedDocs = [blob];
 }
+showImage(imgUrl){
+  this.helperService.showImage(imgUrl);
+ }
 }
 

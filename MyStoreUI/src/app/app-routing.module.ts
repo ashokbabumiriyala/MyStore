@@ -85,7 +85,11 @@ const routes: Routes = [
     loadChildren: () => import('./service-delivery-managment/service-delivery-managment.module').then( m => m.ServiceDeliveryManagmentPageModule)
     ,
     canActivate: [AuthGuardService]
+  },  {
+    path: 'image-view',
+    loadChildren: () => import('./Shared/image-view/image-view.module').then( m => m.ImageViewPageModule)
   }
+
 
 ];
 

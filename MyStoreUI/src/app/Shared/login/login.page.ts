@@ -58,6 +58,7 @@ export class LoginPage implements OnInit {
         this.authenticationService.isAuthenticated = true;
         sessionStorage.setItem("AuthToken",data.token);
         sessionStorage.setItem("providerId", data.providerId);
+        sessionStorage.setItem('providerRoleId', data.providerRoleId);
       let providerDetails:IProviderDetails
       providerDetails = {
         name: data.providerName, roleId: data.providerRoleId,

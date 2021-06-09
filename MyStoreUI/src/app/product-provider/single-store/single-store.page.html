@@ -28,7 +28,7 @@
     <ion-list class="ion-list-ele" *ngIf="!editStore && provideSubStoreList.length !== 0">
         <ion-item *ngFor="let subStore of provideSubStoreList;">
             <ion-avatar size="2">
-                <img src="{{subStore.logo}}" *ngIf="subStore.logo">
+                <img src="{{subStore.logo}}" *ngIf="subStore.logo" (click)="showImage(subStore.logo)">
                 <img src="../../assets/images/default-image.jpg" *ngIf="!subStore.logo">
             </ion-avatar>
             <ion-col size="6">
@@ -193,7 +193,7 @@
                     </ion-label>
                 </ion-item>
                 <!-- <small *ngIf="isFormSubmitted && selectedDocs.length == 0"><span style="color: red;">*Atleast One Image
-                        Required </span> 
+                        Required </span>
                 </small>-->
             </ion-col>
             <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3" *ngIf="!mobileApp">
@@ -212,10 +212,10 @@
                   <ion-avatar size="6">
                     <img src="{{document.logo}}" *ngIf="document.logo">
                     <img src="../../assets/images/default-image.jpg" *ngIf="!document.logo">
-                  </ion-avatar>   
+                  </ion-avatar>
                   <ion-col size="6" class="ion-text-right">
                     <ion-icon name="trash-outline" size="large" (click)="presentAlertConfirm(document,'document')"></ion-icon>
-                  </ion-col>    
+                  </ion-col>
                 </ion-item>
               </ion-list>
 

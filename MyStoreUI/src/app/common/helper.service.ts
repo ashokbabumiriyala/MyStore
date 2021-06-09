@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { IProviderDetails} from 'src/app/common/provider-details';
-import { LoadingController, ToastController, AlertController } from '@ionic/angular';
+import { LoadingController, ToastController, AlertController, ModalController } from '@ionic/angular';
 import { Market } from '@ionic-native/market/ngx';
+import { ImageViewPage } from '../Shared/image-view/image-view.page';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class HelperService {
 // providerDetails = this.providerSource.asObservable();
 
 constructor(private loadingController:LoadingController, private toastController: ToastController,
-  private alertController: AlertController, private market: Market) { }
+  private alertController: AlertController, private market: Market, private modalController: ModalController) { }
 
 
 private profileObs$: BehaviorSubject<IProviderDetails> = new BehaviorSubject(null);
@@ -104,6 +105,15 @@ async presentToast(data: string, toastColor:string) {
       ]
     });
     await alert.present();
+  }
+  async showImage(url) {
+    const modal = await this.modalController.create({
+      component: ImageViewPage,
+      componentProps: {"imageUrl": url},
+      backdropDismiss: false,
+      cssClass: 'image-modal'
+    });
+    await modal.present();
   }
 }
 
