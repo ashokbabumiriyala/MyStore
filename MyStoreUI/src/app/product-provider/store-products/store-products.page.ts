@@ -8,7 +8,8 @@ import { ActionSheetController } from '@ionic/angular';
 import {File, FileEntry} from '@ionic-native/file/ngx';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Console } from 'console';
-
+import { ModalController } from '@ionic/angular';
+import {ModalPageComponent}  from '../product-provider/../modal-page/modal-page.component';
 @Component({
   selector: 'app-store-products',
   templateUrl: './store-products.page.html',
@@ -36,7 +37,8 @@ constructor(private storeProductService:StoreProductService,
   private helperService:HelperService,
   private camera: Camera,
   private actionSheetController: ActionSheetController, private file: File,
-  private alertController:AlertController) { }
+  private alertController:AlertController,
+  public modalController: ModalController) { }
 
   ngOnInit() {
     if (sessionStorage.getItem('mobile') == 'true') {
@@ -87,6 +89,19 @@ constructor(private storeProductService:StoreProductService,
   get Description(){
     return this.storeProductsForm.get('Description');
   }
+
+  async presentModal(rowdata:any) {  
+    const modal = await this.modalController.create({
+      component: ModalPageComponent,
+      cssClass: 'my-custom-class',
+      componentProps: {
+        'productId': rowdata.id,
+        'quantity': rowdata.availableQty    
+      }
+    });
+    return await modal.present();
+  }
+
   async storeProductsList(){
     const loadingController = await this.helperService.createLoadingController("loading");
     await loadingController.present();
@@ -94,8 +109,7 @@ constructor(private storeProductService:StoreProductService,
    await this.storeProductService.storeProductList('ProviderStoreProductsSelect', dataObject)
     .subscribe((data: any) => {
       this.stores=data.storeDropdown;
-      this.storeProductsData = data.storeProducts;
-      console.log(this.storeProductsData);
+      this.storeProductsData = data.storeProducts;     
       loadingController.dismiss();
     },
     (error: any) => {
@@ -287,8 +301,7 @@ constructor(private storeProductService:StoreProductService,
     });
     toast.present();
   }
-  selectedImgWeb(data){
-    console.log(data);
+  selectedImgWeb(data){   
     var files = data.target.files;
     for(let i = 0 ; i <files.length; i++) {
       if (files[i]) {

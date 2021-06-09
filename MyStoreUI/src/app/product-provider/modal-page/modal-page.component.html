@@ -1,0 +1,25 @@
+
+<ion-content class="after-login-bg ion-padding">
+
+  <form [formGroup]="stockFormGroup">
+    <ion-item class="ion-ele">
+      <ion-label position="fixed" style="flex: 0 0 50%;">Available Quantity</ion-label>
+      <ion-input type="number" formControlName="avaQuantity" required></ion-input>
+      <!-- <ion-icon name="aperture-outline" slot="start"></ion-icon> -->
+    </ion-item>
+    <small *ngIf="isFormSubmitted &&  avaQuantity.errors">
+      <span style="color: red;">*Stock Available</span>
+    </small>  
+  </form>
+<ion-row>
+  <ion-col>
+  <ion-button type="submit" (click)="updateStockQuantity();" shape="round" size="medium"
+  class="ion-margin-bottom ion-button">Update</ion-button>
+</ion-col>
+<ion-col>
+  <ion-button type="submit" (click)="dismiss();" shape="round" size="medium"
+  class="ion-margin-bottom ion-button">Close</ion-button>
+</ion-col>
+</ion-row>
+</ion-content>
+
