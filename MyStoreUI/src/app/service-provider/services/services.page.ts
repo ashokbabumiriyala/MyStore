@@ -141,7 +141,7 @@ ngOnInit() {
       Discount: new FormControl('')  ,
       PriceBeforeDiscount: new FormControl(''),
       PriceAfterDiscount: new FormControl('', Validators.required),
-      Description: new FormControl('', Validators.required),
+      Description: new FormControl(''),
     });
   }
 
@@ -196,6 +196,7 @@ ngOnInit() {
   }
   async uploadService():Promise<void> {
     this.Discount.setErrors(null);
+    this.Description.setErrors(null);
     this.PriceBeforeDiscount.setErrors(null);
     this.isFormSubmitted=true;
     if (this.serviceProductsForm.invalid) {
@@ -268,6 +269,18 @@ ngOnInit() {
     });
     toast.present();
   }
+
+
+  async updateServiceStatus(rowdata:any){
+    const dataObject={ServiceId:rowdata.serviceID,Status: rowdata.isActive===true?false:true,};
+   await this.serviceUploadService.updateServiceStatus('updateServiceStatus', dataObject)
+   .subscribe((data: any) => {
+     this.serviceProductsList();
+   },
+     (error: any) => {
+
+     });
+}
 
   selectedImgWeb(data){
     var files = data.target.files;

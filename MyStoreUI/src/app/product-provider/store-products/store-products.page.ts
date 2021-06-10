@@ -223,11 +223,12 @@ constructor(private storeProductService:StoreProductService,
       PriceBeforeDiscount: new FormControl('') ,
       PriceAfterDiscount: new FormControl('', Validators.required),
       AvailableQty: new FormControl('', Validators.required),
-      Description: new FormControl('', Validators.required)
+      Description: new FormControl('')
     });
   }
 
   async uploadProduct():Promise<void> {
+    this.Description.setErrors(null);
     this.Discount.setErrors(null);
     this.PriceBeforeDiscount.setErrors(null);
     this.isFormSubmitted=true;

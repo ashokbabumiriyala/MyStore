@@ -7,7 +7,7 @@ import { ServiceLocationService } from '../../service-provider/service-locations
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ActionSheetController } from '@ionic/angular';
 import { File, FileEntry } from '@ionic-native/file/ngx';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { IfStmt, THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 declare var google:any;
 @Component({
@@ -135,21 +135,22 @@ export class ServiceLocationsPage implements OnInit {
         });
   }
   //#endregion
-  async saveLocation(): Promise<void> {
+  async saveLocation(): Promise<void> {   
     this.isFormSubmitted = true;
     if (this.serviceLocationForm.invalid) {
       return;
     } else {
       this.isFormSubmitted = false;
-      const loadingController = await this.helperService.createLoadingController("loading");
-      await loadingController.present();
+      // const loadingController = await this.helperService.createLoadingController("loading");
+      // await loadingController.present();
       let fullAddress = this.Address.value + ',' + this.LandMark.value + ',' + this.City.value + ','
     + this.State.value + ',' + this.PinCode.value;
-    this.geocoder.geocode( { 'address': fullAddress}, (results, status) =>{
+    this.geocoder.geocode( { 'address': fullAddress}, (results, status) =>{    
       if (status == google.maps.GeocoderStatus.OK) {
         this.latitude =  results[0].geometry.location.lat();
         this.longitude =  results[0].geometry.location.lng();
-      } else {
+      }
+     else {
         this.latitude = null;
         this.longitude = null;
       }
@@ -169,18 +170,18 @@ export class ServiceLocationsPage implements OnInit {
 
        this.serviceLocationService.locationSave(serviceName, formDataList[0])
         .subscribe((data: any) => {
-          loadingController.dismiss();
+          // loadingController.dismiss();
           this.presentToast("Service Location " + this.title + "  successfully.", "success");
           if (this.selectedWebDocs) {
             this.selectedWebDocs.nativeElement.value = "";
-          }
+          }         
           this.tempServiceLocation=[];
           this.serviceLocationForm.reset();
           this.editLocation = false;
           this.serviceLocationListSelect();
         },
           (error: any) => {
-            loadingController.dismiss();
+            // loadingController.dismiss();
 
           });
         });

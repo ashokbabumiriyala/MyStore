@@ -30,4 +30,9 @@ export class ServiceUploadService {
     return this.commonApiServiceCallsService.select(this.apiStoreUrl + methodName, resouce);
   }
 
+  updateServiceStatus(methodName: string, resouce: any): Observable<any> {
+    return this.commonApiServiceCallsService.select(this.apiUrl + methodName, resouce);
+  }
+
+
 }

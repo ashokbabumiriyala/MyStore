@@ -49,12 +49,16 @@
                 <ion-label style="font-size: x-small;">Name: <b>{{ product.serviceName }}</b></ion-label>
                 <ion-label style="font-size: x-small;">Category: <b>{{product.category}}</b></ion-label>
             </ion-col>
-            <ion-col size="2" class="ion-text-right">
+            <ion-col size="1" class="ion-text-right">
                 <ion-icon name="trash-outline" size="large" (click)="presentAlertConfirm(product,'service')"></ion-icon>
             </ion-col>
-            <ion-col size="2">
+            <ion-col size="1">
                 <ion-icon name="create-outline" size="large" (click)="editServiceInfo(product)"></ion-icon>
               </ion-col>
+              <ion-col size="2" class="ion-text-left">
+                <ion-toggle  checked={{product.isActive}}  (ionChange)="updateServiceStatus(product)" style="padding: 6px;"></ion-toggle>
+              </ion-col>
+
         </ion-item>
     </ion-list>
 
@@ -151,9 +155,7 @@
                     <ion-input type="text" formControlName="Description" required></ion-input>
                     <ion-icon name="pricetags-outline" slot="start"></ion-icon>
                 </ion-item>
-                <small *ngIf="isFormSubmitted &&  Description.errors">
-                    <span style="color: red;">*Description Required </span>
-                </small>
+                
             </ion-col>
 
             <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3" *ngIf="mobileApp">
