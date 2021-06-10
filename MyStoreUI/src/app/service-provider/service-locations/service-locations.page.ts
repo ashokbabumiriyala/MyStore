@@ -164,21 +164,18 @@ export class ServiceLocationsPage implements OnInit {
         Id: this.locationId, Mode: this.title, Files: this.selectedDocs, Latitude: this.latitude, Longitude: this.longitude
       };
       this.tempServiceLocation.push(serviceLocationObject);
-      this.selectedDocs = [];
-
       let formDataList = this.getFormData(this.tempServiceLocation);
-
        this.serviceLocationService.locationSave(serviceName, formDataList[0])
-        .subscribe((data: any) => {
-          // loadingController.dismiss();
-          this.presentToast("Service Location " + this.title + "  successfully.", "success");
-          if (this.selectedWebDocs) {
-            this.selectedWebDocs.nativeElement.value = "";
-          }         
+        .subscribe((data: any) => {       
           this.tempServiceLocation=[];
+          this.selectedDocs = [];
           this.serviceLocationForm.reset();
           this.editLocation = false;
           this.serviceLocationListSelect();
+          this.presentToast("Service Location " + this.title + "  successfully.", "success");
+          if (this.selectedWebDocs) {
+            this.selectedWebDocs.nativeElement.value = "";
+          } 
         },
           (error: any) => {
             // loadingController.dismiss();
