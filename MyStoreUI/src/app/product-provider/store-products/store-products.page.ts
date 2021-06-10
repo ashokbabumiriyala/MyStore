@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild,NgZone } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { StoreProductService } from '../store-products/store-product.service'
 import { AlertController, NavController, ToastController } from '@ionic/angular';
-import {HelperService} from '../../common/helper.service';
+import { HelperService} from '../../common/helper.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ActionSheetController } from '@ionic/angular';
-import {File, FileEntry} from '@ionic-native/file/ngx';
+import { File, FileEntry} from '@ionic-native/file/ngx';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Console } from 'console';
 import { ModalController } from '@ionic/angular';
@@ -32,13 +32,16 @@ selectedDocs=[];
 mobileApp:boolean;
 productId:number;
 uploadedDocuments= [];
+public searchStore: string = "";
+public masterData:any = [];
 constructor(private storeProductService:StoreProductService,
   private   toastController:ToastController,
   private helperService:HelperService,
   private camera: Camera,
   private actionSheetController: ActionSheetController, private file: File,
   private alertController:AlertController,
-  public modalController: ModalController) { }
+  public modalController: ModalController,
+  private ngZone:NgZone) { }
 
   ngOnInit() {
     if (sessionStorage.getItem('mobile') == 'true') {
@@ -91,17 +94,6 @@ constructor(private storeProductService:StoreProductService,
   }
 
   async presentModal(rowdata:any) {
-    // const modal = await this.modalController.create({
-    //   component: ModalPageComponent,
-    //   cssClass: 'my-custom-class',
-    //   componentProps: {
-    //     'productId': rowdata.id,
-    //     'quantity': rowdata.availableQty
-    //   }
-    // });
-    // await modal.present();
-
-
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Update Quantity',
@@ -153,16 +145,24 @@ constructor(private storeProductService:StoreProductService,
     await loadingController.present();
     const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Mode:'Select',StoreId:Number(this.SearchStoreId.value)};
    await this.storeProductService.storeProductList('ProviderStoreProductsSelect', dataObject)
-    .subscribe((data: any) => {
-      this.stores=data.storeDropdown;
-      this.storeProductsData = data.storeProducts;
-      loadingController.dismiss();
+    .subscribe((data: any) => {     
+      loadingController.dismiss();    
+      this.ngZone.run(() => {
+        this.stores=data.storeDropdown;
+        this.storeProductsData = data.storeProducts;
+        Object.assign(this.masterData,this.storeProductsData);
+    });
     },
     (error: any) => {
       loadingController.dismiss();
     });
-
   }
+  filterItems() {
+    this.masterData = this.storeProductsData.filter(item => {
+      return item.productName.toLowerCase().indexOf(this.searchStore.toLowerCase()) > -1;
+    });
+  }
+
   pickImage(sourceType) {
     const options: CameraOptions = {
       quality: 40,
@@ -371,12 +371,15 @@ constructor(private storeProductService:StoreProductService,
   }
   private createStoreForm(){
     this.storeForm = new FormGroup({
-      SearchStoreId: new FormControl('0')
+      SearchStoreId: new FormControl('0'),
+    
     });
   }
   changeStore(){
     this.storeProductsList();
   }
+
+
 
   async presentAlertConfirm(rowdata:any,type:string) {
       const alert = await this.alertController.create({

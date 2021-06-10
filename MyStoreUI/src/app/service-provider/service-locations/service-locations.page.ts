@@ -34,6 +34,8 @@ export class ServiceLocationsPage implements OnInit {
   longitude:any;
   geocoder:any;
   uploadedDocuments= [];
+  public masterData:any = [];
+  public searchService: string = "";
   constructor(private toastController: ToastController,
     private helperService: HelperService, private serviceLocationService: ServiceLocationService,
     private camera: Camera,
@@ -117,6 +119,13 @@ export class ServiceLocationsPage implements OnInit {
     });
   }
 
+  filterItems() {
+    this.masterData = this.providerLocationList.filter(item => {
+      debugger;
+      return item.businessName.toLowerCase().indexOf(this.searchService.toLowerCase()) > -1;
+    });
+  }
+
   //#region   list
   async serviceLocationListSelect() {
      const loadingController = await this.helperService.createLoadingController("loading");
@@ -127,7 +136,8 @@ export class ServiceLocationsPage implements OnInit {
         this.serviceMaster = data.serviceMaster;
         this.deliveryType = data.deliveryType;
         this.businessType = data.serviceType;
-        this.providerLocationList = data.locationList;
+        this.providerLocationList = data.locationList;       
+        Object.assign(this.masterData,this.providerLocationList);    
         loadingController.dismiss();
       },
         (error: any) => {
@@ -305,6 +315,7 @@ export class ServiceLocationsPage implements OnInit {
     let base64textString = btoa(binaryString);
     await this.getblobObject('data:image/jpeg;base64,' + base64textString)
   }
+
 
   getFormData(tempProducts: any[]) {
     let formData = [];

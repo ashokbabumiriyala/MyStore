@@ -29,9 +29,11 @@
                 <ion-icon name="cog-outline" slot="start"></ion-icon>
             </ion-item>
         </ion-col>
+        <ion-searchbar  formControlName="searchService"  placeholder="Search By Service Name " 
+        (ionChange)="filterItems()"></ion-searchbar>
     </ion-row>
 
-    <div *ngIf="!editService && serviceProductList.length == 0">
+    <div *ngIf="!editService && masterData.length == 0">
         <h6 class="no-records">
             kindly upload Serive information by clicking on add new service link to proceed.
         </h6>
@@ -39,8 +41,8 @@
         <img class="ion-text-center" src="../assets/images/logo.png">
     </div>
 
-    <ion-list class="ion-list-ele" *ngIf="!editService && serviceProductList.length > 0">
-        <ion-item *ngFor="let product of serviceProductList;">
+    <ion-list class="ion-list-ele" *ngIf="!editService && masterData.length > 0">
+        <ion-item *ngFor="let product of masterData;">
             <ion-avatar size="2">
                 <img src="{{product.logo}}" *ngIf="product.logo" (click)="showImage(product.logo)">
                 <img src="../../assets/images/default-image.jpg" *ngIf="!product.logo">

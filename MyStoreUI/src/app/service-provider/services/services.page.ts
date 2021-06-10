@@ -26,6 +26,8 @@ services=[];
 serviceProductList=[];
 serviceId:number;
 uploadedDocuments= [];
+
+public masterData:any = [];
 @ViewChild('selectedWebDocs') selectedWebDocs;
 mobileApp:boolean;
   constructor(private   toastController:ToastController,
@@ -89,12 +91,20 @@ ngOnInit() {
     .subscribe((data: any) => {
       this.services=data.serviceDropdown;
       this.serviceProductList = data.servicesProducts;
+      Object.assign(this.masterData, this.serviceProductList);     
+console.log( this.serviceProductList);
       loadingController.dismiss();
     },
     (error: any) => {
       loadingController.dismiss();
     });
 
+  }
+
+  filterItems() {
+    this.masterData = this.serviceProductList.filter(item => {
+      return item.serviceName.toLowerCase().indexOf(this.searchService.value.toLowerCase()) > -1;
+    });
   }
 
   get ServiceLocationID(){
@@ -123,13 +133,20 @@ ngOnInit() {
     return this.serviceLocationForm.get('LocationID');
   }
 
+  get searchService(){
+    return this.serviceLocationForm.get('searchService');
+  }
+
+  
+
   get Description(){
     return this.serviceProductsForm.get('Description');
   }
 
   private createServiceLocationForm(){
     this.serviceLocationForm = new FormGroup({
-      LocationID: new FormControl('0')
+      LocationID: new FormControl('0'),
+      searchService:new FormControl(''),
     });
   }
   private createServiceProductForm(){

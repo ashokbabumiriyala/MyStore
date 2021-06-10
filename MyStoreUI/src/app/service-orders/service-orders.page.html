@@ -3,31 +3,6 @@
     <ion-icon name="aperture-outline" slot="start"></ion-icon>Service Orders
   </h2>
   <ion-searchbar  [(ngModel)]="searchService"  placeholder="Search By Delivery Status" (ionChange)="filterItems()"></ion-searchbar>
-  <!-- <ion-list class="ion-list-ele">
-    <ion-row (click)="expandItem($event,item)" class="order-status" *ngFor="let item of masterData">
-      <ion-col size="6">
-        <ion-label>Order Number: <b>{{item.orderId}}</b></ion-label>
-      </ion-col>
-      <ion-col size="6">
-        <ion-label>Ordered Date: <b>{{item.orderDate|date:"dd/MM/yy"}}</b></ion-label>
-      </ion-col>
-      <ion-col size="6">
-        <ion-label>User Name: <b>{{item.userName}}</b></ion-label>
-      </ion-col>
-      <ion-col size="6">
-        <ion-label>MobileNumber: <b>{{item.mobileNumber}}</b></ion-label>
-      </ion-col>
-      <ion-col size="6">
-        <ion-label>Store Location: <b>{{item.address}}</b></ion-label>
-      </ion-col>
-      <ion-col size="6">
-        <ion-label>Delivery Status: <b>{{item.orderStatus}}</b></ion-label>
-      </ion-col>
-      <app-service-order-items *ngIf="showServiceOrders" 
-       [items]="serviceOrderedItems" [expanded]="item.expand"></app-service-order-items>
-    </ion-row>
-  </ion-list> -->
-
   <div *ngIf="masterData.length == 0">
     <h6 class="no-records">
       You do not have any orders from customers yet.

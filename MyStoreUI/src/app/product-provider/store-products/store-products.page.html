@@ -25,7 +25,7 @@
         </ion-select-option>
       </ion-select>
       <ion-icon name="funnel-outline" slot="start"></ion-icon>
-    </ion-item>
+    </ion-item>    
   </form>
 
   <div *ngIf="!editProduct && storeProductsData.length == 0">
@@ -36,8 +36,14 @@
     <img class="ion-text-center" src="../assets/images/logo.png">
   </div>
 
+  
+
+  <ion-searchbar  *ngIf="!editProduct && storeProductsData.length > 0"
+      [(ngModel)]="searchStore" placeholder="Search By Product Name" 
+  (ionChange)="filterItems()"></ion-searchbar>
+
   <ion-list class="ion-list-ele" *ngIf="!editProduct && storeProductsData.length > 0">
-    <ion-item *ngFor="let product of storeProductsData;" class="store-products">
+    <ion-item *ngFor="let product of masterData;" class="store-products">
       <!-- <ion-row> -->
       <ion-avatar size="2">
         <img src="{{product.logo}}" *ngIf="product.logo" (click)="showImage(product.logo)">

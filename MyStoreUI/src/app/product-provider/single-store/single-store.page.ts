@@ -1,5 +1,5 @@
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild,NgZone } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { NavController, ToastController } from '@ionic/angular';
@@ -31,11 +31,14 @@ geocoder:any;
 latitude:any;
 longitude:any;
 uploadedDocuments= [];
+public searchStore: string = "";
+public masterData:any = [];
 @ViewChild('selectedWebDocs') selectedWebDocs;
   constructor(private   toastController:ToastController,private helperService:HelperService,
     private singleStoreService:SingleStoreService,
     private actionSheetController:ActionSheetController,
-    private camera: Camera, private alertController:AlertController
+    private camera: Camera, private alertController:AlertController,
+    private ngZone:NgZone
     ) {
       this.geocoder = new google.maps.Geocoder();
     }
@@ -60,7 +63,10 @@ const loadingController = await this.helperService.createLoadingController("load
    this.masterStore= data.storeMaster;
    this.storeType= data.provideStoreType;
     if(data.provideStoreList.length>0){
-      this.provideSubStoreList=data.provideStoreList;
+      this.ngZone.run(() => {
+        this.provideSubStoreList=data.provideStoreList;
+        Object.assign(this.masterData,this.provideSubStoreList);       
+     });
       loadingController.dismiss();
     }else{
       this.provideSubStoreList=[];
@@ -72,6 +78,12 @@ const loadingController = await this.helperService.createLoadingController("load
     });
 
 }
+filterItems() {
+  this.masterData = this.provideSubStoreList.filter(item => {
+    return item.storeName.toLowerCase().indexOf(this.searchStore.toLowerCase()) > -1;
+  });
+}
+
 //#endregion
 
 //#region   store save

@@ -24,9 +24,11 @@
         <p class="note-text"><b>Note:</b>You can add multiple service locations.</p>
         <img class="ion-text-center" src="../assets/images/logo.png">
     </div>
-
+    <ion-searchbar *ngIf="!editLocation && providerLocationList.length > 0"
+    [(ngModel)]="searchService"  placeholder="Search By Business Name" (ionChange)="filterItems()"></ion-searchbar>
     <ion-list class="ion-list-ele" *ngIf="!editLocation">
-        <ion-item *ngFor="let location of providerLocationList;">
+     
+        <ion-item *ngFor="let location of masterData;">
             <ion-avatar size="2">
                 <img  src="{{location.logo}}" *ngIf="location.logo" (click)="showImage(location.logo)">
                 <img src="../../assets/images/default-image.jpg" *ngIf="!location.logo" >

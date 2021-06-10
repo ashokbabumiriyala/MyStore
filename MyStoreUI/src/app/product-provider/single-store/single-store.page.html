@@ -25,8 +25,11 @@
         <img class="ion-text-center" src="../assets/images/logo.png">
     </div>
 
+    <ion-searchbar   *ngIf="!editStore && provideSubStoreList.length>0" 
+        [(ngModel)]="searchStore"  placeholder="Search By Store Name" (ionChange)="filterItems()"></ion-searchbar>
+
     <ion-list class="ion-list-ele" *ngIf="!editStore && provideSubStoreList.length !== 0">
-        <ion-item *ngFor="let subStore of provideSubStoreList;">
+        <ion-item *ngFor="let subStore of masterData;">
             <ion-avatar size="2">
                 <img src="{{subStore.logo}}" *ngIf="subStore.logo" (click)="showImage(subStore.logo)">
                 <img src="../../assets/images/default-image.jpg" *ngIf="!subStore.logo">
