@@ -1,5 +1,5 @@
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild,NgZone } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, NavController, ToastController } from '@ionic/angular';
 import { HelperService } from '../../common/helper.service';
@@ -40,7 +40,8 @@ export class ServiceLocationsPage implements OnInit {
     private helperService: HelperService, private serviceLocationService: ServiceLocationService,
     private camera: Camera,
     private actionSheetController: ActionSheetController, private file: File,
-    private alertController:AlertController) {
+    private alertController:AlertController,
+    private ngZone:NgZone) {
       this.geocoder = new google.maps.Geocoder();
     }
   ngOnInit() {
@@ -135,10 +136,15 @@ export class ServiceLocationsPage implements OnInit {
       .subscribe((data: any) => {
         this.serviceMaster = data.serviceMaster;
         this.deliveryType = data.deliveryType;
-        this.businessType = data.serviceType;
-        this.providerLocationList = data.locationList;       
-        Object.assign(this.masterData,this.providerLocationList);    
+        this.businessType = data.serviceType;  
+        this.masterData=[];        
         loadingController.dismiss();
+        this.ngZone.run(() => {
+          this.providerLocationList = data.locationList;       
+        Object.assign(this.masterData,this.providerLocationList); 
+      });
+
+
       },
         (error: any) => {
           loadingController.dismiss();
@@ -205,6 +211,7 @@ export class ServiceLocationsPage implements OnInit {
     toast.present();
   }
   async editServiceInfo(rowdata: any) {
+    this.uploadedDocuments=[];
     this.editLocation = true;
     if (rowdata == null) {
       this.locationId = 0;
