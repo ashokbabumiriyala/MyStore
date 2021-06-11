@@ -121,8 +121,7 @@ export class ServiceLocationsPage implements OnInit {
   }
 
   filterItems() {
-    this.masterData = this.providerLocationList.filter(item => {
-      debugger;
+    this.masterData = this.providerLocationList.filter(item => {     
       return item.businessName.toLowerCase().indexOf(this.searchService.toLowerCase()) > -1;
     });
   }

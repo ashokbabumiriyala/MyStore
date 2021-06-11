@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit,ViewChild,NgZone } from '@angular/core';
 import { HelperService } from '../../common/helper.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ActionSheetController } from '@ionic/angular';
@@ -35,7 +35,7 @@ mobileApp:boolean;
     private serviceUploadService:ServiceUploadService,
     private camera: Camera,
     private actionSheetController: ActionSheetController, private file: File,
-    public alertController: AlertController) { }
+    public alertController: AlertController,public ngZone:NgZone) { }
 ngOnInit() {
   if (sessionStorage.getItem('mobile') == 'true') {
     this.mobileApp = true;
@@ -89,11 +89,16 @@ ngOnInit() {
    Mode:'Select',LocationId: Number(this.LocationID.value)};
    await this.serviceUploadService.serviceProductList('serviceListSelect', dataObject)
     .subscribe((data: any) => {
+      this.masterData=[]
       this.services=data.serviceDropdown;
-      this.serviceProductList = data.servicesProducts;
-      Object.assign(this.masterData, this.serviceProductList);     
-console.log( this.serviceProductList);
       loadingController.dismiss();
+      this.ngZone.run(() => {
+        this.serviceProductList = data.servicesProducts;
+        Object.assign(this.masterData, this.serviceProductList);
+    });
+
+     
+    
     },
     (error: any) => {
       loadingController.dismiss();
