@@ -10,13 +10,10 @@ export class StoreOrderItemsComponent implements  OnInit  {
 
   @ViewChild("expandWrapper", { read: ElementRef }) expandWrapper: ElementRef;
   @Input("expandHeight") expandHeight: string = "250px";
-  @Input() items: any = [];
   @Input("expanded") expanded: boolean;
-  @Input()  orderedItems:any = [];
+  @Input()  orderedItems:any;
 
-  constructor(public renderer: Renderer2,  private toastController:ToastController) {
-   
-  }
+  constructor(public renderer: Renderer2,  private toastController:ToastController) {  }
 
   ngOnInit() {
     console.log(this.orderedItems);
@@ -24,6 +21,7 @@ export class StoreOrderItemsComponent implements  OnInit  {
 
   ngOnChanges(SimpleValues:any) {
    this.expanded = SimpleValues.expanded.currentValue;
+   this.orderedItems = SimpleValues.orderedItems.currentValue;
   }  
 }
 

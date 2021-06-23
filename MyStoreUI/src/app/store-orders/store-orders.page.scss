@@ -64,9 +64,9 @@
       }
     }
     .body ion-col {
-        min-width: 150px;
-        white-space: break-spaces;
-        font-size: 14px;              
+      min-width: 250px;
+      white-space: nowrap;
+      font-size: 14px;              
     }    
   }
   .content-section {
@@ -83,9 +83,26 @@
     }
   }
   .order-status {
-    border: 1px solid;
+    border: 1px solid #111;
     border-radius: 15px;
-    min-width: 450px;
+    font-size: 14px;
+    margin-bottom: 5px;   
+    white-space: nowrap;
+    padding: 10px;
+    position: relative;
+    padding-left: 20px;
     width: auto;
-    margin-bottom: 5px;
-  }
+    min-width: fit-content;
+}
+.order-status::before{
+    content: '>';
+    position: absolute;
+    font-size: 32px;
+    color: darkorange;
+    top: 31px;
+    left: 1px;
+}
+.selected::before{
+    transform: rotate(90deg);
+    top: 31px;
+}

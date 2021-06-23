@@ -1,26 +1,26 @@
 .cart-list {
-    border: 1px solid #bbb;
-    border-radius: 10px;
-    height: 90px;
-   ion-card-content {
-       padding: 10px !important;
-        img {
-           width: 100%;
-           height: 100%;
-       }
-   }
+  border: 1px solid #bbb;
+  border-radius: 10px;
+  height: 90px;
+ ion-card-content {
+     padding: 10px !important;
+      img {
+         width: 100%;
+         height: 100%;
+     }
+ }
 }
 .cart-itm-wrap {
-    height: auto;
-    max-height: 310px;
-    overflow-y: auto;
+  height: auto;
+  max-height: 310px;
+  overflow-y: auto;
 }
 .track {
-    text-decoration: underline;
-    text-align: center;
-    cursor: pointer;
-    width: 100%;
-    margin: 2px;
+  text-decoration: underline;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  margin: 2px;
 }
 // .ion-list-ele {
 //     ion-row {
@@ -54,37 +54,55 @@
 
 
 .wide-as-needed {
-    overflow: scroll;
+  overflow: scroll;
+  white-space: nowrap;
+  height:435px;
+  .col-width {
+    min-width: 70px !important;
+    ion-item {
+      --background:transparent;
+    }
+  }
+  .body ion-col {
+    min-width: 250px;
     white-space: nowrap;
-    height:435px;
-    .col-width {
-      min-width: 70px !important;
-      ion-item {
-        --background:transparent;
-      }
-    }
-    .body ion-col {
-        min-width: 150px;
-        white-space: break-spaces;               
-    }    
+    font-size: 14px;              
+  }    
+}
+.content-section {
+  height: auto;
+  max-height: 495px;
+  overflow-y: auto;
+}  
+.header {
+  display: flex;
+  text-align: center;
+  font-weight: bold;
+  ion-col {
+    padding-top: 15px !important;
   }
-  .content-section {
-    height: auto;
-    max-height: 495px;
-    overflow-y: auto;
-  }  
-  .header {
-    display: flex;
-    text-align: center;
-    font-weight: bold;
-    ion-col {
-      padding-top: 15px !important;
-    }
-  }
-  .order-status {
-    border: 1px solid;
-    border-radius: 15px;
-    min-width: 450px;
-    width: auto;
-    margin-bottom: 5px;
-  }
+}
+.order-status {
+  border: 1px solid #111;
+  border-radius: 15px;
+  font-size: 14px;
+  margin-bottom: 5px;   
+  white-space: nowrap;
+  padding: 10px;
+  position: relative;
+  padding-left: 20px;
+  width: auto;
+  min-width: fit-content;
+}
+.order-status::before{
+  content: '>';
+  position: absolute;
+  font-size: 32px;
+  color: darkorange;
+  top: 31px;
+  left: 1px;
+}
+.selected::before{
+  transform: rotate(90deg);
+  top: 31px;
+}

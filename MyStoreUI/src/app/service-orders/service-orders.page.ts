@@ -16,6 +16,7 @@ export class ServiceOrdersPage implements OnInit {
   public items: any = [];
   public searchService: string = "";
   public masterData:any = [];
+  selectedIndex: number;
   constructor( private router: Router,private helperService:HelperService, private serviceOrderService:ServiceOrderService) { }
 
   ngOnInit() {
@@ -41,19 +42,18 @@ export class ServiceOrdersPage implements OnInit {
       this.masterData = this.items.filter(item => {
         return item.orderStatus.toLowerCase().indexOf(this.searchService.toLowerCase()) > -1;
       });
-    }
-
-  expandItem(event, ele): void {  
-  
+    }   
+  expandItem(event, ele:any, index:number): void {  
     this.serviceOrderedItems=[];
     this.showServiceOrders=false;
-    // event.currentTarget.classList.toggle('order-status');
-    // event.currentTarget.classList.toggle('row-icon');
     if (ele.expand) {
       ele.expand = false;
       this.showServiceOrders=false;
+      this.selectedIndex = -1;
     } else {
+      this.items.forEach(element => {element.expand = false;});
       ele.expand = true;
+      this.selectedIndex = index;
       this.getServiceOrderItems(ele.orderId);   
     }
   }

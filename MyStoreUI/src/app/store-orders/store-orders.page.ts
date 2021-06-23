@@ -14,6 +14,7 @@ export class StoreOrdersPage implements OnInit {
   public items: any = [];
   public searchOrder: string = "";
   public masterData:any = [];
+  selectedIndex: number;
   constructor( private router: Router,private helperService:HelperService, 
     private storeOrderService:StoreOrderService) { }
 
@@ -40,16 +41,17 @@ export class StoreOrdersPage implements OnInit {
         return item.deliveryStatus.toLowerCase().indexOf(this.searchOrder.toLowerCase()) > -1;
       });
     }
-  expandItem(event, ele): void {  
+  expandItem(event, ele:any, index:number): void {  
     this.storeOrderedItems=[];
     this.showStoreOrders=false;
-    // event.currentTarget.classList.toggle('order-status');
-    // event.currentTarget.classList.toggle('row-icon');
     if (ele.expand) {
       ele.expand = false;
       this.showStoreOrders=false;
+      this.selectedIndex = -1;
     } else {
+      this.items.forEach(element => {element.expand = false;});
       ele.expand = true;
+      this.selectedIndex = index;
       this.getStoreOrders(ele.orderId);   
     }
   }

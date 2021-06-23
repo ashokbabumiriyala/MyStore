@@ -11,17 +11,18 @@ export class ServiceOrderItemsComponent implements OnInit {
 
   @ViewChild("expandWrapper", { read: ElementRef }) expandWrapper: ElementRef;
   @Input("expandHeight") expandHeight: string = "250px";
-  @Input() items: any = [];
+  @Input() items: any;
   @Input("expanded") expanded: boolean;
 
   constructor(public renderer: Renderer2,  private toastController:ToastController) {
   }
 
   ngOnInit() { 
-   
   }
 
   ngOnChanges(SimpleValues:any) {
    this.expanded = SimpleValues.expanded.currentValue;
+   this.items = SimpleValues.items.currentValue;
+
   }  
 }
