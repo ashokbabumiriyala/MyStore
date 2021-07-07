@@ -1,26 +1,28 @@
 <div #expandWrapper class='expand-wrapper' [ngClass]="!expanded ? 'collapsed':'expanded'">
   <ion-list>
     <p class="ion-text-center" style="margin: auto;">Total Order Value:- <b>{{1500| currency:'INR'}}</b></p>
-    <ion-item *ngFor="let itm of  orderedItems">
+     <ion-item *ngFor="let itm of  orderedItems">
       <ion-avatar slot="start">
         <img src="{{'../assets/images/dump/'+itm.thumb}}">
       </ion-avatar>
-      <ion-label>
-        <ion-row>
-          <ion-col size-xs="8" size-sm="6" size-md="6" size-lg="6">
-            <h3>Name:{{itm.productName}}</h3>
-          </ion-col>
-          <ion-col size-xs="4" size-sm="6" size-md="6" size-lg="6">
-            <h3>Count:{{itm.quantity}}</h3>
-          </ion-col>
-          <ion-col size-xs="8" size-sm="6" size-md="6" size-lg="6">
-            <h3>Price:{{itm.sellingPrice | currency:'INR'}}</h3>
-            </ion-col>
-            <ion-col size-xs="4" size-sm="6" size-md="6" size-lg="6">
-            <h3>Units:{{itm.units}}</h3>
-          </ion-col>
-        </ion-row>
+      <ion-label style="white-space: break-spaces;">
+        <table class="table">      
+          <tbody>
+            <tr>
+              <td><b>Name:</b></td>
+              <td class="label" style="width: 140px;">{{itm.productName}}</td>
+              <td><b>Count:</b></td>
+              <td class="label">{{itm.quantity}}</td>
+            </tr>
+            <tr>
+              <td><b>Price:</b></td>
+              <td class="label">{{itm.sellingPrice | currency:'INR'}}</td>
+              <td><b>Units:</b></td>
+              <td class="label">{{itm.units}}</td>
+            </tr>
+            </tbody>
+        </table>
       </ion-label>
-    </ion-item>
+    </ion-item>   
   </ion-list>
 </div>

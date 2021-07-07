@@ -12,7 +12,7 @@
   </div>
   
   <div direction="x" class="wide-as-needed">
-    <ion-grid>
+    <!-- <ion-grid>
         <div  (click)="expandItem($event,item, i)" class="order-status" *ngFor="let item of masterData;let i = index;" [ngClass]="{'selected': i == selectedIndex}">
           <div class="body" style="display: flex;">
             <ion-col>
@@ -41,7 +41,33 @@
           <app-service-order-items *ngIf="showServiceOrders && item.expand" [items]="serviceOrderedItems"
            [expanded]="item.expand"></app-service-order-items>   
         </div>
-    </ion-grid>
+    </ion-grid> -->
+    <table class="table">      
+      <tbody>
+        <div (click)="expandItem($event,item, i)" class="order-status" *ngFor="let item of masterData;let i = index;" [ngClass]="{'selected': i == selectedIndex}">
+        <tr>
+          <td><b>Order Number:</b></td>
+          <td class="label" style="width: 140px;">{{item.orderId}}</td>
+          <td><b>Ordered Date:</b></td>
+          <td class="label">{{item.orderDate|date:"dd/MM/yy"}}</td>
+        </tr>
+        <tr>
+          <td><b>User Name:</b></td>
+          <td class="label">{{item.userName}}</td>
+          <td><b>MobileNumber:</b></td>
+          <td class="label">{{item.mobileNumber}}</td>
+        </tr>
+        <tr>
+          <td><b>Delivery Status:</b></td>
+          <td class="label">{{item.orderStatus}}</td>
+          <td><b>Store Location:</b></td>
+          <td class="label">{{item.address}}</td>
+        </tr>
+        <app-service-order-items *ngIf="showServiceOrders && item.expand" [items]="serviceOrderedItems"
+           [expanded]="item.expand"></app-service-order-items>   
+      </div>
+        </tbody>
+    </table>
   </div>
 </ion-content>
 
