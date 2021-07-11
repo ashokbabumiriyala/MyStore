@@ -1,5 +1,71 @@
 <div #expandWrapper class='expand-wrapper' [ngClass]="!expanded ? 'collapsed':'expanded'">
   <ion-list>
+    <table class="table1" style=" margin-left: 10px;">
+      <tbody>
+        <tr>
+          <td><b>Ordered Date: </b></td>
+          <td> {{orderDetails.orderDate|date:"dd/MM/yy"}}</td>
+        </tr>
+        <tr>
+          <td><b>User Name: </b></td>
+          <td> {{orderDetails.userName}}</td>
+        </tr>
+        <tr>
+          <td><b>MobileNumber: </b></td>
+          <td> {{orderDetails.userMobileNumber}}</td>
+        </tr>
+        <tr>
+          <td><b>Order Status: </b></td>
+          <td> {{orderDetails.orderStatus}}</td>
+        </tr>
+        <tr>
+          <td><b>Store Location: </b></td>
+          <td> {{orderDetails.serviceProviderAddress}}</td>
+        </tr>
+        <tr>
+          <td><b>Payment Type: </b></td>
+          <td> {{orderDetails.paymentType == 1 ? 'Cash On Delivery' : 'Online Payment' }}</td>
+        </tr>
+        <tr *ngIf="orderDetails.paymentType == 0">
+          <td><b>Transaction Id: </b></td>
+          <td> {{orderDetails.transactionId}}</td>
+        </tr>
+        <tr>
+          <td><b>Sub Total: </b></td>
+          <td> {{ orderDetails.subTotal | currency:'INR'}}</td>
+        </tr>
+        <tr>
+          <td><b>Processing Fee: </b></td>
+          <td> {{orderDetails.processingFee | currency:'INR'}}</td>
+        </tr>       
+        <tr>
+          <td><b>Total Order Value: </b></td>
+          <td> {{ orderDetails.totalAmount | currency:'INR'}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <table style="width: -webkit-fill-available;text-align:left;">
+      <thead>
+        <th></th>
+        <th>Name</th>
+        <th>Qty</th>
+        <th>Price</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let itm of  items">
+          <td>
+            <ion-avatar>
+              <img class="product-img" src="{{itm.url}}" *ngIf="itm.url">
+              <img class="product-img" src="../../assets/images/default-image.jpg" *ngIf="!itm.url">
+            </ion-avatar>        
+          </td>
+            <td>{{itm.serviceName}}</td>
+            <td>{{ itm.sellingPrice | currency:'INR'}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+<!--     
     <p style="margin: auto;">Payment Type:- <b>{{ orderDetails.paymentType == 1 ? 'Cash On Delivery' : 'Online Payment' }}</b></p>
     <p style="margin: auto;" *ngIf="orderDetails.paymentType == 0">Transaction Id:- <b>{{ orderDetails.transactionId}}</b></p>
     <p style="margin: auto;">Sub Total:- <b>{{ orderDetails.subTotal | currency:'INR'}}</b></p>
@@ -21,6 +87,6 @@
           </tbody>
         </table>
       </ion-label>
-    </ion-item>
+    </ion-item> -->
   </ion-list>
 </div>

@@ -18,10 +18,10 @@
           <tr>
             <td><b>Order Number:</b></td>
             <td class="label" style="width: 140px;">{{item.orderId}}</td>
-            <td><b>Ordered Date:</b></td>
-            <td class="label">{{item.orderDate|date:"dd/MM/yy"}}</td>
+            <!-- <td><b>Ordered Date:</b></td>
+            <td class="label">{{item.orderDate|date:"dd/MM/yy"}}</td> -->
           </tr>
-          <tr>
+          <!-- <tr>
             <td><b>User Name:</b></td>
             <td class="label">{{item.userName}}</td>
             <td><b>MobileNumber:</b></td>
@@ -32,7 +32,7 @@
             <td class="label">{{item.orderStatus}}</td>
             <td><b>Store Location:</b></td>
             <td class="label">{{item.storeAddress}}</td>
-          </tr>
+          </tr> -->
           <app-store-order-items *ngIf="showStoreOrders && item.expand" [orderDetails]="item" [orderedItems]="storeOrderedItems" [expanded]="item.expand"></app-store-order-items>
         </div>
       </tbody>
