@@ -102,15 +102,19 @@
   position: absolute;
   font-size: 32px;
   color: darkorange;
-  top: 15px;
-  left: 2px;
+  top: 0px;
+    left: 1px;
 }
 .selected::before{
-  content: '-';
-  left: 4px;
+    content: '-';
+    left: 4px;
+    top: -2px;
+}
+table {
+    width: -webkit-fill-available;
 }
 table tr td.label {
-text-align: left; 
-white-space: break-spaces;
-word-wrap: break-word;
+  text-align: left; 
+  white-space: break-spaces;
+  word-wrap: break-word;
 }
