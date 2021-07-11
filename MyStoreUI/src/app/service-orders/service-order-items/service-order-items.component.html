@@ -1,23 +1,26 @@
 <div #expandWrapper class='expand-wrapper' [ngClass]="!expanded ? 'collapsed':'expanded'">
   <ion-list>
-    <p class="ion-text-center" style="margin: auto;">Total Order Value:- <b>{{1500| currency:'INR'}}</b></p>
+    <p style="margin: auto;">Payment Type:- <b>{{ orderDetails.paymentType == 1 ? 'Cash On Delivery' : 'Online Payment' }}</b></p>
+    <p style="margin: auto;" *ngIf="orderDetails.paymentType == 0">Transaction Id:- <b>{{ orderDetails.transactionId}}</b></p>
+    <p style="margin: auto;">Sub Total:- <b>{{ orderDetails.subTotal | currency:'INR'}}</b></p>
+    <p style="margin: auto;">Processing Fee:- <b>{{ orderDetails.processingFee | currency:'INR'}}</b></p>
+    <p style="margin: auto;">Total Order Value:- <b>{{ orderDetails.totalAmount | currency:'INR'}}</b></p>
     <ion-item *ngFor="let itm of  items">
       <ion-avatar slot="start">
-        <img src="{{'../assets/images/dump/'+itm.thumb}}">
+        <img src="{{itm.url}}">
       </ion-avatar>
-      <ion-label style="white-space: break-spaces;">        
-        <table class="table">      
+      <ion-label style="white-space: break-spaces;">
+        <table class="table">
           <tbody>
             <tr>
               <td><b>Name:</b></td>
               <td class="label" style="width: 140px;">{{itm.serviceName}}</td>
               <td><b>Price:</b></td>
               <td class="label">{{itm.sellingPrice | currency:'INR'}}</td>
-            </tr>           
-            </tbody>
+            </tr>
+          </tbody>
         </table>
       </ion-label>
     </ion-item>
   </ion-list>
 </div>
-

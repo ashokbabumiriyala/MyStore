@@ -2,13 +2,14 @@
   <h2 class="page-title">
     <ion-icon name="archive-outline"></ion-icon>Product Orders
   </h2>
- 
-  <ion-searchbar  [(ngModel)]="searchOrder" placeholder="Search By Order Status" (ionChange)="filterItems()"></ion-searchbar>
+
+  <ion-searchbar [(ngModel)]="searchOrder" placeholder="Search By Order Status" (ionChange)="filterItems()"></ion-searchbar>
   <div class="content-section">
     <div direction="x" class="wide-as-needed">
       <ion-grid>
         <div class="header">
           <ion-col class="col-width">Assigned To</ion-col>
+          <ion-col>Delivery Type</ion-col>
           <ion-col>Order Status</ion-col>
           <ion-col>Order Id</ion-col>
           <ion-col>Order Date and Time</ion-col>
@@ -18,25 +19,32 @@
           <ion-col>Store Name</ion-col>
           <ion-col>Store Address</ion-col>
           <ion-col>Store manager Mobile number</ion-col>
+          <ion-col>Payment Type</ion-col>
+          <ion-col>Transaction ID</ion-col>
+          <ion-col>Sub Total</ion-col>
+          <ion-col>Delivery Charge</ion-col>
+          <ion-col>Processing Fee</ion-col>
           <ion-col>Total Amount</ion-col>
         </div>
         <div style="max-height: 330px;overflow: auto;display: inline-block;">
           <div *ngFor="let order of masterData">
             <div class="body" style="display: flex;">
-              <ion-col class="col-width"  >
-                <ion-item class="ion-ele" *ngIf="order.assignedTo=='0'">Select Executive                 
+              <ion-col class="col-width">
+                <ion-item class="ion-ele" *ngIf="order.assignedTo=='0'">Select Executive
                   <ion-select class="assign-orders" (ionChange)="executivesChange($event,order)">
                     <ion-select-option *ngFor="let service of executives" value="{{service.value}}">
-                        {{service.text}}</ion-select-option>
-                </ion-select>
+                      {{service.text}}</ion-select-option>
+                  </ion-select>
                 </ion-item>
 
-                <ion-item class="ion-ele" *ngIf="order.assignedTo!='0'">                 
+                <ion-item class="ion-ele" *ngIf="order.assignedTo!='0'">
                   {{order.assignedTo}}
                 </ion-item>
 
-              </ion-col>    
-           
+              </ion-col>
+
+              <ion-col *ngIf="order.deliveryType == null || order.deliveryType == 0" (click)="toggle(order)">Home Delivery</ion-col>
+              <ion-col *ngIf="order.deliveryType == 1" (click)="toggle(order)">Self Pickup</ion-col>
               <ion-col (click)="toggle(order)">{{order.deliveryStatus}}</ion-col>
               <ion-col (click)="toggle(order)">{{order.orderID}}</ion-col>
               <ion-col (click)="toggle(order)">{{order.orderDate|date:'dd/MM/yyyy'}}</ion-col>
@@ -46,6 +54,14 @@
               <ion-col (click)="toggle(order)">{{order.storeName}}</ion-col>
               <ion-col (click)="toggle(order)">{{order.storeAddress}}</ion-col>
               <ion-col (click)="toggle(order)">{{order.storeManagerMobileNumber}}</ion-col>
+              <ion-col *ngIf="order.paymentType == null || order.paymentType == 0" (click)="toggle(order)">Online Payment</ion-col>
+              <ion-col *ngIf="order.paymentType == 1" (click)="toggle(order)">Cash On Delivery</ion-col>
+              <ion-col (click)="toggle(order)">{{order.transactionId}}</ion-col>
+              <ion-col (click)="toggle(order)">{{order.subTotal | currency: 'INR'}}</ion-col>
+              <ion-col *ngIf="order.deliveryCharge == null" (click)="toggle(order)">{{0 | currency: 'INR'}}</ion-col>
+              <ion-col *ngIf="order.deliveryCharge != null" (click)="toggle(order)">{{order.deliveryCharge | currency: 'INR'}}</ion-col>
+              <ion-col *ngIf="order.processingFee == null" (click)="toggle(order)">{{0 | currency: 'INR'}}</ion-col>
+              <ion-col *ngIf="order.processingFee != null" (click)="toggle(order)">{{order.processingFee | currency: 'INR'}}</ion-col>
               <ion-col (click)="toggle(order)">{{order.totalAmount| currency:'INR'}}</ion-col>
             </div>
             <div class="order-details" *ngIf="order.expand">
@@ -75,16 +91,15 @@
                     </ion-item>
                   </ion-col> -->
 
-                  <app-store-order-items  *ngIf="showOrdersItems"
-                  [orderedItems]="storeOrderedItems" [expanded]="order.expand" >
-                </app-store-order-items>
-                
+                  <app-store-order-items *ngIf="showOrdersItems" [orderDetails]="order" [orderedItems]="storeOrderedItems" [expanded]="order.expand">
+                  </app-store-order-items>
+
                 </ion-row>
               </ion-list>
             </div>
 
 
-         
+
           </div>
         </div>
       </ion-grid>

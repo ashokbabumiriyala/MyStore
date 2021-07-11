@@ -1,4 +1,12 @@
-import { Component, AfterViewInit, Input, ViewChild,  ElementRef, Renderer2, OnInit } from "@angular/core";
+import {
+  Component,
+  AfterViewInit,
+  Input,
+  ViewChild,
+  ElementRef,
+  Renderer2,
+  OnInit,
+} from '@angular/core';
 import { NavController, ToastController } from '@ionic/angular';
 
 @Component({
@@ -6,22 +14,24 @@ import { NavController, ToastController } from '@ionic/angular';
   templateUrl: './store-order-items.component.html',
   styleUrls: ['./store-order-items.component.scss'],
 })
-export class StoreOrderItemsComponent implements  OnInit  {
+export class StoreOrderItemsComponent implements OnInit {
+  @ViewChild('expandWrapper', { read: ElementRef }) expandWrapper: ElementRef;
+  @Input('expandHeight') expandHeight: string = '250px';
+  @Input('expanded') expanded: boolean;
+  @Input('orderDetails') orderDetails: any;
+  @Input() orderedItems: any;
 
-  @ViewChild("expandWrapper", { read: ElementRef }) expandWrapper: ElementRef;
-  @Input("expandHeight") expandHeight: string = "250px";
-  @Input("expanded") expanded: boolean;
-  @Input()  orderedItems:any;
-
-  constructor(public renderer: Renderer2,  private toastController:ToastController) {  }
+  constructor(
+    public renderer: Renderer2,
+    private toastController: ToastController
+  ) {}
 
   ngOnInit() {
     console.log(this.orderedItems);
   }
 
-  ngOnChanges(SimpleValues:any) {
-   this.expanded = SimpleValues.expanded.currentValue;
-   this.orderedItems = SimpleValues.orderedItems.currentValue;
-  }  
+  ngOnChanges(SimpleValues: any) {
+    this.expanded = SimpleValues.expanded.currentValue;
+    this.orderedItems = SimpleValues.orderedItems.currentValue;
+  }
 }
-

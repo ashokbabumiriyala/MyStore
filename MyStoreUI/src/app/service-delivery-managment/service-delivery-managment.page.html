@@ -1,8 +1,8 @@
 <ion-content class="login-form ion-padding after-login-bg">
   <h2 class="page-title">
-    <ion-icon name="aperture-outline"  slot="start"></ion-icon>Service Orders
+    <ion-icon name="aperture-outline" slot="start"></ion-icon>Service Orders
   </h2>
-  <ion-searchbar  [(ngModel)]="searchService"  placeholder="Search By Delivery Status" (ionChange)="filterItems()"></ion-searchbar>
+  <ion-searchbar [(ngModel)]="searchService" placeholder="Search By Delivery Status" (ionChange)="filterItems()"></ion-searchbar>
   <!-- <ion-list class="ion-list-ele">
     <ion-row (click)="expandItem($event,item)" class="order-status" *ngFor="let item of masterData">
       <ion-col size="6">
@@ -31,44 +31,29 @@
     <div direction="x" class="wide-as-needed">
       <ion-grid>
         <div class="header">
-          <ion-col class="col-width">Assigned To</ion-col>
-          <ion-col>Order Status</ion-col>
           <ion-col>Order Id</ion-col>
+          <ion-col>Order Status</ion-col>
           <ion-col>Order Date and Time</ion-col>
           <ion-col>Customer Name</ion-col>
           <ion-col>Customer Mobile Number</ion-col>
           <ion-col>Customer Address</ion-col>
-          <ion-col>Store Name</ion-col>
-          <ion-col>Store Address</ion-col>
-          <ion-col>Store manager Mobile number</ion-col>
+          <ion-col>Service Provider Name</ion-col>
+          <ion-col>Service Provider Address</ion-col>
+          <ion-col>Service Manager Mobile number</ion-col>
           <ion-col>Total Amount</ion-col>
         </div>
         <div style="max-height: 330px;overflow: auto;display: inline-block;">
           <div *ngFor="let order of masterData">
             <div class="body" style="display: flex;">
-              <ion-col class="col-width"  >
-                <ion-item class="ion-ele" *ngIf="order.assignedTo=='0'">Select Executive                 
-                  <!-- <ion-select class="assign-orders" (ionChange)="executivesChange($event,order)">
-                    <ion-select-option *ngFor="let service of executives" value="{{service.value}}">
-                        {{service.text}}</ion-select-option>
-                </ion-select> -->
-                </ion-item>
-
-                <ion-item class="ion-ele" *ngIf="order.assignedTo!='0'">                 
-                  {{order.assignedTo}}
-                </ion-item>
-
-              </ion-col>    
-           
-              <ion-col>{{order.deliveryStatus}}</ion-col>
-              <ion-col>{{order.orderID}}</ion-col>
+              <ion-col>{{order.orderId}}</ion-col>
+              <ion-col>{{order.orderStatus}}</ion-col>
               <ion-col>{{order.orderDate|date:'dd/MM/yyyy'}}</ion-col>
-              <ion-col>{{order.customer}}</ion-col>
-              <ion-col>{{order.mobileNumber}}</ion-col>
-              <ion-col>{{order.address}}</ion-col>
-              <ion-col>{{order.storeName}}</ion-col>
-              <ion-col>{{order.storeAddress}}</ion-col>
-              <ion-col>{{order.storeManagerMobileNumber}}</ion-col>
+              <ion-col>{{order.userName}}</ion-col>
+              <ion-col>{{order.userMobileNumber}}</ion-col>
+              <ion-col>{{order.userAddress}}</ion-col>
+              <ion-col>{{order.serviceProviderName}}</ion-col>
+              <ion-col>{{order.serviceProviderAddress}}</ion-col>
+              <ion-col>{{order.serviceProviderMobileNumber}}</ion-col>
               <ion-col>{{order.totalAmount| currency:'INR'}}</ion-col>
             </div>
             <div class="order-details" *ngIf="order.expand">
@@ -100,17 +85,16 @@
 
                   <!-- <app-service-order-items *ngIf="showServiceOrders" 
                   [items]="serviceOrderedItems" [expanded]="item.expand"></app-service-order-items> -->
-                
+
                 </ion-row>
               </ion-list>
             </div>
 
 
-         
+
           </div>
         </div>
       </ion-grid>
     </div>
   </div>
 </ion-content>
-
