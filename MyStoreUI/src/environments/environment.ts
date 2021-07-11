@@ -3,17 +3,20 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-
   production: false,
-  // authenticationServiceUrl: 'https://localhost:44337/api/Authentication/',
-  // storeMasterServiceUrl: 'https://localhost:44337/api/Store/',
-  // serviceMasterServiceUrl: 'https://localhost:44337/api/Service/',
-  // adminServiceUrl: 'https://localhost:44337/api/Admin/'
-
-  authenticationServiceUrl: 'https://my3apitest.itprototypes.com/api/Authentication/',
-  storeMasterServiceUrl: 'https://my3apitest.itprototypes.com/api/Store/',
-  serviceMasterServiceUrl: 'https://my3apitest.itprototypes.com/api/Service/',
-  adminServiceUrl: 'https://my3apitest.itprototypes.com/api/Admin/'
+  authenticationServiceUrl: 'https://localhost:44337/api/Authentication/',
+  storeMasterServiceUrl: 'https://localhost:44337/api/Store/',
+  serviceMasterServiceUrl: 'https://localhost:44337/api/Service/',
+  adminServiceUrl: 'https://localhost:44337/api/Admin/',
+  // authenticationServiceUrl:
+  //   'https://my3api.itprototypes.com/api/Authentication/',
+  // storeMasterServiceUrl: 'https://my3api.itprototypes.com/api/Store/',
+  // serviceMasterServiceUrl: 'https://my3api.itprototypes.com/api/Service/',
+  // adminServiceUrl: 'https://my3api.itprototypes.com/api/Admin/',
+  // authenticationServiceUrl: 'https://my3apitest.itprototypes.com/api/Authentication/',
+  // storeMasterServiceUrl: 'https://my3apitest.itprototypes.com/api/Store/',
+  // serviceMasterServiceUrl: 'https://my3apitest.itprototypes.com/api/Service/',
+  // adminServiceUrl: 'https://my3apitest.itprototypes.com/api/Admin/'
 };
 /*
  * For easier debugging in development mode, you can import the following file

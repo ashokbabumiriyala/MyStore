@@ -102,16 +102,12 @@
     position: absolute;
     font-size: 32px;
     color: darkorange;
-    top: 0px;
-    left: 1px;
+    top: 8px;
+    left: 2px;
 }
 .selected::before{
-    content: '-';
-    left: 4px;
-    top: -2px;
-}
-table {
-    width: -webkit-fill-available;
+  content: '-';
+  left: 4px;
 }
 table tr td.label {
   text-align: left; 

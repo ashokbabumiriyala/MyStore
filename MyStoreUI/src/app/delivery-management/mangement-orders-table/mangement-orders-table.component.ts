@@ -45,15 +45,13 @@ export class MangementOrdersTableComponent implements OnInit {
         }
       );
   }
-  toggle(ele): void { 
-    this.storeOrderedItems=[];
-    this.showOrdersItems=false;
+  toggle(ele): void {
+    this.storeOrderedItems = [];
     if (ele.expand) {
       ele.expand = false;
     } else {
-      this.masterData.forEach(element => {element.expand = false;});
       ele.expand = true;
-      this.getStoreOrders(ele.orderId);   
+      this.getStoreOrders(ele.orderID);
     }
   }
 

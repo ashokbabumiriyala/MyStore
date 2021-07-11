@@ -12,16 +12,46 @@
   </div>
 
   <div direction="x" class="wide-as-needed">
+    <!-- <ion-grid>
+        <div  (click)="expandItem($event,item, i)" class="order-status" *ngFor="let item of masterData;let i = index;" [ngClass]="{'selected': i == selectedIndex}">
+          <div class="body" style="display: flex;">
+            <ion-col>
+              <ion-label>Order Number: <b>{{item.orderId}}</b></ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label>Ordered Date: <b>{{item.orderDate|date:"dd/MM/yy"}}</b></ion-label>
+            </ion-col>
+            </div>
+            <div class="body" style="display: flex;">
+            <ion-col>
+              <ion-label>User Name: <b>{{item.userName}}</b></ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label>MobileNumber: <b>{{item.mobileNumber}}</b></ion-label>
+            </ion-col>
+          </div>
+          <div class="body" style="display: flex;">
+            <ion-col>
+              <ion-label>Delivery Status: <b>{{item.orderStatus}}</b></ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label style="white-space: break-spaces;">Store Location: <b>{{item.address}}</b></ion-label>
+            </ion-col>           
+          </div>
+          <app-service-order-items *ngIf="showServiceOrders && item.expand" [items]="serviceOrderedItems"
+           [expanded]="item.expand"></app-service-order-items>   
+        </div>
+    </ion-grid> -->
     <table class="table">
       <tbody>
         <div (click)="expandItem($event,item, i)" class="order-status" *ngFor="let item of masterData;let i = index;" [ngClass]="{'selected': i == selectedIndex}">
           <tr>
             <td><b>Order Number:</b></td>
             <td class="label" style="width: 140px;">{{item.orderId}}</td>
-            <!-- <td><b>Ordered Date:</b></td>
-            <td class="label">{{item.orderDate|date:"dd/MM/yy"}}</td> -->
+            <td><b>Ordered Date:</b></td>
+            <td class="label">{{item.orderDate|date:"dd/MM/yy"}}</td>
           </tr>
-          <!-- <tr>
+          <tr>
             <td><b>User Name:</b></td>
             <td class="label">{{item.userName}}</td>
             <td><b>User Mobile Number:</b></td>
