@@ -2,7 +2,7 @@
   <h2 class="page-title">
     <ion-icon name="archive-outline"></ion-icon>Executive Orders
   </h2>
-  <ion-searchbar  [(ngModel)]="searchOrder" placeholder="Search By Order Status" (ionChange)="filterItems()"></ion-searchbar>
+  <ion-searchbar [(ngModel)]="searchOrder" placeholder="Search By Order Status" (ionChange)="filterItems()"></ion-searchbar>
   <div class="content-section">
     <div direction="x" class="wide-as-needed">
       <ion-grid>
@@ -23,12 +23,12 @@
           <div *ngFor="let order of masterData">
             <div class="body" style="display: flex;">
               <ion-col class="col-width">
-                <ion-item class="ion-ele">                  
+                <ion-item class="ion-ele">
                   <ion-label position="floating">{{order.deliveryStatus}}</ion-label>
-                  <ion-select class="assign-orders"  (ionChange)="deliveryStatusChange($event,order)">
+                  <ion-select class="assign-orders" (ionChange)="deliveryStatusChange($event,order)">
                     <ion-select-option *ngFor="let service of deliveryStatus" value="{{service.value}}">
-                        {{service.text}}</ion-select-option>
-                </ion-select>
+                      {{service.text}}</ion-select-option>
+                  </ion-select>
                 </ion-item>
                 <!-- Assigned To: <b>{{order.assignto}}</b> -->
               </ion-col>
@@ -44,7 +44,7 @@
               <ion-col (click)="toggle(order)">{{order.totalAmount| currency:'INR'}}</ion-col>
             </div>
 
-          
+
             <div class="order-details" *ngIf="order.expand">
               <ion-list class="ion-list-ele">
                 <ion-row>
@@ -71,9 +71,8 @@
                       </ion-label>
                     </ion-item>
                   </ion-col> -->
-                  <app-store-order-items  *ngIf="showOrdersItems"
-                  [orderedItems]="storeOrderedItems" [expanded]="order.expand" >
-                </app-store-order-items>
+                  <app-store-order-items *ngIf="showOrdersItems" [orderDetails]="order" [orderedItems]="storeOrderedItems" [expanded]="order.expand">
+                  </app-store-order-items>
                 </ion-row>
               </ion-list>
             </div>

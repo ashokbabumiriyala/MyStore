@@ -2,15 +2,15 @@
   <h2 class="page-title">
     <ion-icon name="aperture-outline" slot="start"></ion-icon>Service Orders
   </h2>
-  <ion-searchbar  [(ngModel)]="searchService"  placeholder="Search By Delivery Status" (ionChange)="filterItems()"></ion-searchbar>
+  <ion-searchbar [(ngModel)]="searchService" placeholder="Search By Delivery Status" (ionChange)="filterItems()"></ion-searchbar>
   <div *ngIf="masterData.length == 0">
     <h6 class="no-records">
       You do not have any orders from customers yet.
-	            Let Us hope for great business.
+      Let Us hope for great business.
     </h6>
     <img class="ion-text-center" src="../assets/images/logo.png">
   </div>
-  
+
   <div direction="x" class="wide-as-needed">
     <!-- <ion-grid>
         <div  (click)="expandItem($event,item, i)" class="order-status" *ngFor="let item of masterData;let i = index;" [ngClass]="{'selected': i == selectedIndex}">
@@ -42,32 +42,30 @@
            [expanded]="item.expand"></app-service-order-items>   
         </div>
     </ion-grid> -->
-    <table class="table">      
+    <table class="table">
       <tbody>
         <div (click)="expandItem($event,item, i)" class="order-status" *ngFor="let item of masterData;let i = index;" [ngClass]="{'selected': i == selectedIndex}">
-        <tr>
-          <td><b>Order Number:</b></td>
-          <td class="label" style="width: 140px;">{{item.orderId}}</td>
-          <td><b>Ordered Date:</b></td>
-          <td class="label">{{item.orderDate|date:"dd/MM/yy"}}</td>
-        </tr>
-        <tr>
-          <td><b>User Name:</b></td>
-          <td class="label">{{item.userName}}</td>
-          <td><b>MobileNumber:</b></td>
-          <td class="label">{{item.mobileNumber}}</td>
-        </tr>
-        <tr>
-          <td><b>Delivery Status:</b></td>
-          <td class="label">{{item.orderStatus}}</td>
-          <td><b>Store Location:</b></td>
-          <td class="label">{{item.address}}</td>
-        </tr>
-        <app-service-order-items *ngIf="showServiceOrders && item.expand" [items]="serviceOrderedItems"
-           [expanded]="item.expand"></app-service-order-items>   
-      </div>
-        </tbody>
+          <tr>
+            <td><b>Order Number:</b></td>
+            <td class="label" style="width: 140px;">{{item.orderId}}</td>
+            <td><b>Ordered Date:</b></td>
+            <td class="label">{{item.orderDate|date:"dd/MM/yy"}}</td>
+          </tr>
+          <tr>
+            <td><b>User Name:</b></td>
+            <td class="label">{{item.userName}}</td>
+            <td><b>User Mobile Number:</b></td>
+            <td class="label">{{item.userMobileNumber}}</td>
+          </tr>
+          <tr>
+            <td><b>Delivery Status:</b></td>
+            <td class="label">{{item.orderStatus}}</td>
+            <td><b>Service Location:</b></td>
+            <td class="label">{{item.serviceProviderAddress}}</td>
+          </tr>
+          <app-service-order-items *ngIf="showServiceOrders && item.expand" [orderDetails]="item" [items]="serviceOrderedItems" [expanded]="item.expand"></app-service-order-items>
+        </div>
+      </tbody>
     </table>
   </div>
 </ion-content>
-
