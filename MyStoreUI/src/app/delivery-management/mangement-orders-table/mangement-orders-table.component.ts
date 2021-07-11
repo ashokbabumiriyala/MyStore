@@ -33,7 +33,9 @@ export class MangementOrdersTableComponent implements OnInit {
       .deliveryOrdersSelect('DeliveryOrdersSelect')
       .subscribe(
         (data: any) => {
-          this.OrderList = data.deliveryOrders;
+          this.OrderList = data.deliveryOrders.sort(
+            (a, b) => <any>new Date(b.orderDate) - <any> new Date(a.orderDate)
+          );
           this.executives = data.deliveryexecutives;
           Object.assign(this.masterData, this.OrderList);
           loadingController.dismiss();
@@ -65,7 +67,9 @@ export class MangementOrdersTableComponent implements OnInit {
       .deliveryOrderItemsSelect('StoreOrderItemsList', dataObject)
       .subscribe(
         (data: any) => {
-          this.storeOrderedItems = data.storeOrderList;
+          this.storeOrderedItems = data.storeOrderList.sort(
+            (a, b) => <any>new Date(b.orderDate) - <any> new Date(a.orderDate)
+          );
           this.showOrdersItems = true;
           loadingController.dismiss();
         },
