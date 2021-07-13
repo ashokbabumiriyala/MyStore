@@ -1,24 +1,8 @@
 <div #expandWrapper class='expand-wrapper' [ngClass]="!expanded ? 'collapsed':'expanded'">
-  <!-- <ion-searchbar  placeholder="Search Service Locations" [(ngModel)]="searchStore" (ionChange)="filterItems()"></ion-searchbar> -->
-  <!-- <ion-grid class="table">
-    <ion-row>
-      <ion-col size="8" class="ion-text-center">
-       Store Name
-      </ion-col>
-      <ion-col size="4" class="ion-text-center">
-        Action
-      </ion-col>      
-    </ion-row>
-    <ion-row *ngFor="let item of serviceData">
-      <ion-col size="8">{{item.businessName}}</ion-col>
-      <ion-col size="4" class="ion-text-center">
-        <ion-icon name="alert-circle" (click)="changeStatus(item)" *ngIf="!item.status"></ion-icon>
-        <ion-icon name="checkbox" (click)="changeStatus(item)" *ngIf="item.status"></ion-icon>
-      </ion-col>      
-    </ion-row>    
-  </ion-grid> -->
-
   <ion-list class="ion-list-ele">
+      <ion-item *ngIf="serviceData.length == 0">
+        No Store Data Avilable.
+      </ion-item>
     <ion-item *ngFor="let item of serviceData">
         <ion-avatar item-start size="3">
             <img src="assets/default-image.jpg">
