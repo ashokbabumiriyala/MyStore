@@ -26,9 +26,7 @@ export class ServiceDeliveryManagmentPage implements OnInit {
       await this.serviceOrderService.serviceOrdersSelect('ServiceOrdersList', dataObject)
       .subscribe((data: any) => {
         console.log(data);
-        this.items = data.servicesOrders.sort(
-          (a, b) => <any>new Date(b.orderDate) - <any> new Date(a.orderDate)
-        );
+        this.items=  data.servicesOrders;  
         Object.assign(this.masterData,this.items);         
           loadingController.dismiss();
       },

@@ -26,11 +26,9 @@ export class StoreOrdersPage implements OnInit {
       await loadingController.present();
       const dataObject={ProviderId: Number(sessionStorage.getItem("providerId")),Mode:'Select'};
       await this.storeOrderService.storeOrderSelect('StoreOrdersList', dataObject)
-        .subscribe((data: any) => {
-          this.items = data.storeOrderList.sort(
-            (a, b) => <any>new Date(b.orderDate) - <any> new Date(a.orderDate)
-          );
-          Object.assign(this.masterData, this.items);
+      .subscribe((data: any) => {
+        this.items=  data.storeOrderList;
+        Object.assign(this.masterData,this.items);
           loadingController.dismiss();
       },
         (error: any) => {
