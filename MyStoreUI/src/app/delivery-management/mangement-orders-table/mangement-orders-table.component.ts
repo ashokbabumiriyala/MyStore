@@ -53,7 +53,7 @@ export class MangementOrdersTableComponent implements OnInit {
     } else {
       this.masterData.forEach(element => {element.expand = false;});
       ele.expand = true;
-      this.getStoreOrders(ele.orderId);   
+      this.getStoreOrders(ele.orderID);   
     }
   }
 
