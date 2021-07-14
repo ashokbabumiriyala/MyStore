@@ -18,6 +18,7 @@ export class ExcutiveOrdersTableComponent implements OnInit {
   showOrdersItems: boolean;
   public masterData: any = [];
   public searchOrder: string = '';
+  selectedIndex: number;
   constructor(
     private deliveryManagmentService: DeliveryManagmentService,
     private helperService: HelperService,
@@ -81,14 +82,18 @@ export class ExcutiveOrdersTableComponent implements OnInit {
         }
       );
   }
-
-  toggle(ele): void {
-    this.storeOrderedItems = [];
+  
+  toggle( ele:any, index:number): void {
+    this.storeOrderedItems=[];
+    this.showOrdersItems=false;
     if (ele.expand) {
       ele.expand = false;
+      this.selectedIndex = -1;
     } else {
+      this.masterData.forEach(element => {element.expand = false;});
       ele.expand = true;
-      this.getStoreOrders(ele.orderID);
+      this.selectedIndex = index;
+      this.getStoreOrders(ele.orderID);   
     }
   }
   async getStoreOrders(orderId: string) {

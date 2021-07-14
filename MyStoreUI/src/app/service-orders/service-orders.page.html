@@ -32,7 +32,7 @@
             <td class="label">{{item.orderStatus}}</td>
             <td><b>User Address:</b></td>
             <td class="label">{{item.userAddress}}</td>
-          </tr>
+          </tr> -->
           <app-service-order-items *ngIf="showServiceOrders && item.expand" [orderDetails]="item" [items]="serviceOrderedItems" [expanded]="item.expand"></app-service-order-items>
         </div>
       </tbody>

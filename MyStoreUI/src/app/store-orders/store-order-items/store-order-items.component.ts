@@ -1,12 +1,4 @@
-import {
-  Component,
-  AfterViewInit,
-  Input,
-  ViewChild,
-  ElementRef,
-  Renderer2,
-  OnInit,
-} from '@angular/core';
+import { Component, AfterViewInit, Input, ViewChild, ElementRef, Renderer2, OnInit} from '@angular/core';
 import { NavController, ToastController } from '@ionic/angular';
 
 @Component({
@@ -20,6 +12,7 @@ export class StoreOrderItemsComponent implements OnInit {
   @Input('expanded') expanded: boolean;
   @Input('orderDetails') orderDetails: any;
   @Input() orderedItems: any;
+  @Input() condition:any;
 
   constructor(
     public renderer: Renderer2,
@@ -28,6 +21,7 @@ export class StoreOrderItemsComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.orderedItems);
+    console.log(this.condition);
   }
 
   ngOnChanges(SimpleValues: any) {

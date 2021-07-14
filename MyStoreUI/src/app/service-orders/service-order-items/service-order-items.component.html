@@ -1,6 +1,6 @@
 <div #expandWrapper class='expand-wrapper' [ngClass]="!expanded ? 'collapsed':'expanded'">
   <ion-list>
-    <table class="table1" style=" margin-left: 10px;">
+    <table class="table1" style=" margin-left: 10px;" *ngIf="!condition">
       <tbody>
         <tr>
           <td><b>Ordered Date: </b></td>
@@ -44,11 +44,51 @@
         </tr>
       </tbody>
     </table>
+    <table class="table1" style=" margin-left: 10px;" *ngIf="condition">
+      <tbody>
+        <tr>
+          <td><b>Order Status: </b></td>
+          <td> {{orderDetails.orderStatus}}</td>
+        </tr>
+        <tr>
+          <td><b>Order Date and Time: </b></td>
+          <td> {{orderDetails.orderDate|date:'dd/MM/yyyy'}}</td>
+        </tr>
+        <tr>
+          <td><b>Customer Name: </b></td>
+          <td> {{orderDetails.userName}}</td>
+        </tr>
+        <tr>
+          <td><b>Customer Mobile Number: </b></td>
+          <td> {{orderDetails.userMobileNumber}}</td>
+        </tr>
+        
+        <tr>
+          <td><b>Customer Address: </b></td>
+          <td> {{orderDetails.userAddress}}</td>
+        </tr>
+        <tr>
+          <td><b>Service Provider Name: </b></td>
+          <td> {{orderDetails.serviceProviderName}}</td>
+        </tr>
+        <tr>
+          <td><b>Service Provider Address: </b></td>
+          <td> {{orderDetails.serviceProviderAddress}}</td>
+        </tr>
+        <tr>
+          <td><b>Service Manager Mobile number: </b></td>
+          <td> {{ orderDetails.serviceProviderMobileNumber}}</td>
+        </tr>   
+        <tr>
+          <td><b>Total Amount: </b></td>
+          <td> {{ orderDetails.totalAmount | currency:'INR'}}</td>
+        </tr>
+      </tbody>
+    </table>
     <table style="width: -webkit-fill-available;text-align:left;">
       <thead>
         <th></th>
         <th>Name</th>
-        <th>Qty</th>
         <th>Price</th>
       </thead>
       <tbody>

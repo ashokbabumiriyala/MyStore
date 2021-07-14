@@ -1,6 +1,6 @@
 <div #expandWrapper class='expand-wrapper' [ngClass]="!expanded ? 'collapsed':'expanded'">
   <ion-list>
-    <table class="table1" style=" margin-left: 10px;">
+    <table class="table1" style=" margin-left: 10px;" *ngIf="condition == 'undefined'">
       <tbody>
         <tr>
           <td><b>Ordered Date: </b></td>
@@ -60,6 +60,122 @@
         <tr>
           <td><b>Total Order Value: </b></td>
           <td> {{ orderDetails.totalAmount | currency:'INR'}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table1" style=" margin-left: 10px;" *ngIf="condition == true">
+      <tbody>
+        <tr>
+          <td><b>Delivery Type: </b></td>
+          <td *ngIf="orderDetails.deliveryType == null || orderDetails.deliveryType == 0">Home Delivery</td>
+          <td *ngIf="orderDetails.deliveryType == 1">Self Pickup</td>
+        </tr>
+        <tr>
+          <td><b>Order Status: </b></td>
+          <td> {{orderDetails.deliveryStatus}}</td>
+        </tr>
+        <tr>
+          <td><b>Order Id: </b></td>
+          <td> {{orderDetails.orderID}}</td>
+        </tr>
+        <tr>
+          <td><b>Order Date and Time: </b></td>
+          <td> {{orderDetails.orderDate|date:'dd/MM/yyyy'}}</td>
+        </tr>
+        <tr>
+          <td><b>Customer Name: </b></td>
+          <td> {{orderDetails.customer}}</td>
+        </tr>
+        <tr>
+          <td><b>Customer Mobile Number: </b></td>
+          <td> {{orderDetails.mobileNumber}}</td>
+        </tr>
+        <tr>
+          <td><b>Customer Address: </b></td>
+          <td> {{orderDetails.address}}</td>
+        </tr>
+        <tr>
+          <td><b>Store Name: </b></td>
+          <td> {{orderDetails.storeName}}</td>
+        </tr>
+        <tr>
+          <td><b>Store Address: </b></td>
+          <td> {{orderDetails.storeAddress}}</td>
+        </tr>
+        <tr>
+          <td><b>Store manager Mobile number: </b></td>
+          <td> {{orderDetails.storeManagerMobileNumber}}</td>
+        </tr>
+        <tr>
+          <td><b>Payment Type: </b></td>
+          <td *ngIf="orderDetails.paymentType == null || orderDetails.paymentType == 0"> Online Payment</td>
+          <td *ngIf="orderDetails.paymentType == 1"> Cash On Delivery</td>
+        </tr>
+        <tr>
+          <td><b>Transaction ID: </b></td>
+          <td> {{orderDetails.transactionId}}</td>
+        </tr>
+        <tr>
+          <td><b>Sub Total: </b></td>
+          <td> {{orderDetails.subTotal | currency: 'INR'}}</td>
+        </tr>
+        <tr>
+          <td><b>Delivery Charge: </b></td>
+          <td *ngIf="orderDetails.deliveryCharge == null"> {{0 | currency: 'INR'}}</td>
+          <td *ngIf="orderDetails.deliveryCharge != null"> {{orderDetails.deliveryCharge | currency: 'INR'}}</td>
+        </tr>
+        <tr>
+          <td><b>Processing Fee: </b></td>
+          <td *ngIf="orderDetails.processingFee == null"> {{0 | currency: 'INR'}}</td>
+          <td *ngIf="orderDetails.processingFee != null"> {{orderDetails.processingFee | currency: 'INR'}}</td>
+        </tr>
+        <tr>
+          <td><b>Total Amount: </b></td>
+          <td> {{orderDetails.totalAmount| currency:'INR'}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table1" style=" margin-left: 10px;" *ngIf="condition == 'executive'">
+      <tbody>
+        <tr>
+          <td><b>Order Status: </b></td>
+          <td> {{orderDetails.deliveryStatus}}</td>
+        </tr>
+        <tr>
+          <td><b>Order Id: </b></td>
+          <td> {{orderDetails.orderID}}</td>
+        </tr>
+        <tr>
+          <td><b>Order Date and Time: </b></td>
+          <td> {{orderDetails.orderDate|date:'dd/MM/yyyy'}}</td>
+        </tr>
+        <tr>
+          <td><b>Customer Name: </b></td>
+          <td> {{orderDetails.customer}}</td>
+        </tr>
+        <tr>
+          <td><b>Customer Mobile Number: </b></td>
+          <td> {{orderDetails.mobileNumber}}</td>
+        </tr>
+        <tr>
+          <td><b>Customer Address: </b></td>
+          <td> {{orderDetails.address}}</td>
+        </tr>
+        <tr>
+          <td><b>Store Name: </b></td>
+          <td> {{orderDetails.storeName}}</td>
+        </tr>
+        <tr>
+          <td><b>Store Address: </b></td>
+          <td> {{orderDetails.storeAddress}}</td>
+        </tr>
+        <tr>
+          <td><b>Store manager Mobile number: </b></td>
+          <td> {{orderDetails.storeManagerMobileNumber}}</td>
+        </tr>
+        <tr>
+          <td><b>Total Amount: </b></td>
+          <td> {{orderDetails.totalAmount| currency:'INR'}}</td>
         </tr>
       </tbody>
     </table>

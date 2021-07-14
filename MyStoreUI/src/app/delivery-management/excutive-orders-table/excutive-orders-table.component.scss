@@ -36,3 +36,48 @@
 
     }
   }
+  
+  .order-status {
+    border: 1px solid #111;
+    border-radius: 15px;
+    font-size: 14px;
+    margin-bottom: 5px;   
+    white-space: break-spaces;
+    padding: 10px;
+    position: relative;
+    padding-left: 20px;
+    width: 100%;
+    // min-width: fit-content;
+}
+.order-status::before{
+    content: '+';
+    position: absolute;
+    font-size: 32px;
+    color: darkorange;
+    top: 17px;
+    left: 1px;
+}
+.selected::before{
+    content: '-';
+    left: 4px;
+    top: 14px;
+}
+table {
+    width: -webkit-fill-available;
+}
+table tr td {
+  text-align: left; 
+  white-space: break-spaces;
+  word-wrap: break-word;
+  &:first-child {
+    text-align: right;
+    vertical-align: middle;
+  }
+}
+.ion-ele {
+  --background: transparent;
+  border: 1px solid;
+  border-radius: 15px;
+  font-size: inherit;
+  min-width: 250px;
+}

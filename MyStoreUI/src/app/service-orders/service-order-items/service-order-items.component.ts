@@ -20,6 +20,8 @@ export class ServiceOrderItemsComponent implements OnInit {
   @Input() items: any;
   @Input('expanded') expanded: boolean;
   @Input('orderDetails') orderDetails: any;
+  @Input() condition:any;
+
   constructor(
     public renderer: Renderer2,
     private toastController: ToastController

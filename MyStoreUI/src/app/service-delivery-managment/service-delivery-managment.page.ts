@@ -13,6 +13,7 @@ export class ServiceDeliveryManagmentPage implements OnInit {
   public items: any = [];
   public searchService: string = "";
   public masterData:any = [];
+  selectedIndex: number;
   constructor(private helperService:HelperService, private serviceOrderService:ServiceOrderService) { }
 
   ngOnInit() {
@@ -43,17 +44,16 @@ export class ServiceDeliveryManagmentPage implements OnInit {
         return item.orderStatus.toLowerCase().indexOf(this.searchService.toLowerCase()) > -1;
       });
     }
-    expandItem(event, ele): void {  
-  
+    expandItem( event:any,ele:any, index:number): void {
       this.serviceOrderedItems=[];
       this.showServiceOrders=false;
-      event.currentTarget.classList.toggle('order-status');
-      event.currentTarget.classList.toggle('row-icon');
       if (ele.expand) {
         ele.expand = false;
-        this.showServiceOrders=false;
+        this.selectedIndex = -1;
       } else {
+        this.masterData.forEach(element => {element.expand = false;});
         ele.expand = true;
+        this.selectedIndex = index;
         this.getServiceOrderItems(ele.orderId);   
       }
     }

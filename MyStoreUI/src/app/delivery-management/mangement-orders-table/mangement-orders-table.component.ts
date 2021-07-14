@@ -16,6 +16,8 @@ export class MangementOrdersTableComponent implements OnInit {
   public masterData: any = [];
   public searchOrder: string = '';
   storeOrderedItems: any = [];
+  showStoreOrders: boolean;
+  selectedIndex: number;
   constructor(
     private deliveryManagmentService: DeliveryManagmentService,
     private helperService: HelperService
@@ -45,14 +47,16 @@ export class MangementOrdersTableComponent implements OnInit {
         }
       );
   }
-  toggle(ele): void { 
+  toggle( ele:any, index:number): void {
     this.storeOrderedItems=[];
-    this.showOrdersItems=false;
+    this.showStoreOrders=false;
     if (ele.expand) {
       ele.expand = false;
+      this.selectedIndex = -1;
     } else {
       this.masterData.forEach(element => {element.expand = false;});
       ele.expand = true;
+      this.selectedIndex = index;
       this.getStoreOrders(ele.orderID);   
     }
   }
@@ -70,7 +74,7 @@ export class MangementOrdersTableComponent implements OnInit {
           this.storeOrderedItems = data.storeOrderList.sort(
             (a, b) => <any>new Date(b.orderDate) - <any> new Date(a.orderDate)
           );
-          this.showOrdersItems = true;
+          this.showStoreOrders = true;
           loadingController.dismiss();
         },
         (error: any) => {

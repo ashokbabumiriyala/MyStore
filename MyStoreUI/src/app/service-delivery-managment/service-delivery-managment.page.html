@@ -28,7 +28,7 @@
     </ion-row>
   </ion-list> -->
   <div class="content-section">
-    <div direction="x" class="wide-as-needed">
+    <!-- <div direction="x" class="wide-as-needed">
       <ion-grid>
         <div class="header">
           <ion-col>Order Id</ion-col>
@@ -59,42 +59,27 @@
             <div class="order-details" *ngIf="order.expand">
               <ion-list class="ion-list-ele">
                 <ion-row>
-                  <!-- <ion-col size="6" *ngFor="let itm of orderItems">
-                    <ion-item>
-                      <ion-avatar slot="start">
-                        <img src="./assets/images/category.png">
-                      </ion-avatar>
-                      <ion-label>
-                        <ion-row>
-                          <ion-col size="3">
-                            <h3>Name:{{itm.productName}}</h3>
-                          </ion-col>
-                          <ion-col size="3">
-                            <h3>Count:{{itm.quantity}}</h3>
-                          </ion-col>
-                          <ion-col size="3">
-                            <h3>Price:{{itm.sellingPrice | currency:'INR'}}</h3>
-                          </ion-col>
-                          <ion-col size="3">
-                            <h3>Units:{{itm.units}}</h3>
-                          </ion-col>
-                        </ion-row>
-                      </ion-label>
-                    </ion-item>
-                  </ion-col> -->
-
-                  <!-- <app-service-order-items *ngIf="showServiceOrders" 
-                  [items]="serviceOrderedItems" [expanded]="item.expand"></app-service-order-items> -->
-
+                   <app-service-order-items *ngIf="showServiceOrders" 
+                  [items]="serviceOrderedItems" [expanded]="item.expand"></app-service-order-items>
                 </ion-row>
               </ion-list>
             </div>
-
-
-
           </div>
         </div>
       </ion-grid>
-    </div>
+    </div> -->
+    <table class="table">
+      <tbody>
+        <div  (click)="expandItem($event,order, i)" *ngFor="let order of masterData;let i = index;" class="order-status" [ngClass]="{'selected': i == selectedIndex}">
+          <tr>
+            <td><b>Order Id: </b></td>
+            <td> {{order.orderId}}</td>
+          </tr>
+          <app-service-order-items *ngIf="showServiceOrders && order.expand"  [orderDetails]="order"
+          [items]="serviceOrderedItems" [expanded]="order.expand" [condition]="true">
+        </app-service-order-items>
+        </div>
+      </tbody>
+    </table>
   </div>
 </ion-content>
