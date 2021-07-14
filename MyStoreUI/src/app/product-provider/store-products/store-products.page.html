@@ -120,11 +120,11 @@
       </ion-col>
       <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
         <ion-item class="ion-ele">
-          <ion-label position="floating">Quantity</ion-label>
+          <ion-label position="floating">Count(Ex: In 500 ml, Count is 500)</ion-label>
           <ion-input type="number" formControlName="Quantity" required></ion-input>
           <ion-icon name="basket-outline" slot="start"></ion-icon>
         </ion-item>
-        <small *ngIf="isFormSubmitted &&  Quantity.errors"><span style="color: red;">*Quantity Required </span>
+        <small *ngIf="isFormSubmitted &&  Quantity.errors"><span style="color: red;">*Count Required </span>
         </small>
       </ion-col>
       <ion-col size-md="6" size-xs="12" size-lg="4" size-xl="3">
