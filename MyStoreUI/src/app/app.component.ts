@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { HelperService} from 'src/app/common/helper.service'
-import {AppConstants} from 'src/app/common/AppConstants';
+import { HelperService } from 'src/app/common/helper.service';
+import { AppConstants } from 'src/app/common/AppConstants';
 import { Router, NavigationStart } from '@angular/router';
 import { Platform } from '@ionic/angular';
-import { FCM } from "cordova-plugin-fcm-with-dependecy-updated/ionic/ngx";
+import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 
-import { CommonApiServiceCallsService} from './Shared/common-api-service-calls.service';
-import { environment} from './../environments/environment';
-
+import { CommonApiServiceCallsService } from './Shared/common-api-service-calls.service';
+import { environment } from './../environments/environment';
+import { PushTokenService } from './common/pushTokenService';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 @Component({
   selector: 'app-root',
@@ -20,59 +21,98 @@ export class AppComponent implements OnInit {
   roleId: number;
   providerId: number;
   menuItems = [];
-  showHead:boolean;
-  version:any;
-  constructor(private helperService:HelperService,private router: Router,
-    private platform: Platform, private fcm: FCM, private appVersion: AppVersion,
-    private commonApiServiceCallsService: CommonApiServiceCallsService
-    ) {
-      this.initializeApp();
-    }
-    initializeApp() {
-      this.platform.ready().then(() => {
-        if (this.platform.is('android') || this.platform.is('ios')) {
-          console.log("running on mobile device!");
-          sessionStorage.setItem('mobile', 'true');
-        } else {
-          sessionStorage.setItem('mobile', 'false');
-        }
-        if (sessionStorage.getItem('mobile') == 'true') {
-          this.appVersion.getVersionNumber().then((res) => {
-            console.log(res);
-            this.version = res;
-            if (this.version){
-              let apiUrl = environment.adminServiceUrl;
-              this.commonApiServiceCallsService.getAll(apiUrl + 'GetAppVersion').subscribe((res)=>{
-                let appNewVersion = res[0]['storeAppVersion'];
-                let needUpdate = appNewVersion.localeCompare(this.version, undefined, { numeric: true, sensitivity: 'base' })
-                if (needUpdate == 1) {
-                  this.helperService.showAlert('Please update your App to avail Latest features provided by My3Karrt.');
-                }
-              }, (error) => {
-              })
-            }
-          });
-          this.fcm.getToken().then(token => {
-            sessionStorage.setItem("PushToken",token);
-          });
-          // ionic push notification example
-          this.fcm.onNotification().subscribe(data => {
-            console.log(data);
-            if (data.wasTapped) {
-              console.log('Received in background');
-            } else {
-              console.log('Received in foreground');
-            }
-          });
+  showHead: boolean;
+  version: any;
+  constructor(
+    private helperService: HelperService,
+    private router: Router,
+    private platform: Platform,
+    private fcm: FCM,
+    private appVersion: AppVersion,
+    private commonApiServiceCallsService: CommonApiServiceCallsService,
+    private pushTokenService: PushTokenService,
+    private localNotifications: LocalNotifications
+  ) {
+    this.initializeApp();
+  }
+  initializeApp() {
+    this.platform.ready().then(() => {
+      if (this.platform.is('android') || this.platform.is('ios')) {
+        console.log('running on mobile device!');
+        sessionStorage.setItem('mobile', 'true');
+      } else {
+        sessionStorage.setItem('mobile', 'false');
+      }
+      if (sessionStorage.getItem('mobile') == 'true') {
+        this.appVersion.getVersionNumber().then((res) => {
+          console.log(res);
+          this.version = res;
+          if (this.version) {
+            let apiUrl = environment.adminServiceUrl;
+            this.commonApiServiceCallsService
+              .getAll(apiUrl + 'GetAppVersion')
+              .subscribe(
+                (res) => {
+                  let appNewVersion = res[0]['storeAppVersion'];
+                  let needUpdate = appNewVersion.localeCompare(
+                    this.version,
+                    undefined,
+                    { numeric: true, sensitivity: 'base' }
+                  );
+                  if (needUpdate == 1) {
+                    this.helperService.showAlert(
+                      'Please update your App to avail Latest features provided by My3Karrt.'
+                    );
+                  }
+                },
+                (error) => {}
+              );
+          }
+        });
+        this.fcm.getToken().then((token) => {
+          sessionStorage.setItem('PushToken', token);
+          var providerId = Number(sessionStorage.getItem('providerId'));
+          if (providerId != 0 && token != null) {
+            this.pushTokenService
+              .registerProviderPushToken(providerId, token)
+              .subscribe((result) => {
+                console.log(
+                  'successfully registered push token, result:' + result
+                );
+              });
+          }
+        });
+        // ionic push notification example
+        this.fcm.onNotification().subscribe((data) => {
+          console.log(JSON.stringify(data));
+          if (data.wasTapped) {
+            console.log('Received in background');
+          } else {
+            console.log('Received in foreground');
+            this.localNotifications.schedule({
+              title: data.title,
+              text: data.body,
+            });
+          }
+        });
 
-          // refresh the FCM token
-          this.fcm.onTokenRefresh().subscribe(token => {
-            sessionStorage.setItem("PushToken",token);
-          });
-        }
-
-      });
-    }
+        // refresh the FCM token
+        this.fcm.onTokenRefresh().subscribe((token) => {
+          var providerId = Number(sessionStorage.getItem('providerId'));
+          if (providerId != 0 && token != null) {
+            this.pushTokenService
+              .registerProviderPushToken(providerId, token)
+              .subscribe((result) => {
+                console.log(
+                  'successfully registered push token, result:' + result
+                );
+              });
+          }
+          sessionStorage.setItem('PushToken', token);
+        });
+      }
+    });
+  }
   ngOnInit() {
     this.router.events.forEach((event) => {
       if (event instanceof NavigationStart) {
@@ -83,37 +123,40 @@ export class AppComponent implements OnInit {
         }
       }
     });
-    this.helperService.getProfileObs().subscribe(profile => {
-      if(profile!=null){
-      this.menuItems = [];
-      this.providerName = profile.name;
-      this.roleId = profile.roleId;
-      this.providerId = profile.providerId;
-      this.loadMenu(profile.menus);
-      this.navigatePage(profile.defaultMenuId);
+    this.helperService.getProfileObs().subscribe((profile) => {
+      if (profile != null) {
+        this.menuItems = [];
+        this.providerName = profile.name;
+        this.roleId = profile.roleId;
+        this.providerId = profile.providerId;
+        this.loadMenu(profile.menus);
+        this.navigatePage(profile.defaultMenuId);
       }
     });
-
   }
   private loadMenu(menus: any[]): void {
     if (!menus || menus === undefined) {
       return;
     }
-    menus.forEach(menu => {
-      const menuObject = { title: menu.displayName, id: menu.menuID,icon:menu.icon };
+    menus.forEach((menu) => {
+      const menuObject = {
+        title: menu.displayName,
+        id: menu.menuID,
+        icon: menu.icon,
+      };
       this.menuItems.push(menuObject);
     });
   }
   public navigatePage(menuId: number): void {
     if (menuId === 0 || menuId == null || menuId === undefined) {
-      menuId = (this.menuItems.length > 0) ? this.menuItems[0].id : menuId;
+      menuId = this.menuItems.length > 0 ? this.menuItems[0].id : menuId;
     }
     switch (menuId) {
       case AppConstants.menuNavigation.ProviderDashboard:
         this.router.navigate(['product-provider']);
         break;
       case AppConstants.menuNavigation.StoreMaster:
-      this.router.navigate(['product-provider/store-master']);
+        this.router.navigate(['product-provider/store-master']);
         break;
       case AppConstants.menuNavigation.StoreSubunits:
         this.router.navigate(['product-provider/single-store']);
@@ -143,50 +186,50 @@ export class AppComponent implements OnInit {
         this.router.navigate(['service-provider/services']);
         break;
 
-        case AppConstants.menuNavigation.AdminStores:
+      case AppConstants.menuNavigation.AdminStores:
         this.router.navigate(['admin-product-provider']);
         break;
 
-        case AppConstants.menuNavigation.AdminServices:
+      case AppConstants.menuNavigation.AdminServices:
         this.router.navigate(['admin-service-provider']);
         break;
 
-        case AppConstants.menuNavigation.ServiceOrders:
-          this.router.navigate(['service-orders']);
-          break;
+      case AppConstants.menuNavigation.ServiceOrders:
+        this.router.navigate(['service-orders']);
+        break;
 
-          case AppConstants.menuNavigation.Executives:
-          this.router.navigate(['delivery-management/add-executive']);
-          break;
+      case AppConstants.menuNavigation.Executives:
+        this.router.navigate(['delivery-management/add-executive']);
+        break;
 
-          case AppConstants.menuNavigation.ManagementOrders:
-          this.router.navigate(['delivery-management/management-orders']);
-          break;
+      case AppConstants.menuNavigation.ManagementOrders:
+        this.router.navigate(['delivery-management/management-orders']);
+        break;
 
-          case AppConstants.menuNavigation.ExecutivesOrders:
-          this.router.navigate(['delivery-management/executive-orders']);
-          break;
+      case AppConstants.menuNavigation.ExecutivesOrders:
+        this.router.navigate(['delivery-management/executive-orders']);
+        break;
 
-          case AppConstants.menuNavigation.DeliveryFee:
-          this.router.navigate(['delivery-management/delivery-fee']);
-          break;
+      case AppConstants.menuNavigation.DeliveryFee:
+        this.router.navigate(['delivery-management/delivery-fee']);
+        break;
 
-          case AppConstants.menuNavigation.ManagementServicesOrders:
-            this.router.navigate(['service-delivery-managment']);
-            break;
-
-
+      case AppConstants.menuNavigation.ManagementServicesOrders:
+        this.router.navigate(['service-delivery-managment']);
+        break;
     }
   }
   openMenu() {
-    const ele = document.getElementById("panel-split");
-    ele.style.zIndex == '1' ? ele.style.zIndex = '3' : ele.style.zIndex = '1' ;
+    const ele = document.getElementById('panel-split');
+    ele.style.zIndex == '1'
+      ? (ele.style.zIndex = '3')
+      : (ele.style.zIndex = '1');
   }
   logout() {
     let pushToken = sessionStorage.getItem('PushToken');
     let mobileApp = sessionStorage.getItem('mobile');
     sessionStorage.clear();
-    sessionStorage.setItem('PushToken',pushToken );
+    sessionStorage.setItem('PushToken', pushToken);
     sessionStorage.setItem('mobile', mobileApp);
     this.menuItems = [];
     this.router.navigate(['login']);

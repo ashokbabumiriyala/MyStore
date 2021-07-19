@@ -6,25 +6,31 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { Camera } from '@ionic-native/camera/ngx';
-import { FCM } from "cordova-plugin-fcm-with-dependecy-updated/ionic/ngx";
+import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { Market } from '@ionic-native/market/ngx';
-
-
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, HttpClientModule, IonicModule.forRoot(), AppRoutingModule],
-  providers: [ Camera,
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+  ],
+  providers: [
+    Camera,
     FCM,
+    LocalNotifications,
     File,
     AppVersion,
     Market,
-    {provide: LocationStrategy, useClass: HashLocationStrategy}]
-  ,
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
